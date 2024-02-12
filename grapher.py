@@ -51,31 +51,19 @@ def collapse_nodes(ass):
     scc = list(max(nx.strongly_connected_components(con_dep), key=len))
     print(scc)
 
-    subG = ass.subgraph(scc)
-    nx.draw(subG, with_labels=True, font_weight='bold')
-    plt.show()
-
-    return
-
-    cond_ass_cp = cond_ass.copy()
-    for n in cond_ass_cp.nodes:
-        subG = ass.subgraph(cond_ass_cp.nodes[n]['members'])
-
-        print(f"Cluster with {subG.order()} Connections")
-        for sub_dep in trim_connection_graph(subG):
-            nx.draw(sub_dep, with_labels=True, font_weight='bold')
-            plt.show()
-
-            print(f"Sorting SubDep {sub_dep}")
-
-            topo_sort_ass(sub_dep, stage + 1, step)
-
-        cond_ass.remove_node(n)
-
     new_graph = con_dep.copy()
-    for node in scc[1:]:
-        print(node)
-        new_graph = nx.contracted_nodes(new_graph, scc[0], node, self_loops=False)
+    for sub_dep in trim_connection_graph(scc):
+        print(sub_dep)
+        nx.draw(sub_dep, with_labels=True, font_weight='bold')
+        plt.show()
+
+        sub_con_dep = get_con_dep_graph_from_dep(sub_dep)
+
+        clstr_nodes = list(sub_con_dep.nodes)
+        print(clstr_nodes)
+        for node in clstr_nodes[1:]:
+            print(f"NODE: {node}")
+            new_graph = nx.contracted_nodes(new_graph, clstr_nodes[0], node, self_loops=False)
         nx.draw(new_graph, with_labels=True, font_weight='bold')
         plt.show()
 
@@ -118,5 +106,4 @@ def topo_sort_ass(ass, stage=0, step=0):
         step += 1
 
 
-topo_sort_ass(dep)
-# collapse_nodes(dep)
+collapse_nodes(dep)
