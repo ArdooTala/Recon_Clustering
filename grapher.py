@@ -22,12 +22,12 @@ def get_con_dep_graph_from_dep(dep_graph):
     return con_dep
 
 
-def trim_connection_graph(sub_graph):
+def trim_connection_graph(nodes):
     elems = set()
-    for no in sub_graph.nodes:
+    for no in nodes:
         el = list(con.predecessors(no))
         elems.update(el)
-    sub_ass = con.subgraph(list(elems) + list(sub_graph.nodes))
+    sub_ass = con.subgraph(list(elems) + list(nodes))
 
     nx.draw(sub_ass, with_labels=True, font_weight='bold')
     plt.show()
@@ -56,11 +56,11 @@ def topo_sort_ass(ass, stage=0, step=0):
             if cond_ass_cp.out_degree(n) > 0:
                 continue
 
-            subG = ass.subgraph(cond_ass_cp.nodes[n]['members'])
-            if subG.order() == 1:
-                print(f"\t>>> {subG.nodes} {stage}:{step}")
+            subG = cond_ass_cp.nodes[n]['members']
+            if len(subG) == 1:
+                print(f"\t>>> {subG} {stage}:{step}")
             else:
-                print(f"Cluster with {subG.order()} Connections")
+                print(f"Cluster with {len(subG)} Connections")
                 for sub_dep in trim_connection_graph(subG):
                     nx.draw(sub_dep, with_labels=True, font_weight='bold')
                     plt.show()
