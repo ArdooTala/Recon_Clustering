@@ -22,22 +22,17 @@ def get_con_dep_graph_from_dep(dep_graph):
     return con_dep
 
 
-def trim_connection_graph(nodes):
+def trim_connection_graph(graph, nodes):
     elems = set()
     for no in nodes:
-        el = list(con.predecessors(no))
+        el = list(graph.predecessors(no))
         elems.update(el)
-    sub_ass = con.subgraph(list(elems) + list(nodes))
+    sub_ass = graph.subgraph(list(elems) + list(nodes))
 
     nx.draw(sub_ass, with_labels=True, font_weight='bold')
     plt.show()
 
-    sub_ass_parts = list(nx.weakly_connected_components(sub_ass))
-    print(sub_ass_parts)
-
-    for part in sub_ass_parts:
-        sd = dep.subgraph(part)
-        yield sd
+    return sub_ass
 
 
 def collapse_nodes(ass):
@@ -45,30 +40,47 @@ def collapse_nodes(ass):
     nx.draw(con_dep, with_labels=True, font_weight='bold')
     plt.show()
 
-    if nx.is_directed_acyclic_graph(con_dep):
-        return con_dep
-
-    scc = list(max(nx.strongly_connected_components(con_dep), key=len))
-    print(scc)
-
     new_graph = con_dep.copy()
-    for sub_dep in trim_connection_graph(scc):
-        print(sub_dep)
-        nx.draw(sub_dep, with_labels=True, font_weight='bold')
+    while not nx.is_directed_acyclic_graph(new_graph):
+        scc = list(max(nx.strongly_connected_components(new_graph), key=len))
+        print(f"Found a SCC -> {scc}")
+
+        trm_dep_graph = trim_connection_graph(ass, scc)
+        trm_dep_con = get_con_dep_graph_from_dep(trm_dep_graph)
+        nx.draw(trm_dep_con, with_labels=True, font_weight='bold')
         plt.show()
 
-        sub_con_dep = get_con_dep_graph_from_dep(sub_dep)
+        trm_con_graph = trim_connection_graph(con, scc)
+        trm_con_con = get_con_dep_graph_from_dep(trm_con_graph)
+        nx.draw(trm_con_con, with_labels=True, font_weight='bold')
+        plt.show()
 
-        clstr_nodes = list(sub_con_dep.nodes)
-        print(clstr_nodes)
-        for node in clstr_nodes[1:]:
-            print(f"NODE: {node}")
-            new_graph = nx.contracted_nodes(new_graph, clstr_nodes[0], node, self_loops=False)
+        nx.draw(new_graph, with_labels=True, font_weight='bold')
+        plt.show()
+        for edge in trm_dep_con.edges:
+            if not trm_con_con.has_edge(*edge):
+                print(f"Removing dep Edge: {edge}")
+                new_graph.remove_edge(*edge)
         nx.draw(new_graph, with_labels=True, font_weight='bold')
         plt.show()
 
-    nx.draw(new_graph, with_labels=True, font_weight='bold')
-    plt.show()
+        for sub_dep in nx.weakly_connected_components(trm_con_graph):
+            print(sub_dep)
+            clstr_nodes = [n for n in sub_dep if new_graph.has_node(n)]
+            print(clstr_nodes)
+
+            cluster_node = ";".join(clstr_nodes)
+            new_graph.add_node(cluster_node)
+            for node in clstr_nodes:
+                print(f"NODE: {node}")
+                new_graph = nx.contracted_nodes(new_graph, cluster_node, node, self_loops=False)
+            nx.draw(new_graph, with_labels=True, font_weight='bold')
+            plt.show()
+
+        nx.draw(new_graph, with_labels=True, font_weight='bold')
+        plt.show()
+
+    return new_graph
 
 
 def topo_sort_ass(ass, stage=0, step=0):
@@ -92,7 +104,7 @@ def topo_sort_ass(ass, stage=0, step=0):
                 print(f"\t>>> {subG} {stage}:{step}")
             else:
                 print(f"Cluster with {len(subG)} Connections")
-                for sub_dep in trim_connection_graph(subG):
+                for sub_dep in nx.weakly_connected_components(trim_connection_graph(subG)):
                     nx.draw(sub_dep, with_labels=True, font_weight='bold')
                     plt.show()
 
@@ -106,4 +118,7 @@ def topo_sort_ass(ass, stage=0, step=0):
         step += 1
 
 
-collapse_nodes(dep)
+final_con = collapse_nodes(dep)
+
+nx.draw(final_con, with_labels=True, font_weight='bold')
+plt.show()
