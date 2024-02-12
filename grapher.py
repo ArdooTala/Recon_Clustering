@@ -22,12 +22,12 @@ def get_con_dep_graph_from_dep(dep_graph):
     return con_dep
 
 
-def trim_connection_graph(sub_graph):
+def trim_connection_graph(nodes):
     elems = set()
-    for no in sub_graph.nodes:
+    for no in nodes:
         el = list(con.predecessors(no))
         elems.update(el)
-    sub_ass = con.subgraph(list(elems) + list(sub_graph.nodes))
+    sub_ass = con.subgraph(list(elems) + list(nodes))
 
     nx.draw(sub_ass, with_labels=True, font_weight='bold')
     plt.show()
@@ -38,6 +38,49 @@ def trim_connection_graph(sub_graph):
     for part in sub_ass_parts:
         sd = dep.subgraph(part)
         yield sd
+
+
+def collapse_nodes(ass):
+    con_dep = get_con_dep_graph_from_dep(ass)
+    nx.draw(con_dep, with_labels=True, font_weight='bold')
+    plt.show()
+
+    if nx.is_directed_acyclic_graph(con_dep):
+        return con_dep
+
+    scc = list(max(nx.strongly_connected_components(con_dep), key=len))
+    print(scc)
+
+    subG = ass.subgraph(scc)
+    nx.draw(subG, with_labels=True, font_weight='bold')
+    plt.show()
+
+    return
+
+    cond_ass_cp = cond_ass.copy()
+    for n in cond_ass_cp.nodes:
+        subG = ass.subgraph(cond_ass_cp.nodes[n]['members'])
+
+        print(f"Cluster with {subG.order()} Connections")
+        for sub_dep in trim_connection_graph(subG):
+            nx.draw(sub_dep, with_labels=True, font_weight='bold')
+            plt.show()
+
+            print(f"Sorting SubDep {sub_dep}")
+
+            topo_sort_ass(sub_dep, stage + 1, step)
+
+        cond_ass.remove_node(n)
+
+    new_graph = con_dep.copy()
+    for node in scc[1:]:
+        print(node)
+        new_graph = nx.contracted_nodes(new_graph, scc[0], node, self_loops=False)
+        nx.draw(new_graph, with_labels=True, font_weight='bold')
+        plt.show()
+
+    nx.draw(new_graph, with_labels=True, font_weight='bold')
+    plt.show()
 
 
 def topo_sort_ass(ass, stage=0, step=0):
@@ -56,11 +99,11 @@ def topo_sort_ass(ass, stage=0, step=0):
             if cond_ass_cp.out_degree(n) > 0:
                 continue
 
-            subG = ass.subgraph(cond_ass_cp.nodes[n]['members'])
-            if subG.order() == 1:
-                print(f"\t>>> {subG.nodes} {stage}:{step}")
+            subG = cond_ass_cp.nodes[n]['members']
+            if len(subG) == 1:
+                print(f"\t>>> {subG} {stage}:{step}")
             else:
-                print(f"Cluster with {subG.order()} Connections")
+                print(f"Cluster with {len(subG)} Connections")
                 for sub_dep in trim_connection_graph(subG):
                     nx.draw(sub_dep, with_labels=True, font_weight='bold')
                     plt.show()
@@ -76,3 +119,4 @@ def topo_sort_ass(ass, stage=0, step=0):
 
 
 topo_sort_ass(dep)
+# collapse_nodes(dep)
