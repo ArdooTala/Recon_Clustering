@@ -122,7 +122,18 @@ def process_graph(ass_dep, ass_con):
             export_graph(new_ass_con, "ass_con")
             export_graph(new_ass_dep, "ass_dep")
 
+    print("#"*1000)
+    replace_cluster_with_conns(new_con_dep)
+    exit()
+
     return new_con_dep
+
+
+def replace_cluster_with_conns(graph):
+    all_clusters = [n for n, t in graph.nodes.data("TYPE") if t == "CLUS"]
+    print(all_clusters)
+
+    # Replace clusters with connections and internal clusters
 
 
 def export_graph(g, name):
