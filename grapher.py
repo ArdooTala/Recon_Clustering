@@ -50,7 +50,6 @@ def collapse_nodes(ass_dep, ass):
     new_graph = con_dep.copy()
     while not nx.is_directed_acyclic_graph(new_graph):
         condensed = nx.condensation(new_graph)
-        # for scc in list(nx.strongly_connected_components(new_graph)):
         for scc_node in list(nx.topological_sort(condensed)):
             scc = condensed.nodes[scc_node]['members']
             print(f"SCC >> {scc}")
@@ -91,57 +90,19 @@ def collapse_nodes(ass_dep, ass):
                 for node in cluster:
                     print(f"Contracting NODE {ass_cluster_node} and {node}")
                     new_ass = nx.contracted_nodes(new_ass, ass_cluster_node, node, self_loops=False)
-                # new_ass.nodes[ass_cluster_node]['PART'] = True
                 viz_g(new_ass)
-
 
                 ass_cluster_node = f"AC[{';'.join([str(c) for c in cluster])}]"
                 new_ass_dep.add_node(ass_cluster_node, PART=True)
                 for node in cluster:
                     print(f"Contracting NODE {ass_cluster_node} and {node}")
                     new_ass_dep = nx.contracted_nodes(new_ass_dep, ass_cluster_node, node, self_loops=False)
-                # new_ass.nodes[ass_cluster_node]['PART'] = True
                 viz_g(new_ass_dep)
 
             viz_g(new_graph)
             viz_g(new_ass)
 
     return new_graph
-
-
-def topo_sort_ass(ass, stage=0, step=0):
-    con_dep = get_con_dep_graph_from_dep(ass)
-    nx.draw(con_dep, with_labels=True, font_weight='bold')
-    plt.show()
-
-    cond_ass = nx.condensation(con_dep)
-    nx.draw(cond_ass, with_labels=True, font_weight='bold')
-    plt.show()
-
-    while cond_ass.order() > 0:
-        print(f"STEP #{step}")
-        cond_ass_cp = cond_ass.copy()
-        for n in cond_ass_cp.nodes:
-            if cond_ass_cp.out_degree(n) > 0:
-                continue
-
-            subG = cond_ass_cp.nodes[n]['members']
-            if len(subG) == 1:
-                print(f"\t>>> {subG} {stage}:{step}")
-            else:
-                print(f"Cluster with {len(subG)} Connections")
-                for sub_dep in nx.weakly_connected_components(get_dep_graph_from_connections(subG)):
-                    nx.draw(sub_dep, with_labels=True, font_weight='bold')
-                    plt.show()
-
-                    print(f"Sorting SubDep {sub_dep}")
-
-                    topo_sort_ass(sub_dep, stage + 1, step)
-
-            cond_ass.remove_node(n)
-
-        print(f"{cond_ass} remaining")
-        step += 1
 
 
 final_con = collapse_nodes(dep, con)
