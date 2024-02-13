@@ -37,14 +37,14 @@ def get_dep_graph_from_connections(graph, nodes):
     return sub_ass
 
 
-def collapse_nodes(graph, nodes):
+def collapse_nodes(graph, nodes, cluster_node):
     # graph = graph.copy()
     cluster_node = f"C[{';'.join([str(c) for c in nodes])}]"
     graph.add_node(cluster_node, PART=True)
     for node in nodes:
         print(f"Contracting NODE {cluster_node} and {node}")
         graph = nx.contracted_nodes(graph, cluster_node, node, self_loops=False)
-    viz_g(graph)
+    # viz_g(graph)
 
     return graph
 
@@ -75,28 +75,31 @@ def process_graph(ass_dep, ass_con):
             print(f"Main Clusters: {clusters}")
             seg_ass_dep = nx.union_all([new_ass_dep.subgraph(cluster) for cluster in clusters])
             seg_con_dep = get_con_dep_graph_from_dep(seg_ass_dep)
-            viz_g(seg_con_dep)
+            # viz_g(seg_con_dep)
 
             # Remove edges from ConnectionsDependencyGraph
-            viz_g(new_con_dep)
+            # viz_g(new_con_dep)
             for edge in trm_con_dep.edges:
                 if not seg_con_dep.has_edge(*edge):
                     print(f"Removing dep Edge: {edge}")
                     new_con_dep.remove_edge(*edge)
-            viz_g(new_con_dep)
+            # viz_g(new_con_dep)
 
             for cluster in clusters:
+                cluster_name = f"CL_{cluster_num}"
+                cluster_num += 1
+
                 clstr_nodes = [n for n in cluster if new_con_dep.has_node(n)]
-                print(f"{cluster} > CON Nodes > {clstr_nodes}")
+                print(f"{cluster_name} > {cluster} > CON Nodes > {clstr_nodes}")
 
                 # Update ConnectionsDependencyGraph
-                new_con_dep = collapse_nodes(new_con_dep, clstr_nodes)
+                new_con_dep = collapse_nodes(new_con_dep, clstr_nodes, cluster_name)
 
                 # Update AssemblyConnectionsGraph
-                new_ass_con = collapse_nodes(new_ass_con, cluster)
+                new_ass_con = collapse_nodes(new_ass_con, cluster, cluster_name)
 
                 # Update AssemblyDependencyGraph
-                new_ass_dep = collapse_nodes(new_ass_dep, cluster)
+                new_ass_dep = collapse_nodes(new_ass_dep, cluster, cluster_name)
 
             export_graph(new_con_dep, "con_dep")
             export_graph(new_ass_con, "ass_con")
@@ -114,3 +117,26 @@ export_graph(dep, "dep")
 final_con = process_graph(dep, con)
 print("FIN")
 export_graph(final_con, "res")
+
+layer = 0
+layers_dict = {}
+clusters = []
+while final_con.order() > 0:
+    print(final_con)
+    # find sources
+    sources = [x for x in final_con.nodes() if final_con.in_degree(x) == 0]
+    print(sources)
+    layers_dict[layer] = sources
+    clusters += [src[2:-1] for src in sources if src[0] == 'C']
+    final_con.remove_nodes_from(sources)
+
+    layer += 1
+
+print(clusters)
+print(layers_dict)
+with open("exports/export-clusters.csv", 'w') as file:
+    file.write('\n'.join(clusters))
+
+with open("exports/export-layers.csv", 'w') as file:
+    for lay in layers_dict.items():
+        file.write(f"LAYER{lay[0]},{','.join(lay[1])}\n")
