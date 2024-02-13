@@ -7,7 +7,7 @@ subax1 = plt.subplot()
 
 
 def viz_g(g):
-    nx.draw(dep, with_labels=True, font_weight='bold')
+    nx.draw_circular(g, with_labels=True, font_weight='bold')
     plt.show()
 
 
@@ -49,7 +49,11 @@ def collapse_nodes(ass_dep, ass):
     new_ass_dep = ass_dep.copy()
     new_graph = con_dep.copy()
     while not nx.is_directed_acyclic_graph(new_graph):
-        for scc in list((nx.strongly_connected_components(new_graph))):
+        condensed = nx.condensation(new_graph)
+        # for scc in list(nx.strongly_connected_components(new_graph)):
+        for scc_node in list(nx.topological_sort(condensed)):
+            scc = condensed.nodes[scc_node]['members']
+            print(f"SCC >> {scc}")
             if len(scc) < 2:
                 continue
             print(f"Found a SCC -> {scc}")
@@ -84,19 +88,19 @@ def collapse_nodes(ass_dep, ass):
 
                 ass_cluster_node = f"AC[{';'.join([str(c) for c in cluster])}]"
                 new_ass.add_node(ass_cluster_node, PART=True)
-                print("KIR")
-                print(new_ass.nodes[ass_cluster_node])
                 for node in cluster:
                     print(f"Contracting NODE {ass_cluster_node} and {node}")
                     new_ass = nx.contracted_nodes(new_ass, ass_cluster_node, node, self_loops=False)
+                # new_ass.nodes[ass_cluster_node]['PART'] = True
                 viz_g(new_ass)
-                print(new_ass.nodes[ass_cluster_node])
+
 
                 ass_cluster_node = f"AC[{';'.join([str(c) for c in cluster])}]"
-                new_ass.add_node(ass_cluster_node, PART=True)
+                new_ass_dep.add_node(ass_cluster_node, PART=True)
                 for node in cluster:
                     print(f"Contracting NODE {ass_cluster_node} and {node}")
                     new_ass_dep = nx.contracted_nodes(new_ass_dep, ass_cluster_node, node, self_loops=False)
+                # new_ass.nodes[ass_cluster_node]['PART'] = True
                 viz_g(new_ass_dep)
 
             viz_g(new_graph)
@@ -141,5 +145,5 @@ def topo_sort_ass(ass, stage=0, step=0):
 
 
 final_con = collapse_nodes(dep, con)
-
+print("FIN")
 viz_g(final_con)
