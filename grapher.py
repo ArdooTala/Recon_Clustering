@@ -38,13 +38,13 @@ def get_dep_graph_from_connections(graph, nodes):
 
 
 def collapse_nodes(graph, nodes, cluster_node, save_dict=None):
-    subg = graph.subgraph(nodes)
+    subg = graph.subgraph(nodes).copy()
     cluster_level_data = subg.nodes.data('level', default=-1)
     cluster_level = max([lvl for _, lvl in cluster_level_data]) + 1
     print(f"\t >> {cluster_node} >> CLUSTER LEVEL IS > {cluster_level}")
 
     # cluster_node = f"C[{';'.join([str(c) for c in nodes])}]"
-    graph.add_node(cluster_node, TYPE="CLUS", level=cluster_level)
+    graph.add_node(cluster_node, TYPE="CLUS", level=cluster_level, sub_graph=subg)
     for node in nodes:
         # print(f"Contracting NODE {cluster_node} and {node}")
         graph = nx.contracted_nodes(graph, cluster_node, node, self_loops=False)
@@ -84,7 +84,7 @@ def process_graph(ass_dep, ass_con):
             print(f"Found a SCC -> {scc}")
 
             trm_con_dep = new_con_dep.subgraph(scc).copy()
-            viz_g(trm_con_dep)
+            # viz_g(trm_con_dep)
 
             trm_ass_con = get_dep_graph_from_connections(new_ass_con, scc)
             clusters = list(nx.weakly_connected_components(trm_ass_con))
@@ -134,6 +134,17 @@ def replace_cluster_with_conns(graph):
     print(all_clusters)
 
     # Replace clusters with connections and internal clusters
+    for cluster in all_clusters:
+        print('-' * 10)
+        # print(graph.nodes[cluster]["sub_graph"])
+        print(graph.nodes[cluster])
+        print(graph.nodes[cluster]["contraction"])
+
+        # All ancestors
+
+        # All predecessors
+
+        # Add each child with these connections
 
 
 def export_graph(g, name):
