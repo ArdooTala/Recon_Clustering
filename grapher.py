@@ -36,25 +36,30 @@ def get_dep_graph_from_connections(graph, nodes):
     return sub_ass
 
 
-def collapse_nodes(ass):
-    con_dep = get_con_dep_graph_from_dep(ass)
+def collapse_nodes(ass_dep, ass):
+    con_dep = get_con_dep_graph_from_dep(ass_dep)
     nx.draw(con_dep, with_labels=True, font_weight='bold')
     plt.show()
 
+    new_ass = ass_dep.copy()
     new_graph = con_dep.copy()
     while not nx.is_directed_acyclic_graph(new_graph):
         scc = list(max(nx.strongly_connected_components(new_graph), key=len))
         print(f"Found a SCC -> {scc}")
 
-        trm_dep_graph = get_dep_graph_from_connections(ass, scc)
-        trm_dep_con = get_con_dep_graph_from_dep(trm_dep_graph)
+        # trm_dep_graph = get_dep_graph_from_connections(ass, scc)
+        # trm_dep_con = get_con_dep_graph_from_dep(trm_dep_graph)
+        # nx.draw(trm_dep_con, with_labels=True, font_weight='bold')
+        # plt.show()
+
+        trm_dep_con = con_dep.subgraph(scc)
         nx.draw(trm_dep_con, with_labels=True, font_weight='bold')
         plt.show()
 
-        trm_con_graph = get_dep_graph_from_connections(con, scc)
+        trm_con_graph = get_dep_graph_from_connections(ass, scc)
         clusters = list(nx.weakly_connected_components(trm_con_graph))
         print(f"Main Clusters: {clusters}")
-        segmented_dep_graph = nx.union_all([ass.subgraph(cluster) for cluster in clusters])
+        segmented_dep_graph = nx.union_all([new_ass.subgraph(cluster) for cluster in clusters])
         trm_con_con = get_con_dep_graph_from_dep(segmented_dep_graph)
         nx.draw(trm_con_con, with_labels=True, font_weight='bold')
         plt.show()
@@ -68,15 +73,14 @@ def collapse_nodes(ass):
         nx.draw(new_graph, with_labels=True, font_weight='bold')
         plt.show()
 
-        for sub_dep in nx.weakly_connected_components(trm_con_graph):
-            print(sub_dep)
-            clstr_nodes = [n for n in sub_dep if new_graph.has_node(n)]
-            print(clstr_nodes)
+        for cluster in clusters:
+            clstr_nodes = [n for n in cluster if new_graph.has_node(n)]
+            print(f"{cluster} > CON Nodes > {clstr_nodes}")
 
-            cluster_node = ";".join(clstr_nodes)
+            cluster_node = f"C[{';'.join(clstr_nodes)}]"
             new_graph.add_node(cluster_node)
             for node in clstr_nodes:
-                print(f"NODE: {node}")
+                print(f"Contracting NODE {cluster_node} and {node}")
                 new_graph = nx.contracted_nodes(new_graph, cluster_node, node, self_loops=False)
             nx.draw(new_graph, with_labels=True, font_weight='bold')
             plt.show()
@@ -122,7 +126,7 @@ def topo_sort_ass(ass, stage=0, step=0):
         step += 1
 
 
-final_con = collapse_nodes(dep)
+final_con = collapse_nodes(dep, con)
 
 nx.draw(final_con, with_labels=True, font_weight='bold')
 plt.show()
