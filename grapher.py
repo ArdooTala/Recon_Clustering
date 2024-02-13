@@ -161,7 +161,6 @@ export_graph(final_con, "res")
 
 layer = 0
 layers_dict = {}
-clusters = []
 while final_con.order() > 0:
     print(final_con)
     # find sources
