@@ -1,7 +1,8 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import pygraphviz as pgv
-from example_graph import con, dep
+# from example_graph import con, dep
+from main import con, dep
 
 
 def viz_g(g):
@@ -55,6 +56,8 @@ def process_graph(ass_dep, ass_con):
     new_ass_con = ass_con.copy()
     new_ass_dep = ass_dep.copy()
     new_con_dep = con_dep.copy()
+
+    cluster_num = 0
     while not nx.is_directed_acyclic_graph(new_con_dep):
         condensed = nx.condensation(new_con_dep)
         for scc_node in list(nx.topological_sort(condensed)):
