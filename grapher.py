@@ -31,12 +31,24 @@ def get_dep_graph_from_connections(graph, nodes):
     for no in nodes:
         el = list(graph.predecessors(no))
         elems.update(el)
-    sub_ass = graph.subgraph(list(elems) + list(nodes))
+    sub_ass = graph.subgraph(list(elems) + list(nodes)).copy()
 
     return sub_ass
 
 
-def collapse_nodes(ass_dep, ass_con):
+def collapse_nodes(graph, nodes):
+    # graph = graph.copy()
+    cluster_node = f"C[{';'.join([str(c) for c in nodes])}]"
+    graph.add_node(cluster_node, PART=True)
+    for node in nodes:
+        print(f"Contracting NODE {cluster_node} and {node}")
+        graph = nx.contracted_nodes(graph, cluster_node, node, self_loops=False)
+    viz_g(graph)
+
+    return graph
+
+
+def process_graph(ass_dep, ass_con):
     con_dep = get_con_dep_graph_from_dep(ass_dep)
     viz_g(con_dep)
 
@@ -52,19 +64,20 @@ def collapse_nodes(ass_dep, ass_con):
                 continue
             print(f"Found a SCC -> {scc}")
 
-            trm_dep_con = con_dep.subgraph(scc)
-            viz_g(trm_dep_con)
+            trm_con_dep = new_con_dep.subgraph(scc).copy()
+            viz_g(trm_con_dep)
 
-            trm_con_graph = get_dep_graph_from_connections(new_ass_con, scc)
-            clusters = list(nx.weakly_connected_components(trm_con_graph))
+            trm_ass_con = get_dep_graph_from_connections(new_ass_con, scc)
+            clusters = list(nx.weakly_connected_components(trm_ass_con))
             print(f"Main Clusters: {clusters}")
-            segmented_dep_graph = nx.union_all([new_ass_dep.subgraph(cluster) for cluster in clusters])
-            trm_con_con = get_con_dep_graph_from_dep(segmented_dep_graph)
-            viz_g(trm_con_con)
+            seg_ass_dep = nx.union_all([new_ass_dep.subgraph(cluster) for cluster in clusters])
+            seg_con_dep = get_con_dep_graph_from_dep(seg_ass_dep)
+            viz_g(seg_con_dep)
 
+            # Remove edges from ConnectionsDependencyGraph
             viz_g(new_con_dep)
-            for edge in trm_dep_con.edges:
-                if not trm_con_con.has_edge(*edge):
+            for edge in trm_con_dep.edges:
+                if not seg_con_dep.has_edge(*edge):
                     print(f"Removing dep Edge: {edge}")
                     new_con_dep.remove_edge(*edge)
             viz_g(new_con_dep)
@@ -73,26 +86,14 @@ def collapse_nodes(ass_dep, ass_con):
                 clstr_nodes = [n for n in cluster if new_con_dep.has_node(n)]
                 print(f"{cluster} > CON Nodes > {clstr_nodes}")
 
-                cluster_node = f"C[{';'.join(clstr_nodes)}]"
-                new_con_dep.add_node(cluster_node, PART=True)
-                for node in clstr_nodes:
-                    print(f"Contracting NODE {cluster_node} and {node}")
-                    new_con_dep = nx.contracted_nodes(new_con_dep, cluster_node, node, self_loops=False)
-                viz_g(new_con_dep)
+                # Update ConnectionsDependencyGraph
+                new_con_dep = collapse_nodes(new_con_dep, clstr_nodes)
 
-                ass_cluster_node = f"AC[{';'.join([str(c) for c in cluster])}]"
-                new_ass_con.add_node(ass_cluster_node, PART=True)
-                for node in cluster:
-                    print(f"Contracting NODE {ass_cluster_node} and {node}")
-                    new_ass_con = nx.contracted_nodes(new_ass_con, ass_cluster_node, node, self_loops=False)
-                viz_g(new_ass_con)
+                # Update AssemblyConnectionsGraph
+                new_ass_con = collapse_nodes(new_ass_con, cluster)
 
-                ass_cluster_node = f"AC[{';'.join([str(c) for c in cluster])}]"
-                new_ass_dep.add_node(ass_cluster_node, PART=True)
-                for node in cluster:
-                    print(f"Contracting NODE {ass_cluster_node} and {node}")
-                    new_ass_dep = nx.contracted_nodes(new_ass_dep, ass_cluster_node, node, self_loops=False)
-                viz_g(new_ass_dep)
+                # Update AssemblyDependencyGraph
+                new_ass_dep = collapse_nodes(new_ass_dep, cluster)
 
             export_graph(new_con_dep, "con_dep")
             export_graph(new_ass_con, "ass_con")
@@ -107,6 +108,6 @@ def export_graph(g, name):
 subax1 = plt.subplot()
 export_graph(dep, "dep")
 
-final_con = collapse_nodes(dep, con)
+final_con = process_graph(dep, con)
 print("FIN")
 export_graph(final_con, "res")
