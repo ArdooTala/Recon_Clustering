@@ -41,25 +41,21 @@ def collapse_nodes(ass_dep, ass):
     nx.draw(con_dep, with_labels=True, font_weight='bold')
     plt.show()
 
-    new_ass = ass_dep.copy()
+    new_ass = ass.copy()
+    new_ass_dep = ass_dep.copy()
     new_graph = con_dep.copy()
     while not nx.is_directed_acyclic_graph(new_graph):
         scc = list(max(nx.strongly_connected_components(new_graph), key=len))
         print(f"Found a SCC -> {scc}")
 
-        # trm_dep_graph = get_dep_graph_from_connections(ass, scc)
-        # trm_dep_con = get_con_dep_graph_from_dep(trm_dep_graph)
-        # nx.draw(trm_dep_con, with_labels=True, font_weight='bold')
-        # plt.show()
-
         trm_dep_con = con_dep.subgraph(scc)
         nx.draw(trm_dep_con, with_labels=True, font_weight='bold')
         plt.show()
 
-        trm_con_graph = get_dep_graph_from_connections(ass, scc)
+        trm_con_graph = get_dep_graph_from_connections(new_ass, scc)
         clusters = list(nx.weakly_connected_components(trm_con_graph))
         print(f"Main Clusters: {clusters}")
-        segmented_dep_graph = nx.union_all([new_ass.subgraph(cluster) for cluster in clusters])
+        segmented_dep_graph = nx.union_all([new_ass_dep.subgraph(cluster) for cluster in clusters])
         trm_con_con = get_con_dep_graph_from_dep(segmented_dep_graph)
         nx.draw(trm_con_con, with_labels=True, font_weight='bold')
         plt.show()
@@ -85,7 +81,25 @@ def collapse_nodes(ass_dep, ass):
             nx.draw(new_graph, with_labels=True, font_weight='bold')
             plt.show()
 
+            ass_cluster_node = f"AC[{';'.join([str(c) for c in cluster])}]"
+            new_ass.add_node(ass_cluster_node)
+            for node in cluster:
+                print(f"Contracting NODE {ass_cluster_node} and {node}")
+                new_ass = nx.contracted_nodes(new_ass, ass_cluster_node, node, self_loops=False)
+            nx.draw(new_ass, with_labels=True, font_weight='bold')
+            plt.show()
+
+            ass_cluster_node = f"AC[{';'.join([str(c) for c in cluster])}]"
+            new_ass.add_node(ass_cluster_node)
+            for node in cluster:
+                print(f"Contracting NODE {ass_cluster_node} and {node}")
+                new_ass_dep = nx.contracted_nodes(new_ass_dep, ass_cluster_node, node, self_loops=False)
+            nx.draw(new_ass, with_labels=True, font_weight='bold')
+            plt.show()
+
         nx.draw(new_graph, with_labels=True, font_weight='bold')
+        plt.show()
+        nx.draw(new_ass, with_labels=True, font_weight='bold')
         plt.show()
 
     return new_graph
