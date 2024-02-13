@@ -12,12 +12,12 @@ def viz_g(g):
 
 def get_con_dep_graph_from_dep(dep_graph):
     con_dep = dep_graph.copy()
-    print("#" * 100)
+    # print("#" * 100)
     for n, t in dep_graph.nodes.data("TYPE"):
         if t != "PART":
-            print(f"{n} is NOT Part: {dep_graph.nodes[n]}")
+            # print(f"{n} is NOT Part: {dep_graph.nodes[n]}")
             continue
-        print(f"{n} is Part")
+        # print(f"{n} is Part")
         for s in con_dep.successors(n):
             for p in list(con_dep.predecessors(n)):
                 con_dep.add_edge(p, s)
@@ -37,16 +37,16 @@ def get_dep_graph_from_connections(graph, nodes):
     return sub_ass
 
 
-def collapse_nodes(graph, nodes, cluster_node, save_dict=None, node_type=""):
+def collapse_nodes(graph, nodes, cluster_node, save_dict=None, node_type="-"):
     subg = graph.subgraph(nodes)
     cluster_level_data = subg.nodes.data('level', default=-1)
     cluster_level = max([lvl for _, lvl in cluster_level_data]) + 1
-    print(f"\t >> CLUSTER LEVEL IS > {cluster_level}")
+    print(f"\t >> {cluster_node} >> CLUSTER LEVEL IS > {cluster_level}")
 
     # cluster_node = f"C[{';'.join([str(c) for c in nodes])}]"
     graph.add_node(cluster_node, TYPE="PART", level=cluster_level)
     for node in nodes:
-        print(f"Contracting NODE {cluster_node} and {node}")
+        # print(f"Contracting NODE {cluster_node} and {node}")
         graph = nx.contracted_nodes(graph, cluster_node, node, self_loops=False)
     # viz_g(graph)
 
@@ -55,7 +55,7 @@ def collapse_nodes(graph, nodes, cluster_node, save_dict=None, node_type=""):
         clst_list.append(
             (
                 cluster_node,
-                [str(c) for c in nodes if subg.nodes[c].get("TYPE", None) == node_type]
+                [str(c) for c in subg.nodes]
             )
         )
         save_dict[cluster_level] = clst_list
@@ -76,7 +76,7 @@ def process_graph(ass_dep, ass_con):
         condensed = nx.condensation(new_con_dep)
         for scc_node in list(nx.topological_sort(condensed)):
             scc = condensed.nodes[scc_node]['members']
-            print(f"SCC >> {scc}")
+            # print(f"SCC >> {scc}")
             if len(scc) < 2:
                 continue
             print(f"Found a SCC -> {scc}")
@@ -95,13 +95,12 @@ def process_graph(ass_dep, ass_con):
             # viz_g(new_con_dep)
             for edge in trm_con_dep.edges:
                 if not seg_con_dep.has_edge(*edge):
-                    print(f"Removing dep Edge: {edge}")
+                    # print(f"Removing dep Edge: {edge}")
                     new_con_dep.remove_edge(*edge)
             # viz_g(new_con_dep)
 
             for cluster in clusters:
                 cluster_name = f"CL_{cluster_num:02}"
-                cluster_num += 1
 
                 clstr_nodes = [n for n in cluster if new_con_dep.has_node(n)]
                 print(f"{cluster_name} > {cluster} > CON Nodes > {clstr_nodes}")
@@ -118,6 +117,8 @@ def process_graph(ass_dep, ass_con):
 
                 # Update AssemblyDependencyGraph
                 new_ass_dep = collapse_nodes(new_ass_dep, cluster, cluster_name)
+
+                cluster_num += 1
 
             export_graph(new_con_dep, "con_dep")
             export_graph(new_ass_con, "ass_con")
@@ -166,6 +167,6 @@ with open("exports/export-clusters-parts.csv", 'w') as file:
             file.write(f"LAYER{lay[0]},{clst[0]},{';'.join(clst[1])}\n")
 
 with open("exports/export-clusters-conns.csv", 'w') as file:
-    for lay in clusters_dict_parts.items():
+    for lay in clusters_dict_conns.items():
         for clst in lay[1]:
             file.write(f"LAYER{lay[0]},{clst[0]},{';'.join(clst[1])}\n")
