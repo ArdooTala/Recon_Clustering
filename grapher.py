@@ -66,20 +66,23 @@ def process_graph(ass_dep, ass_con):
     new_ass_con = ass_con.copy()
     new_ass_dep = ass_dep.copy()
 
-    new_ass_con, new_ass_dep, _ = cluster_sccs(new_ass_con, new_ass_dep, 0)
+    new_con_dep = cluster_sccs(new_ass_con, new_ass_dep, 0)
 
-    return get_con_dep_graph_from_dep(new_ass_dep)
+    return new_con_dep
 
 
 def cluster_sccs(new_ass_con, new_ass_dep, cluster_num):
     new_con_dep = get_con_dep_graph_from_dep(new_ass_dep)
     if nx.is_strongly_connected(new_con_dep):
         raise Exception("Graph is one SCC")
+
     print(new_con_dep)
-    export_graph(new_con_dep, "con_dep_init")
 
     if nx.is_directed_acyclic_graph(new_con_dep):
-        return new_ass_con, new_ass_dep, cluster_num
+        export_graph(new_con_dep, "con_dep")
+        export_graph(new_ass_con, "ass_con")
+        export_graph(new_ass_dep, "ass_dep")
+        return new_con_dep
 
     condensed = nx.condensation(new_con_dep)
     for scc_node in list(nx.topological_sort(condensed)):
@@ -88,20 +91,20 @@ def cluster_sccs(new_ass_con, new_ass_dep, cluster_num):
             continue
         print(f"Found a SCC -> {scc}")
 
-        trm_con_dep = new_con_dep.subgraph(scc).copy()
+        # trm_con_dep = new_con_dep.subgraph(scc).copy()
         trm_ass_con = get_dep_graph_from_connections(new_ass_con, scc)
         trm_ass_dep = new_ass_dep.subgraph(trm_ass_con.nodes).copy()
-        viz_g(trm_ass_dep)
+        # viz_g(trm_ass_dep)
         clusters = list(nx.weakly_connected_components(trm_ass_con))
         print(f"Main Clusters: {clusters}")
         seg_ass_dep = nx.union_all([new_ass_dep.subgraph(cluster).copy() for cluster in clusters])
-        viz_g(seg_ass_dep)
-        seg_con_dep = get_con_dep_graph_from_dep(seg_ass_dep)
+        # viz_g(seg_ass_dep)
+        # seg_con_dep = get_con_dep_graph_from_dep(seg_ass_dep)
 
-        # Remove edges from ConnectionsDependencyGraph
-        for edge in trm_con_dep.edges:
-            if not seg_con_dep.has_edge(*edge):
-                new_con_dep.remove_edge(*edge)
+        # # Remove edges from ConnectionsDependencyGraph
+        # for edge in trm_con_dep.edges:
+        #     if not seg_con_dep.has_edge(*edge):
+        #         new_con_dep.remove_edge(*edge)
 
         # Remove edges from ConnectionsDependencyGraph
         for edge in trm_ass_dep.edges:
@@ -117,15 +120,12 @@ def cluster_sccs(new_ass_con, new_ass_dep, cluster_num):
             print(f"{cluster_name} > {cluster} > CON Nodes > {clstr_nodes}")
 
             # Update Graphs
-            new_con_dep = collapse_nodes(new_con_dep, clstr_nodes, cluster_name)
+            # new_con_dep = collapse_nodes(new_con_dep, clstr_nodes, cluster_name)
             new_ass_con = collapse_nodes(new_ass_con, cluster, cluster_name, save_dict=clusters_dict)
             new_ass_dep = collapse_nodes(new_ass_dep, cluster, cluster_name)
 
             cluster_num += 1
 
-    export_graph(new_con_dep, "con_dep")
-    export_graph(new_ass_con, "ass_con")
-    export_graph(new_ass_dep, "ass_dep")
     print(f"\n\nIS DAG: {nx.is_directed_acyclic_graph(new_con_dep)}\n\n")
     return cluster_sccs(new_ass_con, new_ass_dep, cluster_num)
 
@@ -154,7 +154,8 @@ def replace_cluster_with_conns(graph: nx.DiGraph):
             for pred in preds:
                 graph.add_edge(pred, succ)
 
-        graph.add_nodes_from(graph.nodes[cluster]["contraction"].items())
+        graph.add_nodes_from(
+            [(n, d) for n, d in graph.nodes[cluster]["contraction"].items() if d["TYPE"] != "PART"])
 
         sub_clusters = [n for n, d in graph.nodes[cluster]["contraction"].items() if d["TYPE"] == "CLUS"]
         children_con = [n for n, d in graph.nodes[cluster]["contraction"].items() if d["TYPE"] == "CONN"]
@@ -162,20 +163,17 @@ def replace_cluster_with_conns(graph: nx.DiGraph):
         print(f"CHILDREN CON > {children_con}")
 
         for sub_cluster in sub_clusters:
+            print(" >> ", sub_cluster)
             for child_con in children_con:
                 graph.add_edge(sub_cluster, child_con)
-
             for pred in preds:
                 graph.add_edge(pred, sub_cluster)
+            for succ in succs:
+                graph.add_edge(sub_cluster, succ)
+            print(list(graph.successors(sub_cluster)))
 
-        for child in graph.nodes[cluster]["contraction"]:
+        for child in children_con:
             print(" >> ", child)
-            print(graph.nodes[child])
-
-            # for pred in preds:
-            #     graph.add_edge(pred, child)
-            # print(list(graph.predecessors(child)))
-
             for succ in succs:
                 graph.add_edge(child, succ)
             print(list(graph.successors(child)))
@@ -201,8 +199,8 @@ export_graph(final_con, "res_clustered")
 print("#" * 1000)
 final_con = replace_cluster_with_conns(final_con)
 
-print("FIN")
 export_graph(final_con, "res_expanded")
+print("FIN")
 
 # Exports
 stage = 0
