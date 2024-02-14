@@ -15,9 +15,8 @@ def get_con_dep_graph_from_dep(dep_graph):
     # print("#" * 100)
     for n, t in dep_graph.nodes.data("TYPE"):
         if t == "CONN":
-            # print(f"{n} is NOT Part: {dep_graph.nodes[n]}")
             continue
-        # print(f"{n} is Part")
+
         for s in con_dep.successors(n):
             for p in list(con_dep.predecessors(n)):
                 con_dep.add_edge(p, s)
@@ -32,9 +31,7 @@ def get_dep_graph_from_connections(graph, nodes):
     for no in nodes:
         el = list(graph.predecessors(no))
         elems.update(el)
-    sub_ass = graph.subgraph(list(elems) + list(nodes)).copy()
-
-    return sub_ass
+    return graph.subgraph(list(elems) + list(nodes)).copy()
 
 
 def collapse_nodes(graph, nodes, cluster_node, save_dict=None):
@@ -168,6 +165,8 @@ export_graph(dep, "dep")
 
 clusters_dict = {}
 final_con = process_graph(dep, con)
+print(clusters_dict)
+
 export_graph(final_con, "res_clustered")
 
 print("#" * 1000)
@@ -177,24 +176,44 @@ print("FIN")
 export_graph(final_con, "res_expanded")
 
 # Exports
-layer = 0
+stage = 0
 layers_dict = {}
+all_parts = []
 while final_con.order() > 0:
     print(final_con)
-    # find sources
+
     sources = [x for x in final_con.nodes() if final_con.in_degree(x) == 0]
     print(sources)
-    layers_dict[layer] = sources
+    con_graph = get_dep_graph_from_connections(con, sources)
+
+    # Export
+    layers_dict[stage] = {}
+    component_count = 0
+    for component in nx.weakly_connected_components(con_graph):
+        print(component)
+        layers_dict[stage][component_count] = {}
+        comp_conns = [n for n in component if con_graph.nodes[n]["TYPE"] == "CONN"]
+        comp_parts = [n for n in component if con_graph.nodes[n]["TYPE"] == "PART"]
+        comp_added = [p for p in comp_parts if p not in all_parts]
+        all_parts += comp_added
+
+        layers_dict[stage][component_count]["conns"] = comp_conns
+        layers_dict[stage][component_count]["parts"] = comp_parts
+        layers_dict[stage][component_count]["added"] = comp_added
+
+        component_count += 1
+    # layers_dict[stage] = sources
     final_con.remove_nodes_from(sources)
+    stage += 1
 
-    layer += 1
-
-print(clusters_dict)
 print(layers_dict)
 
-with open("exports/export-layers.csv", 'w') as file:
-    for lay in layers_dict.items():
-        file.write(f"LAYER{lay[0]},{';'.join(lay[1])}\n")
+with open("exports/export-components.csv", 'w') as file:
+    for stg in layers_dict.keys():
+        for cmp in layers_dict[stg]:
+            comp = layers_dict[stg][cmp]
+            file.write(
+                f"{stg:02},{cmp:02},{';'.join(comp['conns'])},{';'.join(comp['parts'])},{';'.join(comp['added'])}\n")
 
 with open("exports/export-clusters.csv", 'w') as file:
     for lay in clusters_dict.items():
