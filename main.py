@@ -7,7 +7,7 @@ with open("assemblies/ReconSlab_Top-Connectivity.csv", 'r') as file:
     print(file.readline())
     for line in file:
         connection, part1, part2, dependency = line.strip().split(',')
-        print(connection, part1, part2, dependency)
+        # print(connection, part1, part2, dependency)
 
         con.add_nodes_from([part1, part2], TYPE="PART")
         con.add_node(connection, TYPE="CONN")
@@ -18,7 +18,7 @@ with open("assemblies/ReconSlab_Top-Connectivity.csv", 'r') as file:
         ])
 
         if dependency != r'<null>':
-            print(dependency)
+            # print(dependency)
             deps.append((connection, dependency))
 
     dep = con.copy()

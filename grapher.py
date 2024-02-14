@@ -67,62 +67,58 @@ def collapse_nodes(graph, nodes, cluster_node, save_dict=None):
 
 def process_graph(ass_dep, ass_con):
     con_dep = get_con_dep_graph_from_dep(ass_dep)
-    # viz_g(con_dep)
 
     new_ass_con = ass_con.copy()
     new_ass_dep = ass_dep.copy()
     new_con_dep = con_dep.copy()
 
-    cluster_num = 0
-    while not nx.is_directed_acyclic_graph(new_con_dep):
-        condensed = nx.condensation(new_con_dep)
-        for scc_node in list(nx.topological_sort(condensed)):
-            scc = condensed.nodes[scc_node]['members']
-            # print(f"SCC >> {scc}")
-            if len(scc) < 2:
-                continue
-            print(f"Found a SCC -> {scc}")
-
-            trm_con_dep = new_con_dep.subgraph(scc).copy()
-            # viz_g(trm_con_dep)
-
-            trm_ass_con = get_dep_graph_from_connections(new_ass_con, scc)
-            clusters = list(nx.weakly_connected_components(trm_ass_con))
-            print(f"Main Clusters: {clusters}")
-            seg_ass_dep = nx.union_all([new_ass_dep.subgraph(cluster) for cluster in clusters])
-            seg_con_dep = get_con_dep_graph_from_dep(seg_ass_dep)
-            # viz_g(seg_con_dep)
-
-            # Remove edges from ConnectionsDependencyGraph
-            # viz_g(new_con_dep)
-            for edge in trm_con_dep.edges:
-                if not seg_con_dep.has_edge(*edge):
-                    # print(f"Removing dep Edge: {edge}")
-                    new_con_dep.remove_edge(*edge)
-            # viz_g(new_con_dep)
-
-            for cluster in clusters:
-                cluster_name = f"CL_{cluster_num:02}"
-
-                clstr_nodes = [n for n in cluster if new_con_dep.has_node(n)]
-                print(f"{cluster_name} > {cluster} > CON Nodes > {clstr_nodes}")
-
-                # Update ConnectionsDependencyGraph
-                new_con_dep = collapse_nodes(new_con_dep, clstr_nodes, cluster_name)
-
-                # Update AssemblyConnectionsGraph
-                new_ass_con = collapse_nodes(new_ass_con, cluster, cluster_name, save_dict=clusters_dict)
-
-                # Update AssemblyDependencyGraph
-                new_ass_dep = collapse_nodes(new_ass_dep, cluster, cluster_name)
-
-                cluster_num += 1
-
-            export_graph(new_con_dep, "con_dep")
-            export_graph(new_ass_con, "ass_con")
-            export_graph(new_ass_dep, "ass_dep")
+    new_ass_con, new_ass_dep, new_con_dep, _ = cluster_sccs(new_ass_con, new_ass_dep, new_con_dep, 0)
 
     return new_con_dep
+
+
+def cluster_sccs(new_ass_con, new_ass_dep, new_con_dep, cluster_num):
+    if nx.is_directed_acyclic_graph(new_con_dep):
+        return new_ass_con, new_ass_dep, new_con_dep, cluster_num
+
+    condensed = nx.condensation(new_con_dep)
+    for scc_node in list(nx.topological_sort(condensed)):
+        scc = condensed.nodes[scc_node]['members']
+        if len(scc) < 2:
+            continue
+        print(f"Found a SCC -> {scc}")
+
+        trm_con_dep = new_con_dep.subgraph(scc).copy()
+
+        trm_ass_con = get_dep_graph_from_connections(new_ass_con, scc)
+        clusters = list(nx.weakly_connected_components(trm_ass_con))
+        print(f"Main Clusters: {clusters}")
+        seg_ass_dep = nx.union_all([new_ass_dep.subgraph(cluster) for cluster in clusters])
+        seg_con_dep = get_con_dep_graph_from_dep(seg_ass_dep)
+
+        # Remove edges from ConnectionsDependencyGraph
+        for edge in trm_con_dep.edges:
+            if not seg_con_dep.has_edge(*edge):
+                new_con_dep.remove_edge(*edge)
+
+        for cluster in clusters:
+            cluster_name = f"CL_{cluster_num:02}"
+
+            clstr_nodes = [n for n in cluster if new_con_dep.has_node(n)]
+            print(f"{cluster_name} > {cluster} > CON Nodes > {clstr_nodes}")
+
+            # Update Graphs
+            new_con_dep = collapse_nodes(new_con_dep, clstr_nodes, cluster_name)
+            new_ass_con = collapse_nodes(new_ass_con, cluster, cluster_name, save_dict=clusters_dict)
+            new_ass_dep = collapse_nodes(new_ass_dep, cluster, cluster_name)
+
+            cluster_num += 1
+
+        export_graph(new_con_dep, "con_dep")
+        export_graph(new_ass_con, "ass_con")
+        export_graph(new_ass_dep, "ass_dep")
+
+    return cluster_sccs(new_ass_con, new_ass_dep, new_con_dep, cluster_num)
 
 
 def replace_cluster_with_conns(graph: nx.DiGraph):
