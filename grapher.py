@@ -67,7 +67,7 @@ def collapse_nodes(graph, nodes, cluster_node, save_dict=None):
 
 def process_graph(ass_dep, ass_con):
     con_dep = get_con_dep_graph_from_dep(ass_dep)
-    viz_g(con_dep)
+    # viz_g(con_dep)
 
     new_ass_con = ass_con.copy()
     new_ass_dep = ass_dep.copy()
@@ -122,29 +122,45 @@ def process_graph(ass_dep, ass_con):
             export_graph(new_ass_con, "ass_con")
             export_graph(new_ass_dep, "ass_dep")
 
-    print("#"*1000)
-    replace_cluster_with_conns(new_con_dep)
-    exit()
-
     return new_con_dep
 
 
-def replace_cluster_with_conns(graph):
+def replace_cluster_with_conns(graph: nx.DiGraph):
     all_clusters = [n for n, t in graph.nodes.data("TYPE") if t == "CLUS"]
+    print('=' * 100)
+    print(graph)
     print(all_clusters)
+    if not all_clusters:
+        return graph
 
     # Replace clusters with connections and internal clusters
     for cluster in all_clusters:
         print('-' * 10)
-        # print(graph.nodes[cluster]["sub_graph"])
+        print(cluster)
         print(graph.nodes[cluster])
         print(graph.nodes[cluster]["contraction"])
 
-        # All ancestors
+        preds = list(graph.predecessors(cluster))
+        succs = list(graph.successors(cluster))
+        print(preds)
+        print(succs)
 
-        # All predecessors
+        graph.add_nodes_from(graph.nodes[cluster]["contraction"].items())
+        for child in graph.nodes[cluster]["contraction"]:
+            print(" >> ", child)
+            print(graph.nodes[child])
 
-        # Add each child with these connections
+            for pred in preds:
+                graph.add_edge(pred, child)
+            print(list(graph.predecessors(child)))
+
+            for succ in succs:
+                graph.add_edge(child, succ)
+            print(list(graph.successors(child)))
+
+        graph.remove_node(cluster)
+
+    return replace_cluster_with_conns(graph)
 
 
 def export_graph(g, name):
@@ -156,9 +172,15 @@ export_graph(dep, "dep")
 
 clusters_dict = {}
 final_con = process_graph(dep, con)
-print("FIN")
-export_graph(final_con, "res")
+export_graph(final_con, "res_clustered")
 
+print("#" * 1000)
+final_con = replace_cluster_with_conns(final_con)
+
+print("FIN")
+export_graph(final_con, "res_expanded")
+
+# Exports
 layer = 0
 layers_dict = {}
 while final_con.order() > 0:
