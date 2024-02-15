@@ -260,54 +260,48 @@ def replace_cluster_with_conns(graph: nx.DiGraph):
 
         preds = list(graph.predecessors(cluster))
         succs = list(graph.successors(cluster))
-        print(preds)
-        print(succs)
+        print(f"PREDS: {preds}")
+        print(f"SUCCS: {succs}")
 
         for succ in succs:
             for pred in preds:
                 graph.add_edge(pred, succ)
 
-        graph.add_nodes_from(
-            [(n, d) for n, d in graph.nodes[cluster]["contraction"].items() if d["TYPE"] != "PART"])
+        # graph.add_nodes_from(
+        #     [(n, d) for n, d in graph.nodes[cluster]["contraction"].items() if d["TYPE"] != "PART"])
 
         cluster_con_dep = graph.nodes[cluster]["sub_graph"]
+        print(cluster_con_dep.nodes)
+        cluster_con_dep = get_con_dep_graph_from_ass_dep(cluster_con_dep)
+        print(cluster_con_dep.nodes)
+
         if not nx.is_directed_acyclic_graph(cluster_con_dep):
             print("#"*200)
             viz_g(cluster_con_dep)
 
-        if cluster_con_dep.size() > 1000:
-            print("INTERNAL")
-            print([(s, e) for s, e, v in cluster_con_dep.edges(data="EDGE_TYPE") if v == "CONN"])
-            print([(s, e) for s, e, v in cluster_con_dep.edges(data="EDGE_TYPE") if v == "COLL"])
-            viz_g(cluster_con_dep)
-            cluster_con_dep = get_con_dep_graph_from_ass_dep(cluster_con_dep, drop_types=["CLUS", ])
-            # viz_g(cluster_con_dep)
-            viz_g(graph.nodes[cluster]["sub_graph"])
-            solved_sub = process_graph(graph.nodes[cluster]["sub_graph"], con)
-            print("SUB SOLUTION")
-            viz_g(solved_sub)
-            graph.add_edges_from(cluster_con_dep.edges)
+        graph.add_nodes_from(cluster_con_dep.nodes.items())
+        graph.add_edges_from(cluster_con_dep.edges)
+
+        sinks = [x for x, ind in cluster_con_dep.out_degree if ind == 0]
 
         sub_clusters = [n for n, d in graph.nodes[cluster]["contraction"].items() if d["TYPE"] == "CLUS"]
-        children_con = [n for n, d in graph.nodes[cluster]["contraction"].items() if d["TYPE"] == "CONN"]
         print(f"SUB CLUSTERS > {sub_clusters}")
-        print(f"CHILDREN CON > {children_con}")
 
         for sub_cluster in sub_clusters:
-            print(" >> ", sub_cluster)
-            for child_con in children_con:
-                graph.add_edge(sub_cluster, child_con)
+            print(" >> ", graph.in_degree[sub_cluster], " >> ", graph.out_degree[sub_cluster])
+            # for child_con in children_con:
+            #     graph.add_edge(sub_cluster, child_con)
             for pred in preds:
                 graph.add_edge(pred, sub_cluster)
             for succ in succs:
                 graph.add_edge(sub_cluster, succ)
             print(list(graph.successors(sub_cluster)))
 
-        for child in children_con:
-            print(" >> ", child)
+        for sink in sinks:
+            print(" >> ", sink)
             for succ in succs:
-                graph.add_edge(child, succ)
-            print(list(graph.successors(child)))
+                graph.add_edge(sink, succ)
+            print(list(graph.successors(sink)))
 
         graph.remove_node(cluster)
 
