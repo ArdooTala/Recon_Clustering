@@ -318,7 +318,7 @@ export_graph(dep, "dep")
 clusters_dict = {}
 final_ass = direct_cluster_sccs(con.copy(), dep.copy(), 0)
 export_graph(final_ass, "res_dep")
-viz_g(final_ass)
+# viz_g(final_ass)
 final_con = get_con_dep_graph_from_ass_dep(final_ass)
 # final_con = process_graph(dep.copy(), con.copy())
 print(clusters_dict)
@@ -335,6 +335,7 @@ print("FIN")
 stage = 0
 layers_dict = {}
 all_parts = []
+final_con_copy = final_con.copy()
 while final_con.order() > 0:
     print(final_con)
 
@@ -358,13 +359,7 @@ while final_con.order() > 0:
 
         print("Filling Components:")
         comp_group = set(comp_parts)
-        # for layer in layers_dict.keys():
-        #     if layer >= stage:
-        #         continue
-        #     for cmp_name in layers_dict[layer].keys():
-        #         if any([prt in layers_dict[layer][cmp_name]["parts"] for prt in comp_parts]):
-        #             print(f"COMPONENT IS EXTENDING {layer}-{cmp_name}")
-        #             comp_group.update(layers_dict[layer][cmp_name]["parts"])
+
         if stage > 0:
             for cmp_name in layers_dict[stage - 1].keys():
                 if any([prt in layers_dict[stage - 1][cmp_name]["group"] for prt in comp_parts]):
@@ -382,6 +377,14 @@ while final_con.order() > 0:
     stage += 1
 
 print(layers_dict)
+
+for stg in layers_dict.keys():
+    for grp in layers_dict[stg].keys():
+        grp_conns = layers_dict[stg][grp]["conns"]
+        final_con_copy = collapse_nodes(final_con_copy, grp_conns, f"{stg}_{grp}")
+
+export_graph(final_con_copy, "stages_dep")
+
 
 with open("exports/export-components.csv", 'w') as file:
     for stg in layers_dict.keys():
