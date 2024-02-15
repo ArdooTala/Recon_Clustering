@@ -358,13 +358,18 @@ while final_con.order() > 0:
 
         print("Filling Components:")
         comp_group = set(comp_parts)
-        for layer in layers_dict.keys():
-            if layer >= stage:
-                continue
-            for cmp_name in layers_dict[layer].keys():
-                if any([prt in layers_dict[layer][cmp_name]["parts"] for prt in comp_parts]):
-                    print(f"COMPONENT IS EXTENDING {layer}-{cmp_name}")
-                    comp_group.update(layers_dict[layer][cmp_name]["parts"])
+        # for layer in layers_dict.keys():
+        #     if layer >= stage:
+        #         continue
+        #     for cmp_name in layers_dict[layer].keys():
+        #         if any([prt in layers_dict[layer][cmp_name]["parts"] for prt in comp_parts]):
+        #             print(f"COMPONENT IS EXTENDING {layer}-{cmp_name}")
+        #             comp_group.update(layers_dict[layer][cmp_name]["parts"])
+        if stage > 0:
+            for cmp_name in layers_dict[stage - 1].keys():
+                if any([prt in layers_dict[stage - 1][cmp_name]["group"] for prt in comp_parts]):
+                    print(f"COMPONENT IS EXTENDING {stage - 1}-{cmp_name}")
+                    comp_group.update(layers_dict[stage - 1][cmp_name]["group"])
 
         layers_dict[stage][component_count]["conns"] = comp_conns
         layers_dict[stage][component_count]["parts"] = comp_parts
