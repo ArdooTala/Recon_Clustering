@@ -100,36 +100,58 @@ def cluster_sccs(new_ass_con, new_ass_dep, cluster_num):
         # print(nx.is_strongly_connected(get_con_dep_graph_from_dep(new_con_dep.subgraph(scc))))
         # print(nx.is_strongly_connected(get_con_dep_graph_from_dep(new_ass_dep.subgraph(scc))))
 
-        # trm_con_dep = new_con_dep.subgraph(scc).copy()
         trm_ass_con = get_dep_graph_from_connections(new_ass_con, scc)
-        trm_ass_dep = new_ass_dep.subgraph(trm_ass_con.nodes).copy()
-        # viz_g(trm_ass_dep)
+        print(f"ASS_DEP Nodes: {trm_ass_con.nodes}")
+        cluster_nodes = trm_ass_con.nodes
+
+        temp_ass_dep = new_ass_dep.copy()
+        temp_ass_dep = collapse_nodes(temp_ass_dep, list(trm_ass_con.nodes), -1)
+        all_sccs = nx.strongly_connected_components(temp_ass_dep)
+        extended_nodes = [list(g) for g in all_sccs if -1 in g][0]
+        if len(extended_nodes) > 1:
+            print(f"Found extended nodes: {extended_nodes}")
+            extended_nodes.remove(-1)
+            cluster_nodes = list(trm_ass_con.nodes) + list(extended_nodes)
+            print(f"Extended ASS_DEP Nodes: {cluster_nodes}")
+            viz_g(trm_ass_con)
+            trm_ass_con = new_ass_con.subgraph(cluster_nodes).copy()
+            viz_g(trm_ass_con)
+
+        trm_ass_dep = new_ass_dep.subgraph(cluster_nodes).copy()
         clusters = list(nx.weakly_connected_components(trm_ass_con))
         print(f"Segmenting SCC to {len(clusters)} Clusters: {clusters}")
         seg_ass_dep = nx.union_all([new_ass_dep.subgraph(cluster).copy() for cluster in clusters])
-        # viz_g(seg_ass_dep)
-        # seg_con_dep = get_con_dep_graph_from_dep(seg_ass_dep)
-
-        # # Remove edges from ConnectionsDependencyGraph
-        # for edge in trm_con_dep.edges:
-        #     if not seg_con_dep.has_edge(*edge):
-        #         new_con_dep.remove_edge(*edge)
 
         # Remove edges from ConnectionsDependencyGraph
-        for edge in trm_ass_dep.edges:
-            if not seg_ass_dep.has_edge(*edge):
-                print(f"REMOVING EDGE FROM ASS_DEP: {edge}")
-                new_ass_dep.remove_edge(*edge)
+        edges_to_remove = [edge for edge in trm_ass_dep.edges if not seg_ass_dep.has_edge(*edge)]
+        print(f"\tRemoving {len(edges_to_remove)} Edges from ASS_DEP: {edges_to_remove}")
+        print(f"\t\tAll are COLL: {all([new_ass_dep.edges[e]['EDGE_TYPE'] == 'COLL' for e in edges_to_remove])}")
+        new_ass_dep.remove_edges_from(edges_to_remove)
 
         for cluster in clusters:
             cluster_name = f"CL_{cluster_num:02}"
             clstr_nodes = [n for n in cluster if new_con_dep.has_node(n)]
             print(f"{cluster_name} > {cluster} > CON Nodes > {clstr_nodes}")
 
+            # if not nx.is_directed_acyclic_graph(get_con_dep_graph_from_dep(seg_ass_dep)):
+            #     print("\n\nCLUSTER IS NOT DAG")
+            #
+            #     vvvv = [(s, e) for s, e, v in seg_ass_dep.edges(data="EDGE_TYPE") if v == "COLL"]
+            #     if vvvv and False:
+            #         print("SOLVING CLUSTER INTERNAL GRAPH")
+            #         print(vvvv)
+            #         viz_g(seg_ass_dep)
+            #         viz_g(trm_ass_con)
+            #
+            #         gggg = process_graph(seg_ass_dep, trm_ass_con)
+            #         print("SOLVED INTERNAL")
+            #         viz_g(gggg)
+
             # Update Graphs
             # new_con_dep = collapse_nodes(new_con_dep, clstr_nodes, cluster_name)
             new_ass_con = collapse_nodes(new_ass_con, cluster, cluster_name, save_dict=clusters_dict)
             new_ass_dep = collapse_nodes(new_ass_dep, cluster, cluster_name)
+            new_con_dep = get_con_dep_graph_from_dep(new_ass_dep)
 
             cluster_num += 1
 
@@ -161,14 +183,24 @@ def replace_cluster_with_conns(graph: nx.DiGraph):
             for pred in preds:
                 graph.add_edge(pred, succ)
 
-        cluster_con_dep = get_con_dep_graph_from_dep(graph.nodes[cluster]["sub_graph"])
-        # viz_g(cluster_con_dep)
-
         graph.add_nodes_from(
             [(n, d) for n, d in graph.nodes[cluster]["contraction"].items() if d["TYPE"] != "PART"])
 
-        if cluster_con_dep.size() > 0:
+        cluster_con_dep = graph.nodes[cluster]["sub_graph"]
+        if not nx.is_directed_acyclic_graph(cluster_con_dep):
             viz_g(cluster_con_dep)
+
+        if cluster_con_dep.size() > 1000:
+            print("INTERNAL")
+            print([(s, e) for s, e, v in cluster_con_dep.edges(data="EDGE_TYPE") if v == "CONN"])
+            print([(s, e) for s, e, v in cluster_con_dep.edges(data="EDGE_TYPE") if v == "COLL"])
+            viz_g(cluster_con_dep)
+            cluster_con_dep = get_con_dep_graph_from_dep(cluster_con_dep, drop_types=["CLUS", ])
+            # viz_g(cluster_con_dep)
+            viz_g(graph.nodes[cluster]["sub_graph"])
+            solved_sub = process_graph(graph.nodes[cluster]["sub_graph"], con)
+            print("SUB SOLUTION")
+            viz_g(solved_sub)
             graph.add_edges_from(cluster_con_dep.edges)
 
         sub_clusters = [n for n, d in graph.nodes[cluster]["contraction"].items() if d["TYPE"] == "CLUS"]
