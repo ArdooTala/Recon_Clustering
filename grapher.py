@@ -34,8 +34,7 @@ def get_con_dep_graph_from_dep(dep_graph, drop_types=None):
 def get_dep_graph_from_connections(graph, nodes):
     elems = set()
     for no in nodes:
-        el = list(graph.predecessors(no))
-        elems.update(el)
+        elems.update(list(graph.predecessors(no)))
     return graph.subgraph(list(elems) + list(nodes)).copy()
 
 
@@ -68,10 +67,10 @@ def collapse_nodes(graph, nodes, cluster_node, save_dict=None):
 
 
 def process_graph(ass_dep, ass_con):
-    new_ass_con = ass_con.copy()
-    new_ass_dep = ass_dep.copy()
+    # new_ass_con = ass_con.copy()
+    # new_ass_dep = ass_dep.copy()
 
-    new_con_dep = cluster_sccs(new_ass_con, new_ass_dep, 0)
+    new_con_dep = cluster_sccs(ass_con, ass_dep, 0)
 
     return new_con_dep
 
@@ -79,29 +78,34 @@ def process_graph(ass_dep, ass_con):
 def cluster_sccs(new_ass_con, new_ass_dep, cluster_num):
     new_con_dep = get_con_dep_graph_from_dep(new_ass_dep)
     if nx.is_strongly_connected(new_con_dep):
+        print("ERROR")
+        viz_g(new_con_dep)
         raise Exception("Graph is one SCC")
 
-    print(new_con_dep)
-
     if nx.is_directed_acyclic_graph(new_con_dep):
+        print("CON_DEP graph is a DAG...")
         export_graph(new_con_dep, "con_dep")
         export_graph(new_ass_con, "ass_con")
         export_graph(new_ass_dep, "ass_dep")
         return new_con_dep
+
+    print(f"CLUSTERING...{new_ass_dep} > {new_con_dep}")
 
     condensed = nx.condensation(new_con_dep)
     for scc_node in list(nx.topological_sort(condensed)):
         scc = condensed.nodes[scc_node]['members']
         if len(scc) < 2:
             continue
-        print(f"Found a SCC -> {scc}")
+        print(f"CON_DEP SCC: {scc}")
+        # print(nx.is_strongly_connected(get_con_dep_graph_from_dep(new_con_dep.subgraph(scc))))
+        # print(nx.is_strongly_connected(get_con_dep_graph_from_dep(new_ass_dep.subgraph(scc))))
 
         # trm_con_dep = new_con_dep.subgraph(scc).copy()
         trm_ass_con = get_dep_graph_from_connections(new_ass_con, scc)
         trm_ass_dep = new_ass_dep.subgraph(trm_ass_con.nodes).copy()
         # viz_g(trm_ass_dep)
         clusters = list(nx.weakly_connected_components(trm_ass_con))
-        print(f"Main Clusters: {clusters}")
+        print(f"Segmenting SCC to {len(clusters)} Clusters: {clusters}")
         seg_ass_dep = nx.union_all([new_ass_dep.subgraph(cluster).copy() for cluster in clusters])
         # viz_g(seg_ass_dep)
         # seg_con_dep = get_con_dep_graph_from_dep(seg_ass_dep)
@@ -118,9 +122,7 @@ def cluster_sccs(new_ass_con, new_ass_dep, cluster_num):
                 new_ass_dep.remove_edge(*edge)
 
         for cluster in clusters:
-            print(f"Clustering > {cluster}")
             cluster_name = f"CL_{cluster_num:02}"
-
             clstr_nodes = [n for n in cluster if new_con_dep.has_node(n)]
             print(f"{cluster_name} > {cluster} > CON Nodes > {clstr_nodes}")
 
@@ -131,8 +133,8 @@ def cluster_sccs(new_ass_con, new_ass_dep, cluster_num):
 
             cluster_num += 1
 
-    print(f"\n\nIS DAG: {nx.is_directed_acyclic_graph(new_con_dep)}\n\n")
-    return cluster_sccs(new_ass_con, new_ass_dep, cluster_num)
+        print(f"\n\nIS DAG: {nx.is_directed_acyclic_graph(new_con_dep)}\n\n")
+        return cluster_sccs(new_ass_con, new_ass_dep, cluster_num)
 
 
 def replace_cluster_with_conns(graph: nx.DiGraph):
@@ -203,7 +205,7 @@ subax1 = plt.subplot()
 export_graph(dep, "dep")
 
 clusters_dict = {}
-final_con = process_graph(dep, con)
+final_con = process_graph(dep.copy(), con.copy())
 print(clusters_dict)
 
 export_graph(final_con, "res_clustered")
