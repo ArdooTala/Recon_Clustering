@@ -224,9 +224,20 @@ while final_con.order() > 0:
         comp_added = [p for p in comp_parts if p not in all_parts]
         all_parts += comp_added
 
+        print("Filling Components:")
+        comp_group = set(comp_parts)
+        for layer in layers_dict.keys():
+            if layer >= stage:
+                continue
+            for cmp_name in layers_dict[layer].keys():
+                if any([prt in layers_dict[layer][cmp_name]["parts"] for prt in comp_parts]):
+                    print(f"COMPONENT IS EXTENDING {layer}-{cmp_name}")
+                    comp_group.update(layers_dict[layer][cmp_name]["parts"])
+
         layers_dict[stage][component_count]["conns"] = comp_conns
         layers_dict[stage][component_count]["parts"] = comp_parts
         layers_dict[stage][component_count]["added"] = comp_added
+        layers_dict[stage][component_count]["group"] = comp_group
 
         component_count += 1
     # layers_dict[stage] = sources
@@ -240,7 +251,7 @@ with open("exports/export-components.csv", 'w') as file:
         for cmp in layers_dict[stg]:
             comp = layers_dict[stg][cmp]
             file.write(
-                f"{stg:02},{cmp:02},{';'.join(comp['conns'])},{';'.join(comp['parts'])},{';'.join(comp['added'])}\n")
+                f"{stg:02},{cmp:02},{';'.join(comp['conns'])},{';'.join(comp['parts'])},{';'.join(comp['added'])},{';'.join(comp['group'])}\n")
 
 with open("exports/export-clusters.csv", 'w') as file:
     for lay in clusters_dict.items():
