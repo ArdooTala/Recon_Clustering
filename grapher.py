@@ -154,8 +154,15 @@ def replace_cluster_with_conns(graph: nx.DiGraph):
             for pred in preds:
                 graph.add_edge(pred, succ)
 
+        cluster_con_dep = get_con_dep_graph_from_dep(graph.nodes[cluster]["sub_graph"])
+        # viz_g(cluster_con_dep)
+
         graph.add_nodes_from(
             [(n, d) for n, d in graph.nodes[cluster]["contraction"].items() if d["TYPE"] != "PART"])
+
+        if cluster_con_dep.size() > 0:
+            viz_g(cluster_con_dep)
+            graph.add_edges_from(cluster_con_dep.edges)
 
         sub_clusters = [n for n, d in graph.nodes[cluster]["contraction"].items() if d["TYPE"] == "CLUS"]
         children_con = [n for n, d in graph.nodes[cluster]["contraction"].items() if d["TYPE"] == "CONN"]
@@ -209,8 +216,11 @@ all_parts = []
 while final_con.order() > 0:
     print(final_con)
 
-    sources = [x for x in final_con.nodes() if final_con.in_degree(x) == 0]
+    sources = [x for x, ind in final_con.in_degree if ind == 0]
     print(sources)
+    if not sources:
+        print("FUCK . . . No Sources")
+        viz_g(final_con)
     con_graph = get_dep_graph_from_connections(con, sources)
 
     # Export
