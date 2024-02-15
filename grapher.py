@@ -95,37 +95,36 @@ def direct_cluster_sccs(new_ass_con, new_ass_dep, cluster_num):
 
     condensed = nx.condensation(new_ass_dep)
     for scc_node in list(nx.topological_sort(condensed)):
-        scc = condensed.nodes[scc_node]['members']
-        if len(scc) < 2:
+        cluster_nodes = condensed.nodes[scc_node]['members']
+        if len(cluster_nodes) < 2:
             continue
-        print(f"CON_DEP SCC: {scc}")
+        print(f"CON_DEP SCC: {cluster_nodes}")
         for i in range(10):
-
-            trm_ass_dep = new_ass_dep.subgraph(scc).copy()
-            extended_ass_dep = add_parts_to_sub_graph(new_ass_dep, scc)
+            extended_ass_dep = add_parts_to_sub_graph(new_ass_dep, cluster_nodes)
 
             # viz_g(trm_ass_dep)
             # viz_g(extended_ass_dep)
             # viz_g(nx.condensation(extended_ass_dep))
 
-            print(f"ASS_DEP Nodes: {extended_ass_dep.nodes}")
-
             cluster_nodes = list(extended_ass_dep.nodes)
+            print(f"ASS_DEP Nodes: {cluster_nodes}")
+
             temp_ass_dep = collapse_nodes(new_ass_dep.copy(), cluster_nodes, -1)
             all_sccs = nx.strongly_connected_components(temp_ass_dep)
             extended_nodes = [list(g) for g in all_sccs if -1 in g][0]
             if len(extended_nodes) > 1:
-                print(f"Found extended nodes: {extended_nodes}")
                 extended_nodes.remove(-1)
-                cluster_nodes += list(extended_nodes)
+                print(f"Found extended nodes: {extended_nodes}")
+                cluster_nodes = set(cluster_nodes)
+                cluster_nodes.update(extended_nodes)
+                cluster_nodes = list(cluster_nodes)
                 print(f"\tExtending > [{i}]: Latest ASS_DEP Nodes: {cluster_nodes}")
-                scc = cluster_nodes
             else:
                 print(f"Extended {i} times. Final ASS_DEP Nodes: {cluster_nodes}")
                 break
 
-        trm_ass_dep = new_ass_dep.subgraph(scc).copy()
-        trm_ass_con = new_ass_con.subgraph(scc).copy()
+        trm_ass_dep = new_ass_dep.subgraph(cluster_nodes).copy()
+        trm_ass_con = new_ass_con.subgraph(cluster_nodes).copy()
         clusters = list(nx.weakly_connected_components(trm_ass_con))
         print(f"Segmenting SCC to {len(clusters)} Clusters: {clusters}")
         seg_ass_dep = nx.union_all([new_ass_dep.subgraph(cluster).copy() for cluster in clusters])
