@@ -15,11 +15,11 @@ with open("assemblies/ReconSlab_Top-Connectivity.csv", 'r') as file:
         con.add_edges_from([
             (part1, connection),
             (part2, connection)
-        ])
+        ], EDGE_TYPE="CONN")
 
         if dependency != r'<null>':
             # print(dependency)
             deps.append((connection, dependency))
 
     dep = con.copy()
-    dep.add_edges_from(deps, collision_edge=True)
+    dep.add_edges_from(deps, EDGE_TYPE="COLL")

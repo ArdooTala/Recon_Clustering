@@ -10,15 +10,20 @@ def viz_g(g):
     plt.show()
 
 
-def get_con_dep_graph_from_dep(dep_graph):
+def get_con_dep_graph_from_dep(dep_graph, drop_types=None):
+    if not drop_types:
+        drop_types = ["PART"]
+
     con_dep = dep_graph.copy()
     # print("#" * 100)
     for n, t in dep_graph.nodes.data("TYPE"):
-        if t != "PART":
+        if t not in drop_types:
             continue
 
         for s in con_dep.successors(n):
             for p in list(con_dep.predecessors(n)):
+                if s == p:
+                    continue
                 con_dep.add_edge(p, s)
 
         con_dep.remove_node(n)
