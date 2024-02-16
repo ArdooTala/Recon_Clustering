@@ -220,6 +220,7 @@ def generate_gantt(graph):
 
     gantt_dict = {}
     step = 0
+    print("Calculating forward run")
     forward_graph = graph.copy()
     while forward_graph.order() > 0:
         sources = [x for x, ind in forward_graph.in_degree if ind == 0]
@@ -232,13 +233,25 @@ def generate_gantt(graph):
         step += 1
         forward_graph.remove_nodes_from(sources)
 
-    backward_graph = graph.copy()
-    while backward_graph.order() > 0:
-        sinks = [x for x, ind in backward_graph.out_degree if ind == 0]
+    print("Calculating return run")
+    return_graph = graph.copy()
+    while return_graph.order() > 0:
+        sinks = [x for x, ind in return_graph.out_degree if ind == 0]
         for sink in sinks:
             gantt_dict[sink]["end"] = min(
                 [step, ] + [e[1]["start"] for e in gantt_dict.items() if e[0] in gantt_dict[sink]["children"]])
 
+        return_graph.remove_nodes_from(sinks)
+
+    print("Calculating backward run")
+    backward_graph = graph.copy()
+    while backward_graph.order() > 0:
+        print(backward_graph.order())
+        sinks = [x for x, ind in backward_graph.out_degree if ind == 0]
+        for sink in sinks:
+            gantt_dict[sink]["latest"] = step
+
+        step -= 1
         backward_graph.remove_nodes_from(sinks)
 
     return gantt_dict
@@ -338,5 +351,5 @@ stages_gantt = generate_gantt(final_con_copy)
 with open("exports/export-stage_gantt.csv", 'w') as file:
     for el in stages_gantt.items():
         file.write(
-            f"{el[0]},{el[1]['start']},{el[1]['end']},{';'.join(el[1]['deps'])},{';'.join(el[1]['children'])}\n")
+            f"{el[0]},{el[1]['start']},{el[1]['end']},{el[1]['latest']},{';'.join(el[1]['deps'])},{';'.join(el[1]['children'])}\n")
 print("FIN")
