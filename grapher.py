@@ -183,7 +183,7 @@ def cluster_sccs(new_ass_con, new_ass_dep, cluster_num):
         # viz_g(trm_ass_dep)
         # viz_g(nx.condensation(trm_ass_dep))
         viz_g(new_ass_dep.subgraph(ass_dep_scc))
-        viz_g(add_parts_to_sub_graph (new_ass_dep, ass_dep_scc))
+        viz_g(add_parts_to_sub_graph(new_ass_dep, ass_dep_scc))
         ###
 
         print(f"ASS_DEP Nodes: {trm_ass_con.nodes}")
@@ -276,7 +276,7 @@ def replace_cluster_with_conns(graph: nx.DiGraph):
         print(cluster_con_dep.nodes)
 
         if not nx.is_directed_acyclic_graph(cluster_con_dep):
-            print("#"*200)
+            print("#" * 200)
             viz_g(cluster_con_dep)
 
         graph.add_nodes_from(cluster_con_dep.nodes.items())
@@ -331,61 +331,8 @@ final_con = replace_cluster_with_conns(final_con)
 export_graph(final_con, "res_expanded")
 print("FIN")
 
-# Exports
-stage = 0
-layers_dict = {}
-all_parts = []
-final_con_copy = final_con.copy()
-while final_con.order() > 0:
-    print(final_con)
-
-    sources = [x for x, ind in final_con.in_degree if ind == 0]
-    print(sources)
-    if not sources:
-        print("FUCK . . . No Sources")
-        viz_g(final_con)
-    con_graph = get_dep_graph_from_connections(con, sources)
-
-    # Export
-    layers_dict[stage] = {}
-    component_count = 0
-    for component in nx.weakly_connected_components(con_graph):
-        print(component)
-        layers_dict[stage][component_count] = {}
-        comp_conns = [n for n in component if con_graph.nodes[n]["TYPE"] == "CONN"]
-        comp_parts = [n for n in component if con_graph.nodes[n]["TYPE"] == "PART"]
-        comp_added = [p for p in comp_parts if p not in all_parts]
-        all_parts += comp_added
-
-        print("Filling Components:")
-        comp_group = set(comp_parts)
-
-        if stage > 0:
-            for cmp_name in layers_dict[stage - 1].keys():
-                if any([prt in layers_dict[stage - 1][cmp_name]["group"] for prt in comp_parts]):
-                    print(f"COMPONENT IS EXTENDING {stage - 1}-{cmp_name}")
-                    comp_group.update(layers_dict[stage - 1][cmp_name]["group"])
-
-        layers_dict[stage][component_count]["conns"] = comp_conns
-        layers_dict[stage][component_count]["parts"] = comp_parts
-        layers_dict[stage][component_count]["added"] = comp_added
-        layers_dict[stage][component_count]["group"] = comp_group
-
-        component_count += 1
-    # layers_dict[stage] = sources
-    final_con.remove_nodes_from(sources)
-    stage += 1
-
+layers_dict = export_stages(final_con)
 print(layers_dict)
-
-for stg in layers_dict.keys():
-    for grp in layers_dict[stg].keys():
-        grp_conns = layers_dict[stg][grp]["conns"]
-        final_con_copy = collapse_nodes(final_con_copy, grp_conns, f"{stg}_{grp}")
-
-export_graph(final_con_copy, "stages_dep")
-
-
 with open("exports/export-components.csv", 'w') as file:
     for stg in layers_dict.keys():
         for cmp in layers_dict[stg]:
@@ -397,3 +344,11 @@ with open("exports/export-clusters.csv", 'w') as file:
     for lay in clusters_dict.items():
         for clst in lay[1]:
             file.write(f"{lay[0]},{clst[0]},{';'.join(clst[1])},{';'.join(clst[2])},{';'.join(clst[3])}\n")
+
+final_con_copy = final_con.copy()
+for stg in layers_dict.keys():
+    for grp in layers_dict[stg].keys():
+        grp_conns = layers_dict[stg][grp]["conns"]
+        final_con_copy = collapse_nodes(final_con_copy, grp_conns, f"{stg}_{grp}")
+
+export_graph(final_con_copy, "stages_dep")
