@@ -75,10 +75,6 @@ def collapse_nodes(graph, nodes, cluster_node, save_dict=None):
     return graph
 
 
-def process_graph(ass_dep, ass_con):
-    return cluster_sccs(ass_con, ass_dep, 0)
-
-
 def direct_cluster_sccs(new_ass_con, new_ass_dep, cluster_num):
     if nx.is_strongly_connected(new_ass_dep):
         print("ERROR")
@@ -147,100 +143,6 @@ def direct_cluster_sccs(new_ass_con, new_ass_dep, cluster_num):
 
         print(f"Is DAG yet: {nx.is_directed_acyclic_graph(new_ass_dep)}\n\n")
         return direct_cluster_sccs(new_ass_con, new_ass_dep, cluster_num)
-
-
-def cluster_sccs(new_ass_con, new_ass_dep, cluster_num):
-    new_con_dep = get_con_dep_graph_from_ass_dep(new_ass_dep)
-    if nx.is_strongly_connected(new_con_dep):
-        print("ERROR")
-        viz_g(new_con_dep)
-        raise Exception("Graph is one SCC")
-
-    if nx.is_directed_acyclic_graph(new_con_dep):
-        print("CON_DEP graph is a DAG...")
-        export_graph(new_con_dep, "con_dep")
-        export_graph(new_ass_con, "ass_con")
-        export_graph(new_ass_dep, "ass_dep")
-        return new_con_dep
-
-    print(f"CLUSTERING...{new_ass_dep} > {new_con_dep}")
-
-    condensed = nx.condensation(new_con_dep)
-    for scc_node in list(nx.topological_sort(condensed)):
-        scc = condensed.nodes[scc_node]['members']
-        if len(scc) < 2:
-            continue
-        print(f"CON_DEP SCC: {scc}")
-        print(nx.is_strongly_connected(get_con_dep_graph_from_ass_dep(new_con_dep.subgraph(scc))))
-
-        trm_ass_con = get_dep_graph_from_connections(new_ass_con, scc)
-
-        ###
-        trm_ass_dep = new_ass_dep.subgraph(trm_ass_con.nodes).copy()
-        print(nx.is_strongly_connected(trm_ass_dep))
-        ass_dep_scc = [list(ads) for ads in list(nx.strongly_connected_components(trm_ass_dep)) if len(list(ads)) > 1][0]
-        print(ass_dep_scc)
-        # viz_g(trm_ass_dep)
-        # viz_g(nx.condensation(trm_ass_dep))
-        viz_g(new_ass_dep.subgraph(ass_dep_scc))
-        viz_g(add_parts_to_sub_graph(new_ass_dep, ass_dep_scc))
-        ###
-
-        print(f"ASS_DEP Nodes: {trm_ass_con.nodes}")
-        cluster_nodes = list(trm_ass_con.nodes)
-
-        temp_ass_dep = collapse_nodes(new_ass_dep.copy(), cluster_nodes, -1)
-        all_sccs = nx.strongly_connected_components(temp_ass_dep)
-        extended_nodes = [list(g) for g in all_sccs if -1 in g][0]
-        if len(extended_nodes) > 1:
-            print(f"Found extended nodes: {extended_nodes}")
-            extended_nodes.remove(-1)
-            cluster_nodes += list(extended_nodes)
-            print(f"Extended ASS_DEP Nodes: {cluster_nodes}")
-            # viz_g(trm_ass_con)
-            trm_ass_con = get_dep_graph_from_connections(new_ass_con, cluster_nodes)
-            # viz_g(trm_ass_con)
-
-        trm_ass_dep = new_ass_dep.subgraph(cluster_nodes).copy()
-        clusters = list(nx.weakly_connected_components(trm_ass_con))
-        print(f"Segmenting SCC to {len(clusters)} Clusters: {clusters}")
-        seg_ass_dep = nx.union_all([new_ass_dep.subgraph(cluster).copy() for cluster in clusters])
-
-        # Remove edges from ConnectionsDependencyGraph
-        edges_to_remove = [edge for edge in trm_ass_dep.edges if not seg_ass_dep.has_edge(*edge)]
-        print(f"\tRemoving {len(edges_to_remove)} Edges from ASS_DEP: {edges_to_remove}")
-        print(f"\t\tAll are COLL: {all([new_ass_dep.edges[e]['EDGE_TYPE'] == 'COLL' for e in edges_to_remove])}")
-        new_ass_dep.remove_edges_from(edges_to_remove)
-
-        for cluster in clusters:
-            cluster_name = f"CL_{cluster_num:02}"
-            clstr_nodes = [n for n in cluster if new_con_dep.has_node(n)]
-            print(f"{cluster_name} > {cluster} > CON Nodes > {clstr_nodes}")
-
-            # if not nx.is_directed_acyclic_graph(get_con_dep_graph_from_dep(seg_ass_dep)):
-            #     print("\n\nCLUSTER IS NOT DAG")
-            #
-            #     vvvv = [(s, e) for s, e, v in seg_ass_dep.edges(data="EDGE_TYPE") if v == "COLL"]
-            #     if vvvv and False:
-            #         print("SOLVING CLUSTER INTERNAL GRAPH")
-            #         print(vvvv)
-            #         viz_g(seg_ass_dep)
-            #         viz_g(trm_ass_con)
-            #
-            #         gggg = process_graph(seg_ass_dep, trm_ass_con)
-            #         print("SOLVED INTERNAL")
-            #         viz_g(gggg)
-
-            # Update Graphs
-            # new_con_dep = collapse_nodes(new_con_dep, clstr_nodes, cluster_name)
-            new_ass_con = collapse_nodes(new_ass_con, cluster, cluster_name, save_dict=clusters_dict)
-            new_ass_dep = collapse_nodes(new_ass_dep, cluster, cluster_name)
-            new_con_dep = get_con_dep_graph_from_ass_dep(new_ass_dep)
-
-            cluster_num += 1
-
-        print(f"\n\nIS DAG: {nx.is_directed_acyclic_graph(new_con_dep)}\n\n")
-        return cluster_sccs(new_ass_con, new_ass_dep, cluster_num)
 
 
 def replace_cluster_with_conns(graph: nx.DiGraph):
@@ -335,7 +237,7 @@ def generate_gantt(graph):
         sinks = [x for x, ind in backward_graph.out_degree if ind == 0]
         for sink in sinks:
             gantt_dict[sink]["end"] = min(
-                [step + 1, ] + [e[1]["start"] for e in gantt_dict.items() if e[0] in gantt_dict[sink]["children"]])
+                [step, ] + [e[1]["start"] for e in gantt_dict.items() if e[0] in gantt_dict[sink]["children"]])
 
         backward_graph.remove_nodes_from(sinks)
 
@@ -397,16 +299,12 @@ export_graph(dep, "dep")
 clusters_dict = {}
 final_ass = direct_cluster_sccs(con.copy(), dep.copy(), 0)
 export_graph(final_ass, "res_dep")
-# viz_g(final_ass)
 final_con = get_con_dep_graph_from_ass_dep(final_ass)
-# final_con = process_graph(dep.copy(), con.copy())
-print(clusters_dict)
 
 export_graph(final_con, "res_clustered")
+print(clusters_dict)
 
-print("#" * 1000)
 final_con = replace_cluster_with_conns(final_con)
-
 export_graph(final_con, "res_expanded")
 
 gantt = generate_gantt(final_con)
@@ -414,7 +312,6 @@ with open("exports/export-gantt.csv", 'w') as file:
     for el in gantt.items():
         file.write(
             f"{el[0]},{el[1]['start']},{el[1]['end']},{';'.join(el[1]['deps'])},{';'.join(el[1]['children'])}\n")
-print("FIN")
 
 layers_dict = export_stages(final_con)
 print(layers_dict)
@@ -435,5 +332,11 @@ for stg in layers_dict.keys():
     for grp in layers_dict[stg].keys():
         grp_conns = layers_dict[stg][grp]["conns"]
         final_con_copy = collapse_nodes(final_con_copy, grp_conns, f"{stg}_{grp}")
-
 export_graph(final_con_copy, "stages_dep")
+
+stages_gantt = generate_gantt(final_con_copy)
+with open("exports/export-stage_gantt.csv", 'w') as file:
+    for el in stages_gantt.items():
+        file.write(
+            f"{el[0]},{el[1]['start']},{el[1]['end']},{';'.join(el[1]['deps'])},{';'.join(el[1]['children'])}\n")
+print("FIN")
