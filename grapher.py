@@ -312,6 +312,85 @@ def export_graph(g, name):
     nx.nx_agraph.to_agraph(g).draw(f"exports/{name}.pdf", prog="dot")
 
 
+def generate_gantt(graph):
+    if not nx.is_directed_acyclic_graph(graph):
+        raise Exception("Gantt cannot be generated because the graph is not a DAG")
+
+    gantt_dict = {}
+    step = 0
+    forward_graph = graph.copy()
+    while forward_graph.order() > 0:
+        sources = [x for x, ind in forward_graph.in_degree if ind == 0]
+        for source in sources:
+            gantt_dict[source] = {}
+            gantt_dict[source]["start"] = step
+            gantt_dict[source]["deps"] = list(graph.predecessors(source))
+            gantt_dict[source]["children"] = list(graph.successors(source))
+
+        step += 1
+        forward_graph.remove_nodes_from(sources)
+
+    backward_graph = graph.copy()
+    while backward_graph.order() > 0:
+        sinks = [x for x, ind in backward_graph.out_degree if ind == 0]
+        for sink in sinks:
+            gantt_dict[sink]["end"] = min(
+                [step + 1, ] + [e[1]["start"] for e in gantt_dict.items() if e[0] in gantt_dict[sink]["children"]])
+
+        backward_graph.remove_nodes_from(sinks)
+
+    return gantt_dict
+
+
+def export_stages(graph):
+    graph = graph.copy()
+    stage = 0
+    layer_dict = {}
+    all_parts = []
+
+    while graph.order() > 0:
+        print(graph)
+
+        sources = [x for x, ind in graph.in_degree if ind == 0]
+        print(f"Source Nodes: {sources}")
+        if not sources:
+            raise Exception("FUCK!...No Sources in Graph")
+        con_graph = get_dep_graph_from_connections(con, sources)
+
+        # Export
+        layer_dict[stage] = {}
+        component_count = 0
+        for component in nx.weakly_connected_components(con_graph):
+            print(f"\tComponent: {component}")
+            layer_dict[stage][component_count] = {}
+            comp_conns = [n for n in component if con_graph.nodes[n]["TYPE"] == "CONN"]
+            comp_parts = [n for n in component if con_graph.nodes[n]["TYPE"] == "PART"]
+            comp_added = [p for p in comp_parts if p not in all_parts]
+            all_parts += comp_added
+
+            comp_group = set(comp_parts)
+
+            if stage > 0:
+                ext_clstrs = []
+                for cmp_name in layer_dict[stage - 1].keys():
+                    if any([prt in layer_dict[stage - 1][cmp_name]["group"] for prt in comp_parts]):
+                        comp_group.update(layer_dict[stage - 1][cmp_name]["group"])
+                        ext_clstrs.append(f"{stage}-{cmp_name}")
+                print(f"\t\tComponent Extends Clusters > {ext_clstrs}")
+
+            layer_dict[stage][component_count]["conns"] = comp_conns
+            layer_dict[stage][component_count]["parts"] = comp_parts
+            layer_dict[stage][component_count]["added"] = comp_added
+            layer_dict[stage][component_count]["group"] = comp_group
+
+            component_count += 1
+        # layer_dict[stage] = sources
+        graph.remove_nodes_from(sources)
+        stage += 1
+
+    return layer_dict
+
+
 subax1 = plt.subplot()
 export_graph(dep, "dep")
 
@@ -329,6 +408,12 @@ print("#" * 1000)
 final_con = replace_cluster_with_conns(final_con)
 
 export_graph(final_con, "res_expanded")
+
+gantt = generate_gantt(final_con)
+with open("exports/export-gantt.csv", 'w') as file:
+    for el in gantt.items():
+        file.write(
+            f"{el[0]},{el[1]['start']},{el[1]['end']},{';'.join(el[1]['deps'])},{';'.join(el[1]['children'])}\n")
 print("FIN")
 
 layers_dict = export_stages(final_con)
