@@ -9,17 +9,17 @@ with open("assemblies/ReconSlab_Top-Connectivity.csv", 'r') as file:
         connection, part1, part2, dependency = line.strip().split(',')
         # print(connection, part1, part2, dependency)
 
-        con.add_nodes_from([part1, part2], TYPE="PART")
-        con.add_node(connection, TYPE="CONN")
+        con.add_nodes_from([part1[6:], part2[6:]], TYPE="PART", color='black')
+        con.add_node(connection, TYPE="CONN", style='filled', fontcolor='#FFFFFF', fillcolor='black')
 
         con.add_edges_from([
-            (part1, connection),
-            (part2, connection)
-        ], EDGE_TYPE="CONN")
+            (part1[6:], connection),
+            (part2[6:], connection)
+        ], EDGE_TYPE="CONN", color='grey')
 
         if dependency != r'<null>':
             # print(dependency)
-            deps.append((connection, dependency))
+            deps.append((connection, dependency[6:]))
 
     dep = con.copy()
-    dep.add_edges_from(deps, EDGE_TYPE="COLL")
+    dep.add_edges_from(deps, EDGE_TYPE="COLL", color='red')

@@ -211,7 +211,10 @@ def replace_cluster_with_conns(graph: nx.DiGraph):
 
 
 def export_graph(g, name):
-    nx.nx_agraph.to_agraph(g).draw(f"exports/{name}.pdf", prog="dot")
+    # nx.nx_agraph.to_agraph(g).draw(f"exports/{name}.pdf", prog="neato",
+    #                                args="-Gdiredgeconstraints=true -Gmode='ipsep' -Goverlap='prism5000'")
+    nx.nx_agraph.to_agraph(g).draw(f"exports/{name}.pdf", prog="dot",
+                                   args="-Grankdir='LR' -Granksep=1.5 -Gsplines='false'")
 
 
 def generate_gantt(graph):
@@ -352,4 +355,7 @@ with open("exports/export-stage_gantt.csv", 'w') as file:
     for el in stages_gantt.items():
         file.write(
             f"{el[0]},{el[1]['start']},{el[1]['end']},{el[1]['latest']},{';'.join(el[1]['deps'])},{';'.join(el[1]['children'])}\n")
+
+# nx.write_gexf(dep, f"exports/dep.gexf")
+
 print("FIN")
