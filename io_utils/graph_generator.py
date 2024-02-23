@@ -26,3 +26,11 @@ def graph_from_gh_csv(csv_path):
         dep.add_edges_from(deps, EDGE_TYPE="COLL", color='red')
 
     return con, dep
+
+
+def nx_to_agraph_with_subs(g, clusters_dict):
+    ag = nx.nx_agraph.to_agraph(g)
+    for cluster in clusters_dict.items():
+        ag.add_subgraph(cluster[1], cluster[0])
+    
+    return ag
