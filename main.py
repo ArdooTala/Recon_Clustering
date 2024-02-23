@@ -1,25 +1,31 @@
-import networkx as nx
+from io_utils import graph_generator, graph_parser, file_writer
+from graph_solver import *
 
 
-con = nx.DiGraph()
-deps = []
-with open("assemblies/ReconSlab_Top-Connectivity.csv", 'r') as file:
-    print(file.readline())
-    for line in file:
-        connection, part1, part2, dependency = line.strip().split(',')
-        # print(connection, part1, part2, dependency)
+if __name__ == "__main__":
+    con, dep = graph_generator.graph_from_gh_csv("assemblies/ReconSlab_Top-Connectivity.csv")
+    file_writer.export_graph_viz(dep, "dep")
 
-        con.add_nodes_from([part1[6:], part2[6:]], TYPE="PART", color='black')
-        con.add_node(connection, TYPE="CONN", style='filled', fontcolor='#FFFFFF', fillcolor='black')
+    final_ass = direct_cluster_sccs(con.copy(), dep.copy(), 0)
+    file_writer.export_graph_viz(final_ass, "res_dep")
 
-        con.add_edges_from([
-            (part1[6:], connection),
-            (part2[6:], connection)
-        ], EDGE_TYPE="CONN", color='grey')
+    final_con = convert_ass_dep_to_con_dep(final_ass)
+    file_writer.export_graph_viz(final_con, "res_clustered")
 
-        if dependency != r'<null>':
-            # print(dependency)
-            deps.append((connection, dependency[6:]))
+    final_con = replace_cluster_with_conns(final_con)
+    file_writer.export_graph_viz(final_con, "res_expanded")
 
-    dep = con.copy()
-    dep.add_edges_from(deps, EDGE_TYPE="COLL", color='red')
+    stages_dict = graph_parser.generate_stages(con, final_con)
+    file_writer.export_stages(stages_dict)
+
+    stages_graph = generate_stages_graph(final_con, stages_dict)
+    file_writer.export_graph_viz(stages_graph, "stages_dep")
+
+    file_writer.export_clusters(clusters_dict)
+
+    gantt_dict = graph_parser.generate_gantt(final_con)
+    file_writer.export_gantt(gantt_dict)
+
+    nx.write_gexf(dep, f"exports/dep.gexf")
+
+    print("FIN")
