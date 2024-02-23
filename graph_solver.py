@@ -126,58 +126,49 @@ def direct_cluster_sccs(new_ass_con, new_ass_dep, cluster_num):
 def replace_cluster_with_conns(graph: nx.DiGraph):
     all_clusters = [n for n, t in graph.nodes.data("TYPE") if t == "CLUS"]
     print('=' * 100)
-    print(graph)
-    print(all_clusters)
+    print(f"REPLACING CLUSTERS: {all_clusters} > {graph}")
     if not all_clusters:
         return graph
 
     # Replace clusters with connections and internal clusters
     for cluster in all_clusters:
-        print('-' * 10)
-        print(cluster)
-        print(graph.nodes[cluster])
-        print(graph.nodes[cluster]["contraction"])
+        cluster_con_dep = graph.nodes[cluster]["sub_graph"]
+        print(f"\t{cluster} > {cluster_con_dep} > {cluster_con_dep.nodes}")
+        # print(f"\t > {graph.nodes[cluster]}")
+
+        cluster_con_dep = convert_ass_dep_to_con_dep(cluster_con_dep)
+        print(f"\t\tCLUSTER INTERNAL CONNECTION NODES: {cluster_con_dep.nodes}")
+
+        if not nx.is_directed_acyclic_graph(cluster_con_dep):
+            raise Exception("CLUSTER IS NOT DAG, NEEDS SOLUTION")
 
         preds = list(graph.predecessors(cluster))
         succs = list(graph.successors(cluster))
-        print(f"PREDS: {preds}")
-        print(f"SUCCS: {succs}")
+        print(f"\t\tPREDS: {preds}")
+        print(f"\t\tSUCCS: {succs}")
 
         for succ in succs:
             for pred in preds:
                 graph.add_edge(pred, succ)
 
-        cluster_con_dep = graph.nodes[cluster]["sub_graph"]
-        print(cluster_con_dep.nodes)
-        cluster_con_dep = convert_ass_dep_to_con_dep(cluster_con_dep)
-        print(cluster_con_dep.nodes)
-
-        if not nx.is_directed_acyclic_graph(cluster_con_dep):
-            print("#" * 200)
-
         graph.add_nodes_from(cluster_con_dep.nodes.items())
         graph.add_edges_from(cluster_con_dep.edges)
 
-        sinks = [x for x, ind in cluster_con_dep.out_degree if ind == 0]
-
         sub_clusters = [n for n, d in graph.nodes[cluster]["contraction"].items() if d["TYPE"] == "CLUS"]
-        print(f"SUB CLUSTERS > {sub_clusters}")
-
+        print(f"\t\tSUB CLUSTERS: {sub_clusters}")
         for sub_cluster in sub_clusters:
-            print(" >> ", graph.in_degree(sub_cluster), " >> ", graph.out_degree(sub_cluster))
-            # for child_con in children_con:
-            #     graph.add_edge(sub_cluster, child_con)
+            print(f"\t\t\tSUB CLUSTER: {sub_cluster}")
             for pred in preds:
                 graph.add_edge(pred, sub_cluster)
             for succ in succs:
                 graph.add_edge(sub_cluster, succ)
-            print(list(graph.successors(sub_cluster)))
 
+        sinks = [x for x, ind in cluster_con_dep.out_degree if ind == 0]
+        print(f"\t\tSINK NODES: {sinks}")
         for sink in sinks:
-            print(" >> ", sink)
+            print(f"\t\t\tSINK NODE: {sink}")
             for succ in succs:
                 graph.add_edge(sink, succ)
-            print(list(graph.successors(sink)))
 
         graph.remove_node(cluster)
 
