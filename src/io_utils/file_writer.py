@@ -41,9 +41,7 @@ def export_graph_to_inkscape(g, name):
 
     tree = ET.parse(pathlib.Path(__file__).parent / 'inkscape_template.svg')
     root = tree.getroot()
-    print(root)
     nodes_layer = root.findall(".//*[@id='nodes_1']")[0]
-    print(nodes_layer)
 
     header = """<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 
@@ -79,7 +77,6 @@ def export_graph_to_inkscape(g, name):
      id="layer1">
         """)
 
-
         for node in G.nodes():
             pos = G.get_node(node).attr["pos"].split(',')
             # print(pos)
@@ -93,7 +90,21 @@ def export_graph_to_inkscape(g, name):
                 'cy': pos[1],
                 'r': "10.00"
             })
-            print(node_group)
+            node_text = ET.SubElement(node_group, 'text', {
+                'xml:space': "preserve",
+                'style': "font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none",
+                'x': f"{pos[0]}",
+                'y': f"{pos[1]}",
+                'id': f"label1_{node}"
+            })
+            node_text = ET.SubElement(node_text, 'tspan', {
+                'sodipodi:role': "line",
+                'id': f"label2_{node}",
+                'style': "stroke-width:0.264583;stroke:none",
+                'x': f"{pos[0]}",
+                'y': f"{pos[1]}"
+            })
+            node_text.text = node
 
             file.write(f"""
     <g id="g_{node}">
