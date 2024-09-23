@@ -35,123 +35,56 @@ def export_clusters(clusters_dict):
 
 
 def export_graph_to_inkscape(g, name):
+    G = nx.nx_agraph.to_agraph(g)
+    G.layout(prog="dot", args="-Grankdir='LR' -Granksep=1.5 -Gsplines='false'")
+
     ET.register_namespace('', "http://www.w3.org/2000/svg")
     ET.register_namespace('inkscape', "http://www.inkscape.org/namespaces/inkscape")
     ET.register_namespace('sodipodi', "http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd")
 
     tree = ET.parse(pathlib.Path(__file__).parent / 'inkscape_template.svg')
     root = tree.getroot()
+
     nodes_layer = root.findall(".//*[@id='nodes_1']")[0]
+    for node in G.nodes():
+        pos = G.get_node(node).attr["pos"].split(',')
+        # print(pos)
 
-    header = """<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        node_group = ET.SubElement(nodes_layer, 'g')
+        node_group.attrib['id'] = f'node_group_{node}'
+        node_shape = ET.SubElement(node_group, 'circle', {
+            'style': "fill:#000000;stroke-width:0.264583",
+            'id': f"shape_{node}",
+            'cx': pos[0],
+            'cy': pos[1],
+            'r': "10.00"
+        })
+        node_text = ET.SubElement(node_group, 'text', {
+            'xml:space': "preserve",
+            'style': "font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none",
+            'x': f"{pos[0]}",
+            'y': f"{pos[1]}",
+            'id': f"label1_{node}"
+        })
+        node_text = ET.SubElement(node_text, 'tspan', {
+            'sodipodi:role': "line",
+            'id': f"label2_{node}",
+            'style': "stroke-width:0.264583;stroke:none",
+            'x': f"{pos[0]}",
+            'y': f"{pos[1]}"
+        })
+        node_text.text = node
 
-<svg
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
-   version="1.1"
-   id="svg5"
-   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
-   sodipodi:docname="TestInkscapeNetwork.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-"""
-
-    footer = """
-  </g>
-</svg>
-"""
-
-    G = nx.nx_agraph.to_agraph(g)
-    G.layout(prog="dot", args="-Grankdir='LR' -Granksep=1.5 -Gsplines='false'")
-
-    with open("../exports/export-graph.svg", 'w') as file:
-        file.write(header)
-
-        file.write("""
-    <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
-     id="layer1">
-        """)
-
-        for node in G.nodes():
-            pos = G.get_node(node).attr["pos"].split(',')
-            # print(pos)
-
-            node_group = ET.SubElement(nodes_layer, 'g')
-            node_group.attrib['id'] = f'node_group_{node}'
-            node_shape = ET.SubElement(node_group, 'circle', {
-                'style': "fill:#000000;stroke-width:0.264583",
-                'id': f"shape_{node}",
-                'cx': pos[0],
-                'cy': pos[1],
-                'r': "10.00"
-            })
-            node_text = ET.SubElement(node_group, 'text', {
-                'xml:space': "preserve",
-                'style': "font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none",
-                'x': f"{pos[0]}",
-                'y': f"{pos[1]}",
-                'id': f"label1_{node}"
-            })
-            node_text = ET.SubElement(node_text, 'tspan', {
-                'sodipodi:role': "line",
-                'id': f"label2_{node}",
-                'style': "stroke-width:0.264583;stroke:none",
-                'x': f"{pos[0]}",
-                'y': f"{pos[1]}"
-            })
-            node_text.text = node
-
-            file.write(f"""
-    <g id="g_{node}">
-        <circle
-           style="fill:#000000;stroke-width:0.264583"
-           id="shape_{node}"
-           cx="{pos[0]}"
-           cy="{pos[1]}"
-           r="10.00" />
-        <text
-           xml:space="preserve"
-           style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-           x="{pos[0]}"
-           y="{pos[1]}"
-           id="label1_{node}"><tspan
-             sodipodi:role="line"
-             id="label2_{node}"
-             style="stroke-width:0.264583;stroke:none"
-             x="{pos[0]}"
-             y="{pos[1]}">{node}</tspan></text>
-    </g>""")
-
-        file.write("""
-        </g>
-        <g
-         inkscape:label="Layer 2"
-         inkscape:groupmode="layer"
-         id="layer2">
-            """)
-
-        for edge in G.edges():
-            # print(edge)
-            # print(G.get_edge(*edge).attr.to_dict())
-            file.write(f"""
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 71.642728,91.17392 25.709589,9.63346"
-       id="{edge[0] + '__' + edge[1]}"
-       inkscape:connector-type="polyline"
-       inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_{edge[0]}"
-       inkscape:connection-end="#shape_{edge[1]}" />
-""")
-
-        file.write(footer)
-
-    print(G.node_attr.keys())
-    # print(list(G.node_attr.iteritems()))
+    edges_layer = root.findall(".//*[@id='edges_1']")[0]
+    for edge in G.edges():
+        edge_path = ET.SubElement(edges_layer, 'path', {
+            "style": "fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1",
+            "d": "m 71.642728,91.17392 25.709589,9.63346",
+            "id": "{edge[0] + '__' + edge[1]}",
+            "inkscape:connector-type": "polyline",
+            "inkscape:connector-curvature": "0",
+            "inkscape:connection-start": f"#shape_{edge[0]}",
+            "inkscape:connection-end": f"#shape_{edge[1]}"
+        })
 
     tree.write("graphTestTest.svg")
