@@ -36,7 +36,7 @@ def export_clusters(clusters_dict):
 
 def export_graph_to_inkscape(g, name):
     G = nx.nx_agraph.to_agraph(g)
-    G.layout(prog="dot", args="-Grankdir='LR' -Granksep=1.5 -Gsplines='false'")
+    G.layout(prog="dot", args="-Grankdir='TB' -Granksep=0.5 -Gsplines='false' -Gnodesep=0.02 -Goutputorder='edgesfirst'")
 
     ET.register_namespace('', "http://www.w3.org/2000/svg")
     ET.register_namespace('inkscape', "http://www.inkscape.org/namespaces/inkscape")
@@ -45,19 +45,21 @@ def export_graph_to_inkscape(g, name):
     tree = ET.parse(pathlib.Path(__file__).parent / 'inkscape_template.svg')
     root = tree.getroot()
 
+    radius = 10
     nodes_layer = root.findall(".//*[@id='nodes_1']")[0]
     for node in G.nodes():
         pos = G.get_node(node).attr["pos"].split(',')
-        # print(pos)
+        print(G.get_node(node).attr.to_dict())
+        radius = 20 if G.get_node(node).attr["TYPE"] == 'CLUS' else 10
 
         node_group = ET.SubElement(nodes_layer, 'g')
         node_group.attrib['id'] = f'node_group_{node}'
         node_shape = ET.SubElement(node_group, 'circle', {
-            'style': "fill:#000000;stroke-width:0.264583",
+            'style': f"fill:#000000;stroke-width:0.264583",
             'id': f"shape_{node}",
             'cx': pos[0],
             'cy': pos[1],
-            'r': "10.00"
+            'r': f"{radius}"
         })
         node_text = ET.SubElement(node_group, 'text', {
             'xml:space': "preserve",
@@ -87,4 +89,4 @@ def export_graph_to_inkscape(g, name):
             "inkscape:connection-end": f"#shape_{edge[1]}"
         })
 
-    tree.write("graphTestTest.svg")
+    tree.write(f"../exports/{name}.svg")
