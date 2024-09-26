@@ -1,6 +1,7 @@
 import networkx as nx
 import xml.etree.ElementTree as ET
 import pathlib
+import subprocess
 
 
 def export_graph_viz(g, name):
@@ -89,4 +90,5 @@ def export_graph_to_inkscape(g, name):
             "inkscape:connection-end": f"#shape_{edge[1]}"
         })
 
-    tree.write(name)
+    # tree.write(name)
+    subprocess.run(["inkscape", "--pipe", f"--export-filename={name}"], input=ET.tostring(root))
