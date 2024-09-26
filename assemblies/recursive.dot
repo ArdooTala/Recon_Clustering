@@ -1,0 +1,26 @@
+digraph RECURSIVE {
+    splines=line;
+
+    a -> {ab ad ae}
+    b -> {ab bc bf}
+    c -> {bc cd cg}
+    d -> {cd ad dh}
+    e -> {ef eh ae ei}
+    f -> {ef fg bf fj}
+    g -> {fg gh cg gk}
+    h -> {eh gh hl hl}
+    i -> {ij il ei}
+    j -> {ij jk fj}
+    k -> {jk kl gk}
+    l -> {il kl hl}
+
+    ab -> h
+    bc -> e
+    cd -> f
+    ad -> g
+
+    ef -> l
+    fg -> i
+    gh -> j
+    eh -> k
+}

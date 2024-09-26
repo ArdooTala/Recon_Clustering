@@ -1,0 +1,12 @@
+digraph SIMPLE {
+    a -> {ab ae}
+    b -> {bc bd ab}
+    c -> bc
+    d -> bd
+    e -> {ef eg ae}
+    f -> ef
+    g -> eg
+
+    {bc bd} -> e
+    {ef eg} -> b
+}
