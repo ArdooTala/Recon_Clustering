@@ -35,6 +35,7 @@ def extend_sub_graph_with_parts(graph, nodes):
 
 
 def collapse_nodes(graph, nodes, cluster_node, save_dict=None):
+    graph = graph.copy()
     subg = graph.subgraph(nodes).copy()
     cluster_level_data = subg.nodes.data('level', default=-1)
     cluster_level = max([lvl for _, lvl in cluster_level_data]) + 1
