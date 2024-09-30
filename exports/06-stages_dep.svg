@@ -12,9 +12,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <defs
-     id="defs66" />
+     id="defs142" />
   <sodipodi:namedview
-     id="namedview64"
+     id="namedview140"
      pagecolor="#ffffff"
      bordercolor="#000000"
      borderopacity="0.25"
@@ -28,130 +28,230 @@
      inkscape:groupmode="layer"
      id="nodes_1">
     <g
-       id="node_group_E">
+       id="node_group_ab">
       <circle
          style="fill:#000000;stroke-width:0.264583"
-         id="shape_E"
-         cx="53"
-         cy="90"
-         r="10" />
-      <text
-         xml:space="preserve"
-         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="53"
-         y="90"
-         id="label1_E"><tspan
-           sodipodi:role="line"
-           id="label2_E"
-           style="stroke-width:0.264583;stroke:none"
-           x="53"
-           y="90">E</tspan></text>
-    </g>
-    <g
-       id="node_group_F">
-      <circle
-         style="fill:#000000;stroke-width:0.264583"
-         id="shape_F"
-         cx="196"
-         cy="18"
-         r="10" />
-      <text
-         xml:space="preserve"
-         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="196"
-         y="18"
-         id="label1_F"><tspan
-           sodipodi:role="line"
-           id="label2_F"
-           style="stroke-width:0.264583;stroke:none"
-           x="196"
-           y="18">F</tspan></text>
-    </g>
-    <g
-       id="node_group_H">
-      <circle
-         style="fill:#000000;stroke-width:0.264583"
-         id="shape_H"
-         cx="138"
-         cy="18"
-         r="10" />
-      <text
-         xml:space="preserve"
-         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="138"
-         y="18"
-         id="label1_H"><tspan
-           sodipodi:role="line"
-           id="label2_H"
-           style="stroke-width:0.264583;stroke:none"
-           x="138"
-           y="18">H</tspan></text>
-    </g>
-    <g
-       id="node_group_B">
-      <circle
-         style="fill:#000000;stroke-width:0.264583"
-         id="shape_B"
-         cx="27"
+         id="shape_ab"
+         cx="100"
          cy="162"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="100"
+         y="162"
+         id="label1_ab"><tspan
+           sodipodi:role="line"
+           id="label2_ab"
+           style="stroke-width:0.264583;stroke:none"
+           x="100"
+           y="162">ab</tspan></text>
+    </g>
+    <g
+       id="node_group_dh">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_dh"
+         cx="27"
+         cy="90"
          r="10" />
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="27"
-         y="162"
-         id="label1_B"><tspan
+         y="90"
+         id="label1_dh"><tspan
            sodipodi:role="line"
-           id="label2_B"
+           id="label2_dh"
            style="stroke-width:0.264583;stroke:none"
            x="27"
-           y="162">B</tspan></text>
+           y="90">dh</tspan></text>
     </g>
     <g
-       id="node_group_A">
+       id="node_group_eh">
       <circle
          style="fill:#000000;stroke-width:0.264583"
-         id="shape_A"
-         cx="82"
-         cy="162"
-         r="10" />
-      <text
-         xml:space="preserve"
-         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="82"
-         y="162"
-         id="label1_A"><tspan
-           sodipodi:role="line"
-           id="label2_A"
-           style="stroke-width:0.264583;stroke:none"
-           x="82"
-           y="162">A</tspan></text>
-    </g>
-    <g
-       id="node_group_C">
-      <circle
-         style="fill:#000000;stroke-width:0.264583"
-         id="shape_C"
-         cx="137"
+         id="shape_eh"
+         cx="85"
          cy="90"
          r="10" />
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="137"
+         x="85"
          y="90"
-         id="label1_C"><tspan
+         id="label1_eh"><tspan
            sodipodi:role="line"
-           id="label2_C"
+           id="label2_eh"
            style="stroke-width:0.264583;stroke:none"
-           x="137"
-           y="90">C</tspan></text>
+           x="85"
+           y="90">eh</tspan></text>
     </g>
     <g
-       id="node_group_D">
+       id="node_group_gh">
       <circle
          style="fill:#000000;stroke-width:0.264583"
-         id="shape_D"
+         id="shape_gh"
+         cx="143"
+         cy="90"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="143"
+         y="90"
+         id="label1_gh"><tspan
+           sodipodi:role="line"
+           id="label2_gh"
+           style="stroke-width:0.264583;stroke:none"
+           x="143"
+           y="90">gh</tspan></text>
+    </g>
+    <g
+       id="node_group_hl">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_hl"
+         cx="198"
+         cy="18"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="198"
+         y="18"
+         id="label1_hl"><tspan
+           sodipodi:role="line"
+           id="label2_hl"
+           style="stroke-width:0.264583;stroke:none"
+           x="198"
+           y="18">hl</tspan></text>
+    </g>
+    <g
+       id="node_group_gk">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_gk"
+         cx="33"
+         cy="18"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="33"
+         y="18"
+         id="label1_gk"><tspan
+           sodipodi:role="line"
+           id="label2_gk"
+           style="stroke-width:0.264583;stroke:none"
+           x="33"
+           y="18">gk</tspan></text>
+    </g>
+    <g
+       id="node_group_kl">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_kl"
+         cx="143"
+         cy="18"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="143"
+         y="18"
+         id="label1_kl"><tspan
+           sodipodi:role="line"
+           id="label2_kl"
+           style="stroke-width:0.264583;stroke:none"
+           x="143"
+           y="18">kl</tspan></text>
+    </g>
+    <g
+       id="node_group_jk">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_jk"
+         cx="88"
+         cy="18"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="88"
+         y="18"
+         id="label1_jk"><tspan
+           sodipodi:role="line"
+           id="label2_jk"
+           style="stroke-width:0.264583;stroke:none"
+           x="88"
+           y="18">jk</tspan></text>
+    </g>
+    <g
+       id="node_group_fj">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_fj"
+         cx="253"
+         cy="18"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="253"
+         y="18"
+         id="label1_fj"><tspan
+           sodipodi:role="line"
+           id="label2_fj"
+           style="stroke-width:0.264583;stroke:none"
+           x="253"
+           y="18">fj</tspan></text>
+    </g>
+    <g
+       id="node_group_ij">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_ij"
+         cx="308"
+         cy="18"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="308"
+         y="18"
+         id="label1_ij"><tspan
+           sodipodi:role="line"
+           id="label2_ij"
+           style="stroke-width:0.264583;stroke:none"
+           x="308"
+           y="18">ij</tspan></text>
+    </g>
+    <g
+       id="node_group_ad">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_ad"
+         cx="177"
+         cy="162"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="177"
+         y="162"
+         id="label1_ad"><tspan
+           sodipodi:role="line"
+           id="label2_ad"
+           style="stroke-width:0.264583;stroke:none"
+           x="177"
+           y="162">ad</tspan></text>
+    </g>
+    <g
+       id="node_group_cg">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_cg"
          cx="198"
          cy="90"
          r="10" />
@@ -160,52 +260,172 @@
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="198"
          y="90"
-         id="label1_D"><tspan
+         id="label1_cg"><tspan
            sodipodi:role="line"
-           id="label2_D"
+           id="label2_cg"
            style="stroke-width:0.264583;stroke:none"
            x="198"
-           y="90">D</tspan></text>
+           y="90">cg</tspan></text>
     </g>
     <g
-       id="node_group_I">
+       id="node_group_fg">
       <circle
          style="fill:#000000;stroke-width:0.264583"
-         id="shape_I"
-         cx="137"
+         id="shape_fg"
+         cx="366"
+         cy="90"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="366"
+         y="90"
+         id="label1_fg"><tspan
+           sodipodi:role="line"
+           id="label2_fg"
+           style="stroke-width:0.264583;stroke:none"
+           x="366"
+           y="90">fg</tspan></text>
+    </g>
+    <g
+       id="node_group_ei">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_ei"
+         cx="418"
+         cy="18"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="418"
+         y="18"
+         id="label1_ei"><tspan
+           sodipodi:role="line"
+           id="label2_ei"
+           style="stroke-width:0.264583;stroke:none"
+           x="418"
+           y="18">ei</tspan></text>
+    </g>
+    <g
+       id="node_group_il">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_il"
+         cx="363"
+         cy="18"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="363"
+         y="18"
+         id="label1_il"><tspan
+           sodipodi:role="line"
+           id="label2_il"
+           style="stroke-width:0.264583;stroke:none"
+           x="363"
+           y="18">il</tspan></text>
+    </g>
+    <g
+       id="node_group_ae">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_ae"
+         cx="253"
+         cy="90"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="253"
+         y="90"
+         id="label1_ae"><tspan
+           sodipodi:role="line"
+           id="label2_ae"
+           style="stroke-width:0.264583;stroke:none"
+           x="253"
+           y="90">ae</tspan></text>
+    </g>
+    <g
+       id="node_group_bc">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_bc"
+         cx="282"
          cy="162"
          r="10" />
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="137"
+         x="282"
          y="162"
-         id="label1_I"><tspan
+         id="label1_bc"><tspan
            sodipodi:role="line"
-           id="label2_I"
+           id="label2_bc"
            style="stroke-width:0.264583;stroke:none"
-           x="137"
-           y="162">I</tspan></text>
+           x="282"
+           y="162">bc</tspan></text>
     </g>
     <g
-       id="node_group_G">
+       id="node_group_ef">
       <circle
          style="fill:#000000;stroke-width:0.264583"
-         id="shape_G"
-         cx="198"
+         id="shape_ef"
+         cx="308"
+         cy="90"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="308"
+         y="90"
+         id="label1_ef"><tspan
+           sodipodi:role="line"
+           id="label2_ef"
+           style="stroke-width:0.264583;stroke:none"
+           x="308"
+           y="90">ef</tspan></text>
+    </g>
+    <g
+       id="node_group_bf">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_bf"
+         cx="424"
+         cy="90"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="424"
+         y="90"
+         id="label1_bf"><tspan
+           sodipodi:role="line"
+           id="label2_bf"
+           style="stroke-width:0.264583;stroke:none"
+           x="424"
+           y="90">bf</tspan></text>
+    </g>
+    <g
+       id="node_group_cd">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_cd"
+         cx="351"
          cy="162"
          r="10" />
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="198"
+         x="351"
          y="162"
-         id="label1_G"><tspan
+         id="label1_cd"><tspan
            sodipodi:role="line"
-           id="label2_G"
+           id="label2_cd"
            style="stroke-width:0.264583;stroke:none"
-           x="198"
-           y="162">G</tspan></text>
+           x="351"
+           y="162">cd</tspan></text>
     </g>
   </g>
   <g
@@ -214,99 +434,227 @@
      id="edges_1">
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 30.396398,152.59459 49.603602,99.40541"
+       d="M 92.880467,154.978 34.119533,97.022005"
        id="{edge[0] + '__' + edge[1]}"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_B"
-       inkscape:connection-end="#shape_E" />
+       inkscape:connection-start="#shape_ab"
+       inkscape:connection-end="#shape_dh" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 78.263937,152.72426 56.736063,99.275743"
-       id="path40"
+       d="M 97.960487,152.21034 87.039513,99.789661"
+       id="path84"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_A"
-       inkscape:connection-end="#shape_E" />
+       inkscape:connection-start="#shape_ab"
+       inkscape:connection-end="#shape_eh" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 143.3382,82.265249 189.6618,25.734751"
-       id="path42"
+       d="M 105.12737,153.41464 137.87263,98.58536"
+       id="path86"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_C"
-       inkscape:connection-end="#shape_F" />
+       inkscape:connection-start="#shape_ab"
+       inkscape:connection-end="#shape_gh" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 137.13887,80.00105 0.72226,-52.0021"
-       id="path44"
+       d="M 105.62615,153.733 192.37385,26.266996"
+       id="path88"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_C"
-       inkscape:connection-end="#shape_H" />
+       inkscape:connection-start="#shape_ab"
+       inkscape:connection-end="#shape_hl" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 197.72233,80.004002 196.27767,27.995998"
-       id="path46"
+       d="M 79.145108,81.893226 38.854892,26.106774"
+       id="path90"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_D"
-       inkscape:connection-end="#shape_F" />
+       inkscape:connection-start="#shape_eh"
+       inkscape:connection-end="#shape_gk" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 191.59827,82.317925 144.40173,25.682075"
-       id="path48"
+       d="M 91.273205,82.212573 136.7268,25.787427"
+       id="path92"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_D"
-       inkscape:connection-end="#shape_H" />
+       inkscape:connection-start="#shape_eh"
+       inkscape:connection-end="#shape_kl" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 140.79127,152.74673 192.20873,27.253271"
-       id="path50"
+       d="M 85.416298,80.008849 87.583702,27.991151"
+       id="path94"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_I"
-       inkscape:connection-end="#shape_F" />
+       inkscape:connection-start="#shape_eh"
+       inkscape:connection-end="#shape_jk" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 137.06944,152.00043 137.93056,27.999574"
-       id="path52"
+       d="M 136.92966,82.053369 94.070343,25.946631"
+       id="path96"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_I"
-       inkscape:connection-end="#shape_H" />
+       inkscape:connection-start="#shape_gh"
+       inkscape:connection-end="#shape_jk" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 137,152 V 100"
-       id="path54"
+       d="M 151.3669,84.523481 244.6331,23.476519"
+       id="path98"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_I"
-       inkscape:connection-end="#shape_C" />
+       inkscape:connection-start="#shape_gh"
+       inkscape:connection-end="#shape_fj" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 197.86113,152.00105 196.13887,27.99895"
-       id="path56"
+       d="M 152.16522,86.00063 298.83478,21.99937"
+       id="path100"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_G"
-       inkscape:connection-end="#shape_F" />
+       inkscape:connection-start="#shape_gh"
+       inkscape:connection-end="#shape_ij" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 194.15389,152.76933 141.84611,27.230671"
-       id="path58"
+       d="M 172.72995,152.95755 147.27005,99.042454"
+       id="path102"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_G"
-       inkscape:connection-end="#shape_H" />
+       inkscape:connection-start="#shape_ad"
+       inkscape:connection-end="#shape_gh" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 198,152 V 100"
-       id="path60"
+       d="M 169.92893,154.92893 40.071068,25.071068"
+       id="path104"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_G"
-       inkscape:connection-end="#shape_D" />
+       inkscape:connection-start="#shape_ad"
+       inkscape:connection-end="#shape_gk" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 179.79998,152.40008 195.20002,99.599921"
+       id="path106"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_ad"
+       inkscape:connection-end="#shape_cg" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 186.34472,158.44011 356.65528,93.559893"
+       id="path108"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_ad"
+       inkscape:connection-end="#shape_fg" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 359.7268,82.212573 314.2732,25.787427"
+       id="path110"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_fg"
+       inkscape:connection-end="#shape_ij" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 371.85489,81.893226 412.14511,26.106774"
+       id="path112"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_fg"
+       inkscape:connection-end="#shape_ei" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 365.5837,80.008849 363.4163,27.991151"
+       id="path114"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_fg"
+       inkscape:connection-end="#shape_il" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 272.60782,158.56733 94.392179,93.432675"
+       id="path116"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_bc"
+       inkscape:connection-end="#shape_eh" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 288.86612,154.72999 411.13388,25.270011"
+       id="path118"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_bc"
+       inkscape:connection-end="#shape_ei" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 278.26394,152.72426 256.73606,99.275743"
+       id="path120"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_bc"
+       inkscape:connection-end="#shape_ae" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 285.3964,152.59459 304.6036,99.40541"
+       id="path122"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_bc"
+       inkscape:connection-end="#shape_ef" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 299.6331,84.523481 206.3669,23.476519"
+       id="path124"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_ef"
+       inkscape:connection-end="#shape_hl" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 298.83478,86.00063 152.16522,21.99937"
+       id="path126"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_ef"
+       inkscape:connection-end="#shape_kl" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 314.07034,82.053369 356.92966,25.946631"
+       id="path128"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_ef"
+       inkscape:connection-end="#shape_il" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 345.37385,153.733 258.62615,26.266996"
+       id="path130"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_cd"
+       inkscape:connection-end="#shape_fj" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 353.03951,152.21034 363.96049,99.789661"
+       id="path132"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_cd"
+       inkscape:connection-end="#shape_fg" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 345.87263,153.41464 313.12737,98.58536"
+       id="path134"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_cd"
+       inkscape:connection-end="#shape_ef" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 358.11953,154.978 416.88047,97.022005"
+       id="path136"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_cd"
+       inkscape:connection-end="#shape_bf" />
   </g>
 </svg>

@@ -11,7 +11,7 @@ if __name__ == "__main__":
 
     # con = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
     from assemblies import example_graph as eg
-    con = eg.con
+    con = eg.recursive_con
     file_writer.export_graph_viz(con, export_path / "01-dep.pdf")
     file_writer.export_graph_to_inkscape(con, export_path / "01-dep.svg")
 
