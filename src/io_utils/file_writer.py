@@ -50,7 +50,7 @@ def export_graph_to_inkscape(g, name):
     nodes_layer = root.findall(".//*[@id='nodes_1']")[0]
     for node in G.nodes():
         pos = G.get_node(node).attr["pos"].split(',')
-        print(G.get_node(node).attr.to_dict())
+        # print(G.get_node(node).attr.to_dict())
         radius = 20 if G.get_node(node).attr["TYPE"] == 'CLUS' else 10
 
         node_group = ET.SubElement(nodes_layer, 'g')

@@ -9,11 +9,11 @@ if __name__ == "__main__":
     if not export_path.exists():
         export_path.mkdir()
 
-    con, dep = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
-    file_writer.export_graph_viz(dep, export_path / "01-dep.pdf")
-    file_writer.export_graph_to_inkscape(dep, export_path / "01-dep.svg")
+    con = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
+    file_writer.export_graph_viz(con, export_path / "01-dep.pdf")
+    file_writer.export_graph_to_inkscape(con, export_path / "01-dep.svg")
 
-    final_ass = graph_solver.direct_cluster_sccs(con.copy(), dep.copy(), 0)
+    final_ass = graph_solver.direct_cluster_sccs(con.copy())
     file_writer.export_graph_viz(final_ass, export_path / "02-res_dep.pdf")
     file_writer.export_graph_to_inkscape(final_ass, export_path / "02-res_dep.svg")
 

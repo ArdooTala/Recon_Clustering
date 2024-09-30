@@ -59,14 +59,15 @@ def collapse_nodes(graph, nodes, cluster_node, save_dict=None):
     return graph
 
 
-def direct_cluster_sccs(new_ass_con, new_ass_dep, cluster_num):
+def direct_cluster_sccs(new_ass: nx.DiGraph, cluster_num=0):
+    new_ass_dep = new_ass.copy()
+
     if nx.is_strongly_connected(new_ass_dep):
         print("ERROR")
-        # viz_g(new_ass_dep)
         raise Exception("Graph is one SCC")
 
     if nx.is_directed_acyclic_graph(new_ass_dep):
-        print("CON_DEP graph is a DAG...")
+        print("CON_DEP graph is a DAG...\n")
         return new_ass_dep
 
     print(f"CLUSTERING...{new_ass_dep}")
@@ -76,14 +77,14 @@ def direct_cluster_sccs(new_ass_con, new_ass_dep, cluster_num):
         cluster_nodes = condensed.nodes[scc_node]['members']
         if len(cluster_nodes) < 2:
             continue
-        print(f"CON_DEP SCC: {cluster_nodes}")
+        print(f"ASSEMBLY GRAPH SCC: {cluster_nodes}")
         for i in range(10):
             extended_ass_dep = extend_sub_graph_with_parts(new_ass_dep, cluster_nodes)
 
             cluster_nodes = list(extended_ass_dep.nodes)
-            print(f"ASS_DEP Nodes: {cluster_nodes}")
+            print(f"EXTENDED SUBGRAPH: {cluster_nodes}")
 
-            temp_ass_dep = collapse_nodes(new_ass_dep.copy(), cluster_nodes, -1)
+            temp_ass_dep = collapse_nodes(new_ass_dep, cluster_nodes, -1)
             all_sccs = nx.strongly_connected_components(temp_ass_dep)
             extended_nodes = [list(g) for g in all_sccs if -1 in g][0]
             if len(extended_nodes) > 1:
@@ -92,16 +93,24 @@ def direct_cluster_sccs(new_ass_con, new_ass_dep, cluster_num):
                 cluster_nodes = set(cluster_nodes)
                 cluster_nodes.update(extended_nodes)
                 cluster_nodes = list(cluster_nodes)
-                print(f"\tExtending > [{i}]: Latest ASS_DEP Nodes: {cluster_nodes}")
+                print(f"\tExtending > [{i}]: Latest EXTENDED Nodes: {cluster_nodes}")
             else:
-                print(f"Extended {i} times. Final ASS_DEP Nodes: {cluster_nodes}")
+                print(f"Extended {i} times. Final EXTENDED Nodes: {cluster_nodes}")
                 break
 
-        trm_ass_dep = new_ass_dep.subgraph(cluster_nodes).copy()
-        trm_ass_con = new_ass_con.subgraph(cluster_nodes).copy()
+        trm_ass_dep = new_ass.subgraph(cluster_nodes)
+        trm_ass_con = nx.subgraph_view(
+            trm_ass_dep,
+            filter_edge=lambda e1, e2: trm_ass_dep[e1][e2]["EDGE_TYPE"] != "COLL",
+        )
+        # trm_ass_con = nx.subgraph_view(
+        #     new_ass,
+        #     filter_edge=lambda e1, e2: new_ass[e1][e2]["EDGE_TYPE"] != "COLL",
+        #     filter_node=lambda n: n in cluster_nodes,
+        # ).copy()
         clusters = list(nx.weakly_connected_components(trm_ass_con))
         print(f"Segmenting SCC to {len(clusters)} Clusters: {clusters}")
-        seg_ass_dep = nx.union_all([new_ass_dep.subgraph(cluster).copy() for cluster in clusters])
+        seg_ass_dep = nx.union_all([new_ass_dep.subgraph(cluster) for cluster in clusters])
 
         # Remove edges from ConnectionsDependencyGraph
         edges_to_remove = [edge for edge in trm_ass_dep.edges if not seg_ass_dep.has_edge(*edge)]
@@ -114,19 +123,18 @@ def direct_cluster_sccs(new_ass_con, new_ass_dep, cluster_num):
             print(f"{cluster_name} > {cluster}")
 
             # Update Graphs
-            new_ass_con = collapse_nodes(new_ass_con, cluster, cluster_name, save_dict=clusters_dict)
-            new_ass_dep = collapse_nodes(new_ass_dep, cluster, cluster_name)
+            new_ass_dep = collapse_nodes(new_ass_dep, cluster, cluster_name, save_dict=clusters_dict)
 
             cluster_num += 1
 
         print(f"Is DAG yet: {nx.is_directed_acyclic_graph(new_ass_dep)}\n\n")
-        return direct_cluster_sccs(new_ass_con, new_ass_dep, cluster_num)
+        return direct_cluster_sccs(new_ass_dep, cluster_num)
 
 
 def replace_cluster_with_conns(graph: nx.DiGraph):
     all_clusters = [n for n, t in graph.nodes.data("TYPE") if t == "CLUS"]
     print('=' * 100)
-    print(f"REPLACING CLUSTERS: {all_clusters} > {graph}")
+    print(f"REPLACING CLUSTERS: {all_clusters} in a {graph}")
     if not all_clusters:
         return graph
 

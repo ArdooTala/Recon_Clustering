@@ -21,8 +21,10 @@ def graph_from_gh_csv(csv_path):
             if dependency != r'<null>':
                 # print(dependency)
                 deps.append((connection, dependency[6:]))
+                con.add_edge(connection, dependency[6:], EDGE_TYPE='COLL', color='red')
 
-        dep = con.copy()
-        dep.add_edges_from(deps, EDGE_TYPE="COLL", color='red')
+        # dep = con.copy()
+        # dep.add_edges_from(deps, EDGE_TYPE="COLL", color='red')
 
-    return con, dep
+    # return con, dep
+    return con
