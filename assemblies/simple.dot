@@ -1,12 +1,18 @@
 digraph SIMPLE {
-    a -> {ab ae}
-    b -> {bc bd ab}
-    c -> bc
-    d -> bd
-    e -> {ef eg ae}
-    f -> ef
-    g -> eg
+    // nodes
+    a b c d e f g [TYPE=PART]
 
-    {bc bd} -> e
-    {ef eg} -> b
+    // connections
+    ab ae bc bd ab ef eg ae [TYPE=CONN]
+
+    a -> {ab ae} [EDGE_TYPE="CONN"]
+    b -> {bc bd ab} [EDGE_TYPE="CONN"]
+    c -> bc [EDGE_TYPE="CONN"]
+    d -> bd [EDGE_TYPE="CONN"]
+    e -> {ef eg ae} [EDGE_TYPE="CONN"]
+    f -> ef [EDGE_TYPE="CONN"]
+    g -> eg [EDGE_TYPE="CONN"]
+
+    {bc bd} -> e [EDGE_TYPE="COLL"]
+    {ef eg} -> b [EDGE_TYPE="COLL"]
 }

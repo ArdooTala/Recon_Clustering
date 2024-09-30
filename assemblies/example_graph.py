@@ -21,17 +21,19 @@ con.add_edges_from([
     (7, 'H'),
     (5, 'I'),
     (8, 'I'),
-])
+], EDGE_TYPE='CONN')
 
 for i in range(9):
-    con.nodes[i]["PART"] = True
+    con.nodes[i]["TYPE"] = "PART"
 
-dep = con.copy()
-dep.add_edges_from([
+for i in "ABCDEFGHI":
+    con.nodes[i]["TYPE"] = "CONN"
+
+con.add_edges_from([
     ('A', 2),
     ('B', 2),
     ('C', 1),
     ('D', 1),
     ('G', 5),
     ('I', 6)
-], collision_edge=True)
+], EDGE_TYPE="COLL")
