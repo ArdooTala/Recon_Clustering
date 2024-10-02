@@ -1,7 +1,5 @@
-from src.io_utils import graph_parser, file_writer
-from src.io_utils import graph_generator
-from src.graph_solver import graph_solver
-import networkx as nx
+from recongraph.io_utils import graph_parser, file_writer
+from recongraph.graph_solver import graph_solver
 from pathlib import Path
 
 if __name__ == "__main__":
