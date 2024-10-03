@@ -29,3 +29,6 @@ Repository = "https://github.com/ArdooTala/Recon_Clustering.git"
 [tool.setuptools.packages.find]
 where = ["src"]
 exclude = ["main.py"]
+
+[tool.setuptools.package-data]
+"recongraph.io_utils" = ["inkscape_template.svg"]
