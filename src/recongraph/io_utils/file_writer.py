@@ -4,10 +4,9 @@ import xml.etree.ElementTree as ET
 import pathlib
 import subprocess
 import warnings
-from recongraph.visualizer import graph_visualizer
-
 
 VIZ_DEP_INSTALLED = (importlib.util.find_spec('pygraphviz')) is not None
+
 
 def pygraphviz_export(g, name):
     if not VIZ_DEP_INSTALLED:
@@ -55,8 +54,7 @@ def inkscape_export(g, name, node_pos):
     nodes_layer = root.findall(".//*[@id='nodes_1']")[0]
     for node in g.nodes():
         pos = node_pos[node]
-        # pos = G.get_node(node).attr["pos"].split(',')
-        radius = 20 if g.nodes[node]["TYPE"] == 'CLUS' else 10
+        radius = radius * 2 if g.nodes[node]["TYPE"] == 'CLUS' else radius
 
         node_group = ET.SubElement(nodes_layer, 'g')
         node_group.attrib['id'] = f'node_group_{node}'
@@ -95,5 +93,4 @@ def inkscape_export(g, name, node_pos):
             "inkscape:connection-end": f"#shape_{edge[1]}"
         })
 
-    # tree.write(name)
     subprocess.run(["inkscape", "--pipe", f"--export-filename={name}"], input=ET.tostring(root))
