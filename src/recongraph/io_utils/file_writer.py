@@ -1,10 +1,17 @@
+import importlib.util
 import networkx as nx
 import xml.etree.ElementTree as ET
 import pathlib
 import subprocess
+import warnings
 
+
+VIZ_DEP_INSTALLED = (importlib.util.find_spec('pygraphviz')) is not None
 
 def export_graph_viz(g, name):
+    if not VIZ_DEP_INSTALLED:
+        warnings.warn("Package pygraphviz is not installed. Skipping visualization.")
+        return
     # nx.nx_agraph.to_agraph(g).draw(f"exports/{name}.pdf", prog="neato",
     #                                args="-Gdiredgeconstraints=true -Gmode='ipsep' -Goverlap='prism5000'")
     nx.nx_agraph.to_agraph(g).draw(name, prog="dot",
@@ -36,6 +43,10 @@ def export_clusters(clusters_dict, name):
 
 
 def export_graph_to_inkscape(g, name):
+    if not VIZ_DEP_INSTALLED:
+        warnings.warn("Package pygraphviz is not installed. Skipping visualization.")
+        return
+    # nx.nx_agraph.to_agraph(g).draw(f"exports/{name}.pdf", prog="neato",
     G = nx.nx_agraph.to_agraph(g)
     G.layout(prog="dot", args="-Grankdir='TB' -Granksep=0.5 -Gsplines='false' -Gnodesep=0.02 -Goutputorder='edgesfirst'")
 
