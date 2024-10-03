@@ -9,29 +9,29 @@ if __name__ == "__main__":
         export_path.mkdir()
 
     # con = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
-    from assemblies import example_graph as eg
-
-    con = eg.con
+    # from assemblies import example_graph as eg
+    # con = eg.con
+    con = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
     file_writer.pygraphviz_export(con, export_path / "01-dep.pdf")
-    pos = graph_visualizer.pygraphviz_layout(con)
+    pos = graph_visualizer.multipartite_layout_by_connections(con)
     file_writer.inkscape_export(con, export_path / "01-dep.svg", pos)
     graph_visualizer.viz_dag(con, pos)
 
     final_ass = graph_solver.direct_cluster_sccs(con.copy())
     file_writer.pygraphviz_export(final_ass, export_path / "02-res_dep.pdf")
-    pos = graph_visualizer.pygraphviz_layout(final_ass)
+    pos = graph_visualizer.multipartite_layout_by_connections(final_ass)
     file_writer.inkscape_export(final_ass, export_path / "02-res_dep.svg", pos)
     graph_visualizer.viz_dag(final_ass, pos)
 
     final_con = graph_solver.convert_ass_dep_to_con_dep(final_ass)
     file_writer.pygraphviz_export(final_con, export_path / "03-res_clustered.pdf")
-    pos = graph_visualizer.pygraphviz_layout(final_con)
+    pos = graph_visualizer.multipartite_layout_by_connections(final_con)
     file_writer.inkscape_export(final_con, export_path / "03-res_clustered.svg", pos)
     graph_visualizer.viz_dag(final_con, pos)
 
     final_con = graph_solver.replace_cluster_with_conns(final_con)
     file_writer.pygraphviz_export(final_con, export_path / "04-res_expanded.pdf")
-    pos = graph_visualizer.pygraphviz_layout(final_con)
+    pos = graph_visualizer.multipartite_layout_by_connections(final_con)
     file_writer.inkscape_export(final_con, export_path / "04-res_expanded.svg", pos)
     graph_visualizer.viz_dag(final_con, pos)
 
@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
     stages_graph = graph_solver.generate_stages_graph(final_con, stages_dict)
     file_writer.pygraphviz_export(stages_graph, export_path / "06-stages_dep.pdf")
-    pos = graph_visualizer.pygraphviz_layout(final_con)
+    pos = graph_visualizer.multipartite_layout_by_connections(final_con)
     file_writer.inkscape_export(final_con, export_path / "06-stages_dep.svg", pos)
     graph_visualizer.viz_dag(final_con, pos)
 

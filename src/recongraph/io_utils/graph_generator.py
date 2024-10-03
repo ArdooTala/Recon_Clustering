@@ -19,12 +19,19 @@ def graph_from_gh_csv(csv_path):
             ], EDGE_TYPE="CONN", color='grey')
 
             if dependency != r'<null>':
-                # print(dependency)
                 deps.append((connection, dependency[6:]))
                 con.add_edge(connection, dependency[6:], EDGE_TYPE='COLL', color='red')
 
-        # dep = con.copy()
-        # dep.add_edges_from(deps, EDGE_TYPE="COLL", color='red')
-
-    # return con, dep
     return con
+
+def graph_from_assembly(connections, collisions):
+    pass
+
+def graph_from_dot_file(file_path):
+    graph = nx.DiGraph(nx.nx_agraph.read_dot(file_path))
+    for i in graph.nodes:
+        graph.nodes[i]["TYPE"] = "PART" if graph[i].get('shape', None) == 'box' else "CONN"
+    for s, e in graph.edges:
+        graph[s][e]["EDGE_TYPE"] = "CONN" if graph[s][e].get('color', None) == 'red' else "COLL"
+
+    return graph
