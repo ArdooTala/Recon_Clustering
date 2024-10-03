@@ -4,11 +4,12 @@ import xml.etree.ElementTree as ET
 import pathlib
 import subprocess
 import warnings
+from recongraph.visualizer import graph_visualizer
 
 
 VIZ_DEP_INSTALLED = (importlib.util.find_spec('pygraphviz')) is not None
 
-def export_graph_viz(g, name):
+def pygraphviz_export(g, name):
     if not VIZ_DEP_INSTALLED:
         warnings.warn("Package pygraphviz is not installed. Skipping visualization.")
         return
@@ -42,14 +43,7 @@ def export_clusters(clusters_dict, name):
                 file.write(f"{lay[0]},{clst[0]},{';'.join(clst[1])},{';'.join(clst[2])},{';'.join(clst[3])}\n")
 
 
-def export_graph_to_inkscape(g, name):
-    if not VIZ_DEP_INSTALLED:
-        warnings.warn("Package pygraphviz is not installed. Skipping visualization.")
-        return
-    # nx.nx_agraph.to_agraph(g).draw(f"exports/{name}.pdf", prog="neato",
-    G = nx.nx_agraph.to_agraph(g)
-    G.layout(prog="dot", args="-Grankdir='TB' -Granksep=0.5 -Gsplines='false' -Gnodesep=0.02 -Goutputorder='edgesfirst'")
-
+def inkscape_export(g, name, node_pos):
     ET.register_namespace('', "http://www.w3.org/2000/svg")
     ET.register_namespace('inkscape', "http://www.inkscape.org/namespaces/inkscape")
     ET.register_namespace('sodipodi', "http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd")
@@ -59,18 +53,18 @@ def export_graph_to_inkscape(g, name):
 
     radius = 10
     nodes_layer = root.findall(".//*[@id='nodes_1']")[0]
-    for node in G.nodes():
-        pos = G.get_node(node).attr["pos"].split(',')
-        # print(G.get_node(node).attr.to_dict())
-        radius = 20 if G.get_node(node).attr["TYPE"] == 'CLUS' else 10
+    for node in g.nodes():
+        pos = node_pos[node]
+        # pos = G.get_node(node).attr["pos"].split(',')
+        radius = 20 if g.nodes[node]["TYPE"] == 'CLUS' else 10
 
         node_group = ET.SubElement(nodes_layer, 'g')
         node_group.attrib['id'] = f'node_group_{node}'
         node_shape = ET.SubElement(node_group, 'circle', {
             'style': f"fill:#000000;stroke-width:0.264583",
             'id': f"shape_{node}",
-            'cx': pos[0],
-            'cy': pos[1],
+            'cx': f"pos[0]",
+            'cy': f"pos[1]",
             'r': f"{radius}"
         })
         node_text = ET.SubElement(node_group, 'text', {
@@ -90,7 +84,7 @@ def export_graph_to_inkscape(g, name):
         node_text.text = node
 
     edges_layer = root.findall(".//*[@id='edges_1']")[0]
-    for edge in G.edges():
+    for edge in g.edges():
         edge_path = ET.SubElement(edges_layer, 'path', {
             "style": "fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1",
             "d": "m 71.642728,91.17392 25.709589,9.63346",

@@ -32,100 +32,100 @@
       <circle
          style="fill:#000000;stroke-width:0.264583"
          id="shape_E"
-         cx="39.646"
-         cy="18"
+         cx="pos[0]"
+         cy="pos[1]"
          r="10" />
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="39.646"
-         y="18"
+         y="18.0"
          id="label1_E"><tspan
            sodipodi:role="line"
            id="label2_E"
            style="stroke-width:0.264583;stroke:none"
            x="39.646"
-           y="18">E</tspan></text>
+           y="18.0">E</tspan></text>
     </g>
     <g
        id="node_group_F">
       <circle
          style="fill:#000000;stroke-width:0.264583"
          id="shape_F"
-         cx="114.65"
-         cy="18"
+         cx="pos[0]"
+         cy="pos[1]"
          r="10" />
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="114.65"
-         y="18"
+         y="18.0"
          id="label1_F"><tspan
            sodipodi:role="line"
            id="label2_F"
            style="stroke-width:0.264583;stroke:none"
            x="114.65"
-           y="18">F</tspan></text>
+           y="18.0">F</tspan></text>
     </g>
     <g
        id="node_group_H">
       <circle
          style="fill:#000000;stroke-width:0.264583"
          id="shape_H"
-         cx="169.65"
-         cy="18"
+         cx="pos[0]"
+         cy="pos[1]"
          r="10" />
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="169.65"
-         y="18"
+         y="18.0"
          id="label1_H"><tspan
            sodipodi:role="line"
            id="label2_H"
            style="stroke-width:0.264583;stroke:none"
            x="169.65"
-           y="18">H</tspan></text>
+           y="18.0">H</tspan></text>
     </g>
     <g
        id="node_group_CL_02">
       <circle
          style="fill:#000000;stroke-width:0.264583"
          id="shape_CL_02"
-         cx="39.646"
-         cy="90"
+         cx="pos[0]"
+         cy="pos[1]"
          r="20" />
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="39.646"
-         y="90"
+         y="90.0"
          id="label1_CL_02"><tspan
            sodipodi:role="line"
            id="label2_CL_02"
            style="stroke-width:0.264583;stroke:none"
            x="39.646"
-           y="90">CL_02</tspan></text>
+           y="90.0">CL_02</tspan></text>
     </g>
     <g
        id="node_group_CL_03">
       <circle
          style="fill:#000000;stroke-width:0.264583"
          id="shape_CL_03"
-         cx="134.65"
-         cy="90"
+         cx="pos[0]"
+         cy="pos[1]"
          r="20" />
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="134.65"
-         y="90"
+         y="90.0"
          id="label1_CL_03"><tspan
            sodipodi:role="line"
            id="label2_CL_03"
            style="stroke-width:0.264583;stroke:none"
            x="134.65"
-           y="90">CL_03</tspan></text>
+           y="90.0">CL_03</tspan></text>
     </g>
   </g>
   <g
@@ -134,7 +134,7 @@
      id="edges_1">
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 39.646,70 V 28"
+       d="M 0,0 V 0"
        id="{edge[0] + '__' + edge[1]}"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
@@ -142,19 +142,19 @@
        inkscape:connection-end="#shape_E" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 129.29715,70.729747 117.32642,27.635127"
+       d="M 0,0 V 0"
        id="path24"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
        inkscape:connection-start="#shape_CL_03"
-       inkscape:connection-end="#shape_F" />
+       inkscape:connection-end="#shape_H" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 143.39377,72.012795 165.2781,26.993602"
+       d="M 0,0 V 0"
        id="path26"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
        inkscape:connection-start="#shape_CL_03"
-       inkscape:connection-end="#shape_H" />
+       inkscape:connection-end="#shape_F" />
   </g>
 </svg>
