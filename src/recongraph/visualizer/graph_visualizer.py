@@ -29,13 +29,14 @@ def pygraphviz_layout(g):
         prog="dot",
         args="-Grankdir='TB' -Granksep=0.5 -Gsplines='false' -Gnodesep=0.02 -Goutputorder='edgesfirst'"
     )
-
+    bbox = tuple(map(float, gg.graph_attr['bb'].split(',')))
+    # bbox = gg.graph_attr['bb'].split(',')
     pos = {}
     for node in gg.nodes():
         pos[node] = tuple(map(float, gg.get_node(node).attr["pos"].split(',')))
 
     logger.debug(f"Node Positions: {pos}")
-    return pos
+    return pos, bbox
 
 def multipartite_layout_by_connections(g):
     graph = nx.subgraph_view(
@@ -55,6 +56,4 @@ def multipartite_layout_by_connections(g):
         stage += 1
     pos = nx.multipartite_layout(g)
     logger.debug(f"Node Positions: {pos}")
-    return pos
-
-
+    return pos, (0, 0, 1, 1)

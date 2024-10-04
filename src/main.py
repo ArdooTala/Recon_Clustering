@@ -12,8 +12,8 @@ if __name__ == "__main__":
     def viz_and_save(graph, path: Path):
         file_writer.pygraphviz_export(graph, path.with_suffix(".pdf"))
         # pos = graph_visualizer.multipartite_layout_by_connections(graph)
-        pos = graph_visualizer.pygraphviz_layout(graph)
-        file_writer.inkscape_export(graph, path.with_suffix(".svg"), pos)
+        pos, bbox = graph_visualizer.pygraphviz_layout(graph)
+        file_writer.inkscape_export(graph, path.with_suffix(".svg"), pos, bbox)
         # graph_visualizer.viz_dag(graph, pos)
 
     assembly = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
