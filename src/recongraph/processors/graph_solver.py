@@ -3,6 +3,7 @@ import logging
 
 
 logger = logging.getLogger(__name__)
+# TODO: clusters_dict as Graph Attr...or not...whatever...! You can extract it later anyway.
 clusters_dict = {}
 
 def convert_ass_dep_to_con_dep(dep_graph, drop_types=None):
