@@ -148,12 +148,18 @@ def _expands_cluster(graph, cluster):
     graph.add_nodes_from(cluster_con_dep.nodes.items())
     graph.add_edges_from(cluster_con_dep.edges)
 
-    sources = [x for x, ind in cluster_con_dep.in_degree if ind == 0]
-    logger.debug(f"\t\tSOURCE NODES: {sources}")
-    for source in sources:
-        logger.debug(f"\t\t\tConnecting SOURCE NODE {source} to {preds}")
-        for pred in preds:
-            graph.add_edge(source, pred)
+    # Since the cluster is isolated, the predecessors are not a dependency anymore
+    # sources = [x for x, ind in cluster_con_dep.in_degree if ind == 0]
+    # logger.debug(f"\t\tSOURCE NODES: {sources}")
+    # for source in sources:
+    #     logger.debug(f"\t\t\tConnecting SOURCE NODE {source} to {preds}")
+    #     for pred in preds:
+    #         graph.add_edge(source, pred)
+
+    # however, the predecessors and successors need to keep their dependency
+    for pred in preds:
+        for succ in succs:
+            graph.add_edge(pred, succ)
 
     sinks = [x for x, ind in cluster_con_dep.out_degree if ind == 0]
     logger.debug(f"\t\tSINK NODES: {sinks}")
