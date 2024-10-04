@@ -57,7 +57,6 @@ def inkscape_export(g, name, node_pos, bbox):
     radius = 10
     nodes_layer = root.findall(".//*[@id='nodes_1']")[0]
     for node in g.nodes():
-        # TODO: Use node attributes for drawing
         pos = node_pos[node]
 
         rad = radius * 2 if g.nodes[node]["TYPE"] == 'CLUS' else radius

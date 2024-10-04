@@ -3,8 +3,6 @@ import logging
 
 
 logger = logging.getLogger(__name__)
-# TODO: clusters_dict as Graph Attr...or not...whatever...! You can extract it later anyway.
-clusters_dict = {}
 
 def convert_ass_dep_to_con_dep(dep_graph, drop_types=None):
     if not drop_types:
@@ -63,6 +61,10 @@ def collapse_nodes(graph, nodes, cluster_node, save_dict=None):
 
 def direct_cluster_sccs(new_ass: nx.DiGraph, cluster_num=0):
     new_ass_dep = new_ass.copy()
+    if 'clusters_dict' not in new_ass_dep.graph:
+        new_ass_dep.graph['clusters_dict'] = {}
+
+    clusters_dict = new_ass_dep.graph['clusters_dict']
 
     if nx.is_strongly_connected(new_ass_dep):
         raise Exception("Graph is one SCC")

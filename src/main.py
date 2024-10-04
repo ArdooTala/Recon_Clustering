@@ -43,7 +43,7 @@ if __name__ == "__main__":
     stages_graph = graph_solver.generate_stages_graph(res_con, stages_dict)
     viz_and_save(stages_graph, export_path / "06-stages_dep.pdf")
 
-    file_writer.export_clusters(graph_solver.clusters_dict, export_path / "export-clusters.csv")
+    file_writer.export_clusters(res_dep.graph['clusters_dict'], export_path / "export-clusters.csv")
 
     gantt_dict = graph_parser.generate_gantt(res_con)
     file_writer.export_gantt(gantt_dict, export_path / "export-stage_gantt.csv")
