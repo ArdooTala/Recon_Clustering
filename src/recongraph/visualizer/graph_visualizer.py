@@ -12,12 +12,12 @@ VIZ_DEP_INSTALLED = (importlib.util.find_spec('pygraphviz')) is not None
 def viz_g(g):
     subax1 = plt.subplot()
     pos = nx.spring_layout(g)
-    nx.draw_networkx(g, pos=pos, with_labels=True, font_weight='bold')
+    nx.draw_networkx(g, pos=pos, with_labels=True)
     plt.show()
 
 def viz_dag(g, pos):
     subax1 = plt.subplot()
-    nx.draw_networkx(g, pos=pos, with_labels=True, font_weight='bold')
+    nx.draw_networkx(g, pos=pos, with_labels=True)
     plt.show()
 
 def pygraphviz_layout(g):
