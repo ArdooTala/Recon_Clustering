@@ -56,7 +56,7 @@ def inkscape_export(g, name, node_pos):
     nodes_layer = root.findall(".//*[@id='nodes_1']")[0]
     for node in g.nodes():
         pos = node_pos[node]
-        radius = radius * 2 if g.nodes[node]["TYPE"] == 'CLUS' else radius
+        rad = radius * 2 if g.nodes[node]["TYPE"] == 'CLUS' else radius
 
         node_group = ET.SubElement(nodes_layer, 'g')
         node_group.attrib['id'] = f'node_group_{node}'
@@ -65,7 +65,7 @@ def inkscape_export(g, name, node_pos):
             'id': f"shape_{node}",
             'cx': f"{pos[0]}",
             'cy': f"{pos[1]}",
-            'r': f"{radius}"
+            'r': f"{rad}"
         })
         node_text = ET.SubElement(node_group, 'text', {
             'xml:space': "preserve",
