@@ -1,8 +1,11 @@
 import importlib.util
+import logging
 import networkx as nx
 import matplotlib.pyplot as plt
 import warnings
 
+
+logger = logging.getLogger(__name__)
 
 VIZ_DEP_INSTALLED = (importlib.util.find_spec('pygraphviz')) is not None
 
@@ -31,7 +34,7 @@ def pygraphviz_layout(g):
     for node in gg.nodes():
         pos[node] = tuple(map(float, gg.get_node(node).attr["pos"].split(',')))
 
-    print(pos)
+    logger.debug(f"Node Positions: {pos}")
     return pos
 
 def multipartite_layout_by_connections(g):
@@ -42,10 +45,7 @@ def multipartite_layout_by_connections(g):
 
     stage = 0
     while graph.order() > 0:
-        print(graph)
-
         sources = [x for x, ind in graph.in_degree if ind == 0]
-        print(f"Source Nodes: {sources}")
         if not sources:
             raise Exception("FUCK!...No Sources in Graph")
         for src in sources:
@@ -54,7 +54,7 @@ def multipartite_layout_by_connections(g):
 
         stage += 1
     pos = nx.multipartite_layout(g)
-    print(pos)
+    logger.debug(f"Node Positions: {pos}")
     return pos
 
 

@@ -1,11 +1,14 @@
+import logging
 import networkx as nx
 
+
+logger = logging.getLogger(__name__)
 
 def graph_from_gh_csv(csv_path):
     con = nx.DiGraph()
     deps = []
     with open(csv_path, 'r') as file:
-        print(file.readline())
+        logger.info(file.readline())
         for line in file:
             connection, part1, part2, dependency = line.strip().split(',')
             # print(connection, part1, part2, dependency)

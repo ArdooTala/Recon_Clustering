@@ -1,5 +1,9 @@
+import logging
 import networkx as nx
+import graph_solver as gs
 
+
+logger = logging.getLogger(__name__)
 
 def _get_dep_graph_from_connections(graph, nodes):
     elems = set()
@@ -10,13 +14,15 @@ def _get_dep_graph_from_connections(graph, nodes):
 
 def generate_stages(con, g):
     graph = g.copy()
-    stage = 0
     stages_dict = {}
     all_parts = []
 
+    logger.info("Generating Stages")
+    stage = 0
     while graph.order() > 0:
+        logger.debug(f"Stage: {stage}")
         sources = [x for x, ind in graph.in_degree if ind == 0]
-        print(f"Source Nodes: {sources}")
+        logger.debug(f"\tSource Nodes: {sources}")
         if not sources:
             raise Exception("FUCK!...No Sources in Graph")
         con_graph = _get_dep_graph_from_connections(con, sources)
@@ -25,7 +31,7 @@ def generate_stages(con, g):
         stages_dict[stage] = {}
         component_count = 0
         for component in nx.weakly_connected_components(con_graph):
-            print(f"\tComponent: {component}")
+            logger.debug(f"\t\tComponent: {component}")
             stages_dict[stage][component_count] = {}
             comp_conns = [n for n in component if con_graph.nodes[n]["TYPE"] == "CONN"]
             comp_parts = [n for n in component if con_graph.nodes[n]["TYPE"] == "PART"]
@@ -40,7 +46,7 @@ def generate_stages(con, g):
                     if any([prt in stages_dict[stage - 1][cmp_name]["group"] for prt in comp_parts]):
                         comp_group.update(stages_dict[stage - 1][cmp_name]["group"])
                         ext_clstrs.append(f"{stage}-{cmp_name}")
-                print(f"\t\tComponent Extends Clusters > {ext_clstrs}")
+                logger.debug(f"\t\tComponent Extends Clusters > {ext_clstrs}")
 
             stages_dict[stage][component_count]["conns"] = comp_conns
             stages_dict[stage][component_count]["parts"] = comp_parts

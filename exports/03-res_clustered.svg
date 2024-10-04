@@ -15,13 +15,13 @@
      id="defs58" />
   <sodipodi:namedview
      id="namedview56"
-     pagecolor="#505050"
-     bordercolor="#eeeeee"
-     borderopacity="1"
-     inkscape:showpageshadow="0"
-     inkscape:pageopacity="0"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#505050"
+     inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm" />
   <g
      inkscape:label="nodes_1"
@@ -59,13 +59,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="-0.33333333333333337"
-         y="-0.5"
+         y="0.5"
          id="label1_c"><tspan
            sodipodi:role="line"
            id="label2_c"
            style="stroke-width:0.264583;stroke:none"
            x="-0.33333333333333337"
-           y="-0.5">c</tspan></text>
+           y="0.5">c</tspan></text>
     </g>
     <g
        id="node_group_d">
@@ -79,13 +79,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="-0.33333333333333337"
-         y="0.5"
+         y="-0.5"
          id="label1_d"><tspan
            sodipodi:role="line"
            id="label2_d"
            style="stroke-width:0.264583;stroke:none"
            x="-0.33333333333333337"
-           y="0.5">d</tspan></text>
+           y="-0.5">d</tspan></text>
     </g>
     <g
        id="node_group_f">
@@ -179,13 +179,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="0.16666666666666666"
-         y="0.25"
+         y="-0.25"
          id="label1_CL_00"><tspan
            sodipodi:role="line"
            id="label2_CL_00"
            style="stroke-width:0.264583;stroke:none"
            x="0.16666666666666666"
-           y="0.25">CL_00</tspan></text>
+           y="-0.25">CL_00</tspan></text>
     </g>
     <g
        id="node_group_CL_01">
@@ -199,13 +199,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="0.16666666666666666"
-         y="-0.25"
+         y="0.25"
          id="label1_CL_01"><tspan
            sodipodi:role="line"
            id="label2_CL_01"
            style="stroke-width:0.264583;stroke:none"
            x="0.16666666666666666"
-           y="-0.25">CL_01</tspan></text>
+           y="0.25">CL_01</tspan></text>
     </g>
   </g>
   <g
@@ -235,7 +235,7 @@
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
        inkscape:connection-start="#shape_c"
-       inkscape:connection-end="#shape_CL_01" />
+       inkscape:connection-end="#shape_CL_00" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 0,0 V 0"
@@ -243,7 +243,7 @@
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
        inkscape:connection-start="#shape_d"
-       inkscape:connection-end="#shape_CL_01" />
+       inkscape:connection-end="#shape_CL_00" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 0,0 V 0"
@@ -251,7 +251,7 @@
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
        inkscape:connection-start="#shape_f"
-       inkscape:connection-end="#shape_CL_00" />
+       inkscape:connection-end="#shape_CL_01" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 0,0 V 0"
@@ -259,7 +259,7 @@
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
        inkscape:connection-start="#shape_g"
-       inkscape:connection-end="#shape_CL_00" />
+       inkscape:connection-end="#shape_CL_01" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 0,0 V 0"
@@ -267,7 +267,7 @@
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
        inkscape:connection-start="#shape_CL_00"
-       inkscape:connection-end="#shape_ae" />
+       inkscape:connection-end="#shape_ab" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 0,0 V 0"
@@ -275,6 +275,6 @@
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
        inkscape:connection-start="#shape_CL_01"
-       inkscape:connection-end="#shape_ab" />
+       inkscape:connection-end="#shape_ae" />
   </g>
 </svg>

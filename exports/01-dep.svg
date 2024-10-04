@@ -15,13 +15,13 @@
      id="defs90" />
   <sodipodi:namedview
      id="namedview88"
-     pagecolor="#505050"
-     bordercolor="#eeeeee"
-     borderopacity="1"
-     inkscape:showpageshadow="0"
-     inkscape:pageopacity="0"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#505050"
+     inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm" />
   <g
      inkscape:label="nodes_1"
@@ -39,13 +39,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="-0.15384615384615385"
-         y="-1.0"
+         y="-0.6666666666666666"
          id="label1_a"><tspan
            sodipodi:role="line"
            id="label2_a"
            style="stroke-width:0.264583;stroke:none"
            x="-0.15384615384615385"
-           y="-1.0">a</tspan></text>
+           y="-0.6666666666666666">a</tspan></text>
     </g>
     <g
        id="node_group_b">
@@ -59,13 +59,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="-0.15384615384615385"
-         y="-0.3333333333333333"
+         y="-1.0"
          id="label1_b"><tspan
            sodipodi:role="line"
            id="label2_b"
            style="stroke-width:0.264583;stroke:none"
            x="-0.15384615384615385"
-           y="-0.3333333333333333">b</tspan></text>
+           y="-1.0">b</tspan></text>
     </g>
     <g
        id="node_group_c">
@@ -79,13 +79,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="-0.15384615384615385"
-         y="-0.6666666666666666"
+         y="0.6666666666666666"
          id="label1_c"><tspan
            sodipodi:role="line"
            id="label2_c"
            style="stroke-width:0.264583;stroke:none"
            x="-0.15384615384615385"
-           y="-0.6666666666666666">c</tspan></text>
+           y="0.6666666666666666">c</tspan></text>
     </g>
     <g
        id="node_group_d">
@@ -99,13 +99,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="-0.15384615384615385"
-         y="0.6666666666666666"
+         y="-0.3333333333333333"
          id="label1_d"><tspan
            sodipodi:role="line"
            id="label2_d"
            style="stroke-width:0.264583;stroke:none"
            x="-0.15384615384615385"
-           y="0.6666666666666666">d</tspan></text>
+           y="-0.3333333333333333">d</tspan></text>
     </g>
     <g
        id="node_group_e">
@@ -179,13 +179,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="0.17948717948717946"
-         y="0.5"
+         y="-0.16666666666666666"
          id="label1_ab"><tspan
            sodipodi:role="line"
            id="label2_ab"
            style="stroke-width:0.264583;stroke:none"
            x="0.17948717948717946"
-           y="0.5">ab</tspan></text>
+           y="-0.16666666666666666">ab</tspan></text>
     </g>
     <g
        id="node_group_ae">
@@ -199,13 +199,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="0.17948717948717946"
-         y="-0.5"
+         y="0.5"
          id="label1_ae"><tspan
            sodipodi:role="line"
            id="label2_ae"
            style="stroke-width:0.264583;stroke:none"
            x="0.17948717948717946"
-           y="-0.5">ae</tspan></text>
+           y="0.5">ae</tspan></text>
     </g>
     <g
        id="node_group_bc">
@@ -219,13 +219,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="0.17948717948717946"
-         y="0.16666666666666666"
+         y="-0.5"
          id="label1_bc"><tspan
            sodipodi:role="line"
            id="label2_bc"
            style="stroke-width:0.264583;stroke:none"
            x="0.17948717948717946"
-           y="0.16666666666666666">bc</tspan></text>
+           y="-0.5">bc</tspan></text>
     </g>
     <g
        id="node_group_bd">
@@ -259,13 +259,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="0.17948717948717946"
-         y="-0.8333333333333333"
+         y="0.16666666666666666"
          id="label1_ef"><tspan
            sodipodi:role="line"
            id="label2_ef"
            style="stroke-width:0.264583;stroke:none"
            x="0.17948717948717946"
-           y="-0.8333333333333333">ef</tspan></text>
+           y="0.16666666666666666">ef</tspan></text>
     </g>
     <g
        id="node_group_eg">
@@ -279,13 +279,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="0.17948717948717946"
-         y="-0.16666666666666666"
+         y="-0.8333333333333333"
          id="label1_eg"><tspan
            sodipodi:role="line"
            id="label2_eg"
            style="stroke-width:0.264583;stroke:none"
            x="0.17948717948717946"
-           y="-0.16666666666666666">eg</tspan></text>
+           y="-0.8333333333333333">eg</tspan></text>
     </g>
   </g>
   <g

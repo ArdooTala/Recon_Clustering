@@ -1,12 +1,14 @@
 import importlib.util
+import logging
 import networkx as nx
 import xml.etree.ElementTree as ET
 import pathlib
 import subprocess
 import warnings
 
-VIZ_DEP_INSTALLED = (importlib.util.find_spec('pygraphviz')) is not None
 
+logger = logging.getLogger(__name__)
+VIZ_DEP_INSTALLED = (importlib.util.find_spec('pygraphviz')) is not None
 
 def pygraphviz_export(g, name):
     if not VIZ_DEP_INSTALLED:
@@ -19,7 +21,7 @@ def pygraphviz_export(g, name):
 
 
 def export_stages(stages_dict, name):
-    print(stages_dict)
+    logger.debug(stages_dict)
     with open(name, 'w') as file:
         for stg in stages_dict.keys():
             for cmp in stages_dict[stg]:
