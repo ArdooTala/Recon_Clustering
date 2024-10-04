@@ -32,9 +32,12 @@ def graph_from_assembly(connections, collisions):
 
 def graph_from_dot_file(file_path):
     graph = nx.DiGraph(nx.nx_agraph.read_dot(file_path))
-    for i in graph.nodes:
-        graph.nodes[i]["TYPE"] = "PART" if graph[i].get('shape', None) == 'box' else "CONN"
-    for s, e in graph.edges:
-        graph[s][e]["EDGE_TYPE"] = "COLL" if graph[s][e].get('color', None) == 'red' else "CONN"
+    shapes = graph.nodes.data('shape', default=None)
+    for i in graph:
+        graph.nodes[i]["TYPE"] = "PART" if shapes[i] == 'box' else "CONN"
+        logger.debug(f"NODE: {i} > TYPE: {graph.nodes[i]['TYPE']}")
+    colors = graph.edges.data('color', default=None)
+    for s, e, c in colors:
+        graph[s][e]["EDGE_TYPE"] = "COLL" if c == 'red' else "CONN"
 
     return graph
