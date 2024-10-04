@@ -79,7 +79,7 @@ def generate_gantt(graph):
         step += 1
         forward_graph.remove_nodes_from(sources)
 
-    print("Calculating return run")
+    logger.info("Calculating return run")
     return_graph = graph.copy()
     while return_graph.order() > 0:
         sinks = [x for x, ind in return_graph.out_degree if ind == 0]
@@ -89,10 +89,9 @@ def generate_gantt(graph):
 
         return_graph.remove_nodes_from(sinks)
 
-    print("Calculating backward run")
+    logger.info("Calculating backward run")
     backward_graph = graph.copy()
     while backward_graph.order() > 0:
-        print(backward_graph.order())
         sinks = [x for x, ind in backward_graph.out_degree if ind == 0]
         for sink in sinks:
             gantt_dict[sink]["latest"] = step
