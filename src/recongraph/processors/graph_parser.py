@@ -66,7 +66,7 @@ def generate_gantt(graph):
 
     gantt_dict = {}
     step = 0
-    print("Calculating forward run")
+    logger.info("Calculating forward run")
     forward_graph = graph.copy()
     while forward_graph.order() > 0:
         sources = [x for x, ind in forward_graph.in_degree if ind == 0]
