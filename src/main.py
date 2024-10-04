@@ -14,31 +14,38 @@ if __name__ == "__main__":
         # pos = graph_visualizer.multipartite_layout_by_connections(graph)
         pos = graph_visualizer.pygraphviz_layout(graph)
         file_writer.inkscape_export(graph, path.with_suffix(".svg"), pos)
-        graph_visualizer.viz_dag(graph, pos)
+        # graph_visualizer.viz_dag(graph, pos)
 
     assembly = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
     # from assemblies.example_graph import con as assembly
     # assembly = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
+
     viz_and_save(assembly, export_path / "01-dep.pdf")
 
     res_dep = graph_solver.direct_cluster_sccs(assembly.copy())
     viz_and_save(res_dep, export_path / "02-res_dep.pdf")
 
-    final_con = graph_solver.convert_ass_dep_to_con_dep(res_dep)
-    viz_and_save(final_con, export_path / "03-res_clustered.pdf")
+    res_dep_xpn = graph_solver.expand_clusters(res_dep)
+    viz_and_save(res_dep_xpn, export_path / "03-res_dep_xpn.pdf")
 
-    final_xpn = graph_solver.replace_cluster_with_conns(final_con)
-    viz_and_save(final_xpn, export_path / "04-res_expanded.pdf")
+    res_con = graph_solver.convert_ass_dep_to_con_dep(res_dep_xpn)
+    viz_and_save(res_con, export_path / "04-res_con.pdf")
 
-    stages_dict = graph_parser.generate_stages(assembly, final_con)
-    # file_writer.export_stages(stages_dict, export_path / "export-components.csv" )
+    # final_con = graph_solver.convert_ass_dep_to_con_dep(res_dep)
+    # viz_and_save(final_con, export_path / "03-res_clustered.pdf")
 
-    stages_graph = graph_solver.generate_stages_graph(final_con, stages_dict)
+    # final_xpn = graph_solver.replace_clusters_with_conns(final_con)
+    # viz_and_save(final_xpn, export_path / "04-res_expanded.pdf")
+
+    stages_dict = graph_parser.generate_stages(assembly, res_con)
+    file_writer.export_stages(stages_dict, export_path / "export-components.csv" )
+
+    stages_graph = graph_solver.generate_stages_graph(res_con, stages_dict)
     viz_and_save(stages_graph, export_path / "06-stages_dep.pdf")
 
     file_writer.export_clusters(graph_solver.clusters_dict, export_path / "export-clusters.csv")
 
-    # gantt_dict = graph_parser.generate_gantt(final_con)
-    # file_writer.export_gantt(gantt_dict, export_path / "export-stage_gantt.csv")
+    gantt_dict = graph_parser.generate_gantt(res_con)
+    file_writer.export_gantt(gantt_dict, export_path / "export-stage_gantt.csv")
 
     print("FIN")

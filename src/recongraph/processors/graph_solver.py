@@ -139,12 +139,12 @@ def _expands_cluster(graph, cluster):
 
     preds = list(graph.predecessors(cluster))
     succs = list(graph.successors(cluster))
-    logger.debug(f"\t\tPREDS: {preds}")
-    logger.debug(f"\t\tSUCCS: {succs}")
+    logger.debug(f"\t\t> PREDECESSORS: {preds}")
+    logger.debug(f"\t\t>   SUCCESSORS: {succs}")
 
     logger.debug(f"\t\tCLUSTER INTERNAL NODES: {cluster_con_dep.nodes}")
 
-    logger.debug(f"\t\tReplacing Cluster {cluster} with internal connections graph")
+    logger.debug(f"\t\tReplacing Cluster {cluster} with internal graph")
     graph.add_nodes_from(cluster_con_dep.nodes.items())
     graph.add_edges_from(cluster_con_dep.edges)
 
@@ -176,60 +176,7 @@ def expand_clusters(graph: nx.DiGraph):
     for cluster in all_clusters:
         _expands_cluster(graph, cluster)
 
-    return replace_clusters_with_conns(graph)
-
-
-def _replace_cluster_with_conns(graph, cluster):
-    cluster_con_dep = graph.nodes[cluster]["sub_graph"]
-    logger.debug(f"\tEXPANDING CLUSTER: {cluster} > {cluster_con_dep} > {cluster_con_dep.nodes}")
-
-    if len(cluster_con_dep) < 1:
-        raise Exception("Cluster is empty")
-
-    if not nx.is_directed_acyclic_graph(cluster_con_dep):
-        raise Exception("CLUSTER IS NOT DAG, NEEDS SOLUTION")
-
-    preds = list(graph.predecessors(cluster))
-    succs = list(graph.successors(cluster))
-    logger.debug(f"\t\tPREDS: {preds}")
-    logger.debug(f"\t\tSUCCS: {succs}")
-
-    cluster_con_dep = convert_ass_dep_to_con_dep(cluster_con_dep)
-    logger.debug(f"\t\tCLUSTER INTERNAL NODES: {cluster_con_dep.nodes}")
-
-    logger.debug(f"\t\tReplacing Cluster {cluster} with internal connections graph")
-    graph.add_nodes_from(cluster_con_dep.nodes.items())
-    graph.add_edges_from(cluster_con_dep.edges)
-
-    sources = [x for x, ind in cluster_con_dep.in_degree if ind == 0]
-    logger.debug(f"\t\tSOURCE NODES: {sources}")
-    for source in sources:
-        logger.debug(f"\t\t\tConnecting SOURCE NODE {source} to {preds}")
-        for pred in preds:
-            graph.add_edge(source, pred)
-
-    sinks = [x for x, ind in cluster_con_dep.out_degree if ind == 0]
-    logger.debug(f"\t\tSINK NODES: {sinks}")
-    for sink in sinks:
-        logger.debug(f"\t\t\tConnecting SINK NODE {sink} to {succs}")
-        for succ in succs:
-            graph.add_edge(sink, succ)
-
-    graph.remove_node(cluster)
-
-    return graph
-
-
-def replace_clusters_with_conns(graph: nx.DiGraph):
-    all_clusters = [n for n, t in graph.nodes.data("TYPE") if t == "CLUS"]
-    logger.info(f"REPLACING CLUSTERS: {all_clusters} in a {graph}")
-    if not all_clusters:
-        return graph
-
-    for cluster in all_clusters:
-        _replace_cluster_with_conns(graph, cluster)
-
-    return replace_clusters_with_conns(graph)
+    return expand_clusters(graph)
 
 
 def generate_stages_graph(g, stages_dict):
