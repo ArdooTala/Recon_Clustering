@@ -1,6 +1,5 @@
 import logging
 import networkx as nx
-import graph_solver as gs
 
 
 logger = logging.getLogger(__name__)

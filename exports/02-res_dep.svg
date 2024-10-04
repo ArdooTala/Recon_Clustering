@@ -59,13 +59,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="-0.33333333333333337"
-         y="0.5"
+         y="1.0"
          id="label1_c"><tspan
            sodipodi:role="line"
            id="label2_c"
            style="stroke-width:0.264583;stroke:none"
            x="-0.33333333333333337"
-           y="0.5">c</tspan></text>
+           y="1.0">c</tspan></text>
     </g>
     <g
        id="node_group_d">
@@ -79,13 +79,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="-0.33333333333333337"
-         y="-0.5"
+         y="0.5"
          id="label1_d"><tspan
            sodipodi:role="line"
            id="label2_d"
            style="stroke-width:0.264583;stroke:none"
            x="-0.33333333333333337"
-           y="-0.5">d</tspan></text>
+           y="0.5">d</tspan></text>
     </g>
     <g
        id="node_group_f">
@@ -119,13 +119,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="-0.33333333333333337"
-         y="1.0"
+         y="-0.5"
          id="label1_g"><tspan
            sodipodi:role="line"
            id="label2_g"
            style="stroke-width:0.264583;stroke:none"
            x="-0.33333333333333337"
-           y="1.0">g</tspan></text>
+           y="-0.5">g</tspan></text>
     </g>
     <g
        id="node_group_ab">

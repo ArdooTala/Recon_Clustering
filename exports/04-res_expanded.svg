@@ -39,13 +39,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="-0.20512820512820512"
-         y="-0.6666666666666666"
+         y="-1.0"
          id="label1_a"><tspan
            sodipodi:role="line"
            id="label2_a"
            style="stroke-width:0.264583;stroke:none"
            x="-0.20512820512820512"
-           y="-0.6666666666666666">a</tspan></text>
+           y="-1.0">a</tspan></text>
     </g>
     <g
        id="node_group_c">
@@ -79,13 +79,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="-0.20512820512820512"
-         y="-0.3333333333333333"
+         y="0.3333333333333333"
          id="label1_d"><tspan
            sodipodi:role="line"
            id="label2_d"
            style="stroke-width:0.264583;stroke:none"
            x="-0.20512820512820512"
-           y="-0.3333333333333333">d</tspan></text>
+           y="0.3333333333333333">d</tspan></text>
     </g>
     <g
        id="node_group_f">
@@ -99,13 +99,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="-0.20512820512820512"
-         y="0.0"
+         y="-0.3333333333333333"
          id="label1_f"><tspan
            sodipodi:role="line"
            id="label2_f"
            style="stroke-width:0.264583;stroke:none"
            x="-0.20512820512820512"
-           y="0.0">f</tspan></text>
+           y="-0.3333333333333333">f</tspan></text>
     </g>
     <g
        id="node_group_g">
@@ -119,13 +119,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="-0.20512820512820512"
-         y="1.0"
+         y="-0.6666666666666666"
          id="label1_g"><tspan
            sodipodi:role="line"
            id="label2_g"
            style="stroke-width:0.264583;stroke:none"
            x="-0.20512820512820512"
-           y="1.0">g</tspan></text>
+           y="-0.6666666666666666">g</tspan></text>
     </g>
     <g
        id="node_group_ab">
@@ -168,6 +168,26 @@
            y="-0.16666666666666666">ae</tspan></text>
     </g>
     <g
+       id="node_group_bc">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_bc"
+         cx="pos[0]"
+         cy="pos[1]"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="0.1282051282051282"
+         y="-0.5"
+         id="label1_bc"><tspan
+           sodipodi:role="line"
+           id="label2_bc"
+           style="stroke-width:0.264583;stroke:none"
+           x="0.1282051282051282"
+           y="-0.5">bc</tspan></text>
+    </g>
+    <g
        id="node_group_b">
       <circle
          style="fill:#000000;stroke-width:0.264583"
@@ -179,13 +199,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="-0.20512820512820512"
-         y="-1.0"
+         y="1.0"
          id="label1_b"><tspan
            sodipodi:role="line"
            id="label2_b"
            style="stroke-width:0.264583;stroke:none"
            x="-0.20512820512820512"
-           y="-1.0">b</tspan></text>
+           y="1.0">b</tspan></text>
     </g>
     <g
        id="node_group_bd">
@@ -199,53 +219,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="0.1282051282051282"
-         y="-0.16666666666666666"
+         y="0.5"
          id="label1_bd"><tspan
            sodipodi:role="line"
            id="label2_bd"
            style="stroke-width:0.264583;stroke:none"
            x="0.1282051282051282"
-           y="-0.16666666666666666">bd</tspan></text>
-    </g>
-    <g
-       id="node_group_bc">
-      <circle
-         style="fill:#000000;stroke-width:0.264583"
-         id="shape_bc"
-         cx="pos[0]"
-         cy="pos[1]"
-         r="10" />
-      <text
-         xml:space="preserve"
-         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="0.1282051282051282"
-         y="0.5"
-         id="label1_bc"><tspan
-           sodipodi:role="line"
-           id="label2_bc"
-           style="stroke-width:0.264583;stroke:none"
-           x="0.1282051282051282"
-           y="0.5">bc</tspan></text>
-    </g>
-    <g
-       id="node_group_eg">
-      <circle
-         style="fill:#000000;stroke-width:0.264583"
-         id="shape_eg"
-         cx="pos[0]"
-         cy="pos[1]"
-         r="10" />
-      <text
-         xml:space="preserve"
-         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="0.1282051282051282"
-         y="-0.5"
-         id="label1_eg"><tspan
-           sodipodi:role="line"
-           id="label2_eg"
-           style="stroke-width:0.264583;stroke:none"
-           x="0.1282051282051282"
-           y="-0.5">eg</tspan></text>
+           y="0.5">bd</tspan></text>
     </g>
     <g
        id="node_group_ef">
@@ -268,6 +248,26 @@
            y="0.16666666666666666">ef</tspan></text>
     </g>
     <g
+       id="node_group_eg">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_eg"
+         cx="pos[0]"
+         cy="pos[1]"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="0.1282051282051282"
+         y="-0.16666666666666666"
+         id="label1_eg"><tspan
+           sodipodi:role="line"
+           id="label2_eg"
+           style="stroke-width:0.264583;stroke:none"
+           x="0.1282051282051282"
+           y="-0.16666666666666666">eg</tspan></text>
+    </g>
+    <g
        id="node_group_e">
       <circle
          style="fill:#000000;stroke-width:0.264583"
@@ -279,13 +279,13 @@
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
          x="-0.20512820512820512"
-         y="0.3333333333333333"
+         y="0.0"
          id="label1_e"><tspan
            sodipodi:role="line"
            id="label2_e"
            style="stroke-width:0.264583;stroke:none"
            x="-0.20512820512820512"
-           y="0.3333333333333333">e</tspan></text>
+           y="0.0">e</tspan></text>
     </g>
   </g>
   <g
@@ -346,8 +346,8 @@
        id="path66"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_b"
-       inkscape:connection-end="#shape_bc" />
+       inkscape:connection-start="#shape_bc"
+       inkscape:connection-end="#shape_ab" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 0,0 V 0"
@@ -355,11 +355,19 @@
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
        inkscape:connection-start="#shape_b"
-       inkscape:connection-end="#shape_bd" />
+       inkscape:connection-end="#shape_bc" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 0,0 V 0"
        id="path70"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_b"
+       inkscape:connection-end="#shape_bd" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 0,0 V 0"
+       id="path72"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
        inkscape:connection-start="#shape_bd"
@@ -367,18 +375,10 @@
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 0,0 V 0"
-       id="path72"
-       inkscape:connector-type="polyline"
-       inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_bc"
-       inkscape:connection-end="#shape_ab" />
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 0,0 V 0"
        id="path74"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_eg"
+       inkscape:connection-start="#shape_ef"
        inkscape:connection-end="#shape_ae" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -386,7 +386,7 @@
        id="path76"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_ef"
+       inkscape:connection-start="#shape_eg"
        inkscape:connection-end="#shape_ae" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
