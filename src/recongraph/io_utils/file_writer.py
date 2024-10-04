@@ -63,8 +63,8 @@ def inkscape_export(g, name, node_pos):
         node_shape = ET.SubElement(node_group, 'circle', {
             'style': f"fill:#000000;stroke-width:0.264583",
             'id': f"shape_{node}",
-            'cx': f"pos[0]",
-            'cy': f"pos[1]",
+            'cx': f"{pos[0]}",
+            'cy': f"{pos[1]}",
             'r': f"{radius}"
         })
         node_text = ET.SubElement(node_group, 'text', {

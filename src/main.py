@@ -11,13 +11,14 @@ if __name__ == "__main__":
 
     def viz_and_save(graph, path: Path):
         file_writer.pygraphviz_export(graph, path.with_suffix(".pdf"))
-        pos = graph_visualizer.multipartite_layout_by_connections(graph)
+        # pos = graph_visualizer.multipartite_layout_by_connections(graph)
+        pos = graph_visualizer.pygraphviz_layout(graph)
         file_writer.inkscape_export(graph, path.with_suffix(".svg"), pos)
         graph_visualizer.viz_dag(graph, pos)
 
-    # con = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
+    assembly = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
     # from assemblies.example_graph import con as assembly
-    assembly = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
+    # assembly = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
     viz_and_save(assembly, export_path / "01-dep.pdf")
 
     res_dep = graph_solver.direct_cluster_sccs(assembly.copy())
