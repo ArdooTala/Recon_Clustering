@@ -3,6 +3,7 @@ from recongraph.processors import graph_parser, graph_solver
 from recongraph.visualizer import graph_visualizer
 from pathlib import Path
 
+
 if __name__ == "__main__":
     export_path = Path("../exports/")
     if not export_path.exists():
@@ -15,20 +16,20 @@ if __name__ == "__main__":
         graph_visualizer.viz_dag(graph, pos)
 
     # con = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
-    # from assemblies.example_graph import con
-    con = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
-    viz_and_save(con, export_path / "01-dep.pdf")
+    # from assemblies.example_graph import con as assembly
+    assembly = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
+    viz_and_save(assembly, export_path / "01-dep.pdf")
 
-    final_ass = graph_solver.direct_cluster_sccs(con.copy())
-    viz_and_save(final_ass, export_path / "02-res_dep.pdf")
+    res_dep = graph_solver.direct_cluster_sccs(assembly.copy())
+    viz_and_save(res_dep, export_path / "02-res_dep.pdf")
 
-    final_con = graph_solver.convert_ass_dep_to_con_dep(final_ass)
+    final_con = graph_solver.convert_ass_dep_to_con_dep(res_dep)
     viz_and_save(final_con, export_path / "03-res_clustered.pdf")
 
-    final_con = graph_solver.replace_cluster_with_conns(final_con)
-    viz_and_save(final_con, export_path / "04-res_expanded.pdf")
+    final_xpn = graph_solver.replace_cluster_with_conns(final_con)
+    viz_and_save(final_xpn, export_path / "04-res_expanded.pdf")
 
-    stages_dict = graph_parser.generate_stages(con, final_con)
+    stages_dict = graph_parser.generate_stages(assembly, final_con)
     # file_writer.export_stages(stages_dict, export_path / "export-components.csv" )
 
     stages_graph = graph_solver.generate_stages_graph(final_con, stages_dict)

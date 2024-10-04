@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="TestInkscapeNetwork.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs16" />
+  <sodipodi:namedview
+     id="namedview14"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm" />
+  <g
+     inkscape:label="nodes_1"
+     inkscape:groupmode="layer"
+     id="nodes_1">
+    <g
+       id="node_group_0_0">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_0_0"
+         cx="pos[0]"
+         cy="pos[1]"
+         r="20" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="-1.0"
+         y="0.0"
+         id="label1_0_0"><tspan
+           sodipodi:role="line"
+           id="label2_0_0"
+           style="stroke-width:0.264583;stroke:none"
+           x="-1.0"
+           y="0.0">0_0</tspan></text>
+    </g>
+    <g
+       id="node_group_1_0">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_1_0"
+         cx="pos[0]"
+         cy="pos[1]"
+         r="40" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="1.0"
+         y="0.0"
+         id="label1_1_0"><tspan
+           sodipodi:role="line"
+           id="label2_1_0"
+           style="stroke-width:0.264583;stroke:none"
+           x="1.0"
+           y="0.0">1_0</tspan></text>
+    </g>
+  </g>
+  <g
+     inkscape:label="edges_1"
+     inkscape:groupmode="layer"
+     id="edges_1">
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 0,0 V 0"
+       id="{edge[0] + '__' + edge[1]}"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_0_0"
+       inkscape:connection-end="#shape_1_0" />
+  </g>
+</svg>
