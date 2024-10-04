@@ -127,54 +127,109 @@ def direct_cluster_sccs(new_ass: nx.DiGraph, cluster_num=0):
         return direct_cluster_sccs(new_ass_dep, cluster_num)
 
 
-def replace_cluster_with_conns(graph: nx.DiGraph):
+def _expands_cluster(graph, cluster):
+    cluster_con_dep = graph.nodes[cluster]["sub_graph"]
+    logger.debug(f"\tEXPANDING CLUSTER: {cluster} > {cluster_con_dep} > {cluster_con_dep.nodes}")
+
+    if len(cluster_con_dep) < 1:
+        raise Exception("Cluster is empty")
+
+    if not nx.is_directed_acyclic_graph(cluster_con_dep):
+        raise Exception("CLUSTER IS NOT DAG, NEEDS SOLUTION")
+
+    preds = list(graph.predecessors(cluster))
+    succs = list(graph.successors(cluster))
+    logger.debug(f"\t\tPREDS: {preds}")
+    logger.debug(f"\t\tSUCCS: {succs}")
+
+    logger.debug(f"\t\tCLUSTER INTERNAL NODES: {cluster_con_dep.nodes}")
+
+    logger.debug(f"\t\tReplacing Cluster {cluster} with internal connections graph")
+    graph.add_nodes_from(cluster_con_dep.nodes.items())
+    graph.add_edges_from(cluster_con_dep.edges)
+
+    sources = [x for x, ind in cluster_con_dep.in_degree if ind == 0]
+    logger.debug(f"\t\tSOURCE NODES: {sources}")
+    for source in sources:
+        logger.debug(f"\t\t\tConnecting SOURCE NODE {source} to {preds}")
+        for pred in preds:
+            graph.add_edge(source, pred)
+
+    sinks = [x for x, ind in cluster_con_dep.out_degree if ind == 0]
+    logger.debug(f"\t\tSINK NODES: {sinks}")
+    for sink in sinks:
+        logger.debug(f"\t\t\tConnecting SINK NODE {sink} to {succs}")
+        for succ in succs:
+            graph.add_edge(sink, succ)
+
+    graph.remove_node(cluster)
+
+    return graph
+
+
+def expand_clusters(graph: nx.DiGraph):
+    all_clusters = [n for n, t in graph.nodes.data("TYPE") if t == "CLUS"]
+    logger.info(f"Expanding clusters {all_clusters} in a {graph}")
+    if not all_clusters:
+        return graph
+
+    for cluster in all_clusters:
+        _expands_cluster(graph, cluster)
+
+    return replace_clusters_with_conns(graph)
+
+
+def _replace_cluster_with_conns(graph, cluster):
+    cluster_con_dep = graph.nodes[cluster]["sub_graph"]
+    logger.debug(f"\tEXPANDING CLUSTER: {cluster} > {cluster_con_dep} > {cluster_con_dep.nodes}")
+
+    if len(cluster_con_dep) < 1:
+        raise Exception("Cluster is empty")
+
+    if not nx.is_directed_acyclic_graph(cluster_con_dep):
+        raise Exception("CLUSTER IS NOT DAG, NEEDS SOLUTION")
+
+    preds = list(graph.predecessors(cluster))
+    succs = list(graph.successors(cluster))
+    logger.debug(f"\t\tPREDS: {preds}")
+    logger.debug(f"\t\tSUCCS: {succs}")
+
+    cluster_con_dep = convert_ass_dep_to_con_dep(cluster_con_dep)
+    logger.debug(f"\t\tCLUSTER INTERNAL NODES: {cluster_con_dep.nodes}")
+
+    logger.debug(f"\t\tReplacing Cluster {cluster} with internal connections graph")
+    graph.add_nodes_from(cluster_con_dep.nodes.items())
+    graph.add_edges_from(cluster_con_dep.edges)
+
+    sources = [x for x, ind in cluster_con_dep.in_degree if ind == 0]
+    logger.debug(f"\t\tSOURCE NODES: {sources}")
+    for source in sources:
+        logger.debug(f"\t\t\tConnecting SOURCE NODE {source} to {preds}")
+        for pred in preds:
+            graph.add_edge(source, pred)
+
+    sinks = [x for x, ind in cluster_con_dep.out_degree if ind == 0]
+    logger.debug(f"\t\tSINK NODES: {sinks}")
+    for sink in sinks:
+        logger.debug(f"\t\t\tConnecting SINK NODE {sink} to {succs}")
+        for succ in succs:
+            graph.add_edge(sink, succ)
+
+    graph.remove_node(cluster)
+
+    return graph
+
+
+def replace_clusters_with_conns(graph: nx.DiGraph):
     all_clusters = [n for n, t in graph.nodes.data("TYPE") if t == "CLUS"]
     logger.info(f"REPLACING CLUSTERS: {all_clusters} in a {graph}")
     if not all_clusters:
         return graph
 
-    # Replace clusters with connections and internal clusters
     for cluster in all_clusters:
-        cluster_con_dep = graph.nodes[cluster]["sub_graph"]
-        logger.debug(f"\tCLUSTER: {cluster} > {cluster_con_dep} > {cluster_con_dep.nodes}")
+        _replace_cluster_with_conns(graph, cluster)
 
-        cluster_con_dep = convert_ass_dep_to_con_dep(cluster_con_dep)
-        logger.debug(f"\t\tCLUSTER INTERNAL NODES: {cluster_con_dep.nodes}")
-
-        if not nx.is_directed_acyclic_graph(cluster_con_dep):
-            raise Exception("CLUSTER IS NOT DAG, NEEDS SOLUTION")
-
-        preds = list(graph.predecessors(cluster))
-        succs = list(graph.successors(cluster))
-        logger.debug(f"\t\tPREDS: {preds}")
-        logger.debug(f"\t\tSUCCS: {succs}")
-
-        for succ in succs:
-            for pred in preds:
-                graph.add_edge(pred, succ)
-
-        graph.add_nodes_from(cluster_con_dep.nodes.items())
-        graph.add_edges_from(cluster_con_dep.edges)
-
-        sub_clusters = [n for n, d in graph.nodes[cluster]["contraction"].items() if d["TYPE"] == "CLUS"]
-        logger.debug(f"\t\tSUB CLUSTERS: {sub_clusters}")
-        for sub_cluster in sub_clusters:
-            logger.debug(f"\t\t\tSUB CLUSTER: {sub_cluster}")
-            for pred in preds:
-                graph.add_edge(pred, sub_cluster)
-            for succ in succs:
-                graph.add_edge(sub_cluster, succ)
-
-        sinks = [x for x, ind in cluster_con_dep.out_degree if ind == 0]
-        logger.debug(f"\t\tSINK NODES: {sinks}")
-        for sink in sinks:
-            logger.debug(f"\t\t\tConnecting SINK NODE {sink} to {succs}")
-            for succ in succs:
-                graph.add_edge(sink, succ)
-
-        graph.remove_node(cluster)
-
-    return replace_cluster_with_conns(graph)
+    return replace_clusters_with_conns(graph)
 
 
 def generate_stages_graph(g, stages_dict):
