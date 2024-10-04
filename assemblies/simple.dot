@@ -1,12 +1,14 @@
 digraph SIMPLE {
-    // nodes
-    a [shape=box]
-    b [shape=box]
-    c [shape=box]
-    d [shape=box]
-    e [shape=box]
-    f [shape=box]
-    g [shape=box]
+    subgraph {
+        node[shape=box]
+        a
+        b
+        c
+        d
+        e
+        f
+        g
+    }
 
     a -> {ab ae}
     b -> {bc bd ab}
@@ -16,6 +18,9 @@ digraph SIMPLE {
     f -> ef
     g -> eg
 
-    {bc bd} -> e [color=red]
-    {ef eg} -> b [color=red]
+    subgraph {
+        edge[color=red]
+        {bc bd} -> e
+        {ef eg} -> b
+    }
 }
