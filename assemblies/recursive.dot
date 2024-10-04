@@ -1,6 +1,19 @@
 digraph RECURSIVE {
     splines=line;
 
+    a [shape=box]
+    b [shape=box]
+    c [shape=box]
+    d [shape=box]
+    e [shape=box]
+    f [shape=box]
+    g [shape=box]
+    h [shape=box]
+    i [shape=box]
+    j [shape=box]
+    k [shape=box]
+    l [shape=box]
+
     a -> {ab ad ae}
     b -> {ab bc bf}
     c -> {bc cd cg}
@@ -8,19 +21,19 @@ digraph RECURSIVE {
     e -> {ef eh ae ei}
     f -> {ef fg bf fj}
     g -> {fg gh cg gk}
-    h -> {eh gh hl hl}
+    h -> {eh gh hl dh}
     i -> {ij il ei}
     j -> {ij jk fj}
     k -> {jk kl gk}
     l -> {il kl hl}
 
-    ab -> h
-    bc -> e
-    cd -> f
-    ad -> g
+    ab -> h [color=red]
+    bc -> e [color=red]
+    cd -> f [color=red]
+    ad -> g [color=red]
 
-    ef -> l
-    fg -> i
-    gh -> j
-    eh -> k
+    ef -> l [color=red]
+    fg -> i [color=red]
+    gh -> j [color=red]
+    eh -> k [color=red]
 }

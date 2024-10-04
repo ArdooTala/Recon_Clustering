@@ -3,17 +3,18 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "spam-eggs"
-version = "2020.0.0"
+name = "recongraph"
+version = "0.0.1"
 dependencies = [
   "networkx",
   "matplotlib",
+  "scipy"
 ]
 requires-python = ">=3.8"
 authors = [
   {name = "Ardeshir Talaei", email = "ardeshir.talaei@gmail.com"},
 ]
-description = "Lovely Spam! Wonderful Spam!"
+description = "A graph-based solution for sequencing assembly operations"
 readme = "README.md"
 license = {file = "LICENSE"}
 classifiers = [
@@ -24,7 +25,11 @@ classifiers = [
 viz = ["pygraphviz"]
 
 [project.urls]
-Repository = "https://github.com/me/spam.git"
+Repository = "https://github.com/ArdooTala/Recon_Clustering.git"
 
-[project.entry-points."spam.magical"]
-tomatoes = "spam:main_tomatoes"
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["main.py"]
+
+[tool.setuptools.package-data]
+"recongraph.io_utils" = ["inkscape_template.svg"]
