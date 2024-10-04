@@ -15,8 +15,6 @@ def generate_stages(con, g):
     all_parts = []
 
     while graph.order() > 0:
-        print(graph)
-
         sources = [x for x, ind in graph.in_degree if ind == 0]
         print(f"Source Nodes: {sources}")
         if not sources:

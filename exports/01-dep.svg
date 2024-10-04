@@ -38,13 +38,13 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.03076923076923077"
+         x="-0.15384615384615385"
          y="-1.0"
          id="label1_a"><tspan
            sodipodi:role="line"
            id="label2_a"
            style="stroke-width:0.264583;stroke:none"
-           x="-0.03076923076923077"
+           x="-0.15384615384615385"
            y="-1.0">a</tspan></text>
     </g>
     <g
@@ -58,14 +58,14 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="0.16923076923076924"
-         y="0.1"
+         x="-0.15384615384615385"
+         y="-0.3333333333333333"
          id="label1_b"><tspan
            sodipodi:role="line"
            id="label2_b"
            style="stroke-width:0.264583;stroke:none"
-           x="0.16923076923076924"
-           y="0.1">b</tspan></text>
+           x="-0.15384615384615385"
+           y="-0.3333333333333333">b</tspan></text>
     </g>
     <g
        id="node_group_c">
@@ -78,14 +78,14 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.03076923076923077"
-         y="-0.6000000000000001"
+         x="-0.15384615384615385"
+         y="-0.6666666666666666"
          id="label1_c"><tspan
            sodipodi:role="line"
            id="label2_c"
            style="stroke-width:0.264583;stroke:none"
-           x="-0.03076923076923077"
-           y="-0.6000000000000001">c</tspan></text>
+           x="-0.15384615384615385"
+           y="-0.6666666666666666">c</tspan></text>
     </g>
     <g
        id="node_group_d">
@@ -98,14 +98,14 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.03076923076923077"
-         y="-0.2"
+         x="-0.15384615384615385"
+         y="0.6666666666666666"
          id="label1_d"><tspan
            sodipodi:role="line"
            id="label2_d"
            style="stroke-width:0.264583;stroke:none"
-           x="-0.03076923076923077"
-           y="-0.2">d</tspan></text>
+           x="-0.15384615384615385"
+           y="0.6666666666666666">d</tspan></text>
     </g>
     <g
        id="node_group_e">
@@ -118,14 +118,14 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="0.16923076923076924"
-         y="-0.1"
+         x="-0.15384615384615385"
+         y="0.3333333333333333"
          id="label1_e"><tspan
            sodipodi:role="line"
            id="label2_e"
            style="stroke-width:0.264583;stroke:none"
-           x="0.16923076923076924"
-           y="-0.1">e</tspan></text>
+           x="-0.15384615384615385"
+           y="0.3333333333333333">e</tspan></text>
     </g>
     <g
        id="node_group_f">
@@ -138,14 +138,14 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.03076923076923077"
-         y="-0.8"
+         x="-0.15384615384615385"
+         y="0.0"
          id="label1_f"><tspan
            sodipodi:role="line"
            id="label2_f"
            style="stroke-width:0.264583;stroke:none"
-           x="-0.03076923076923077"
-           y="-0.8">f</tspan></text>
+           x="-0.15384615384615385"
+           y="0.0">f</tspan></text>
     </g>
     <g
        id="node_group_g">
@@ -158,14 +158,14 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.03076923076923077"
-         y="-0.4"
+         x="-0.15384615384615385"
+         y="1.0"
          id="label1_g"><tspan
            sodipodi:role="line"
            id="label2_g"
            style="stroke-width:0.264583;stroke:none"
-           x="-0.03076923076923077"
-           y="-0.4">g</tspan></text>
+           x="-0.15384615384615385"
+           y="1.0">g</tspan></text>
     </g>
     <g
        id="node_group_ab">
@@ -178,14 +178,14 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.03076923076923077"
-         y="0.8"
+         x="0.17948717948717946"
+         y="0.5"
          id="label1_ab"><tspan
            sodipodi:role="line"
            id="label2_ab"
            style="stroke-width:0.264583;stroke:none"
-           x="-0.03076923076923077"
-           y="0.8">ab</tspan></text>
+           x="0.17948717948717946"
+           y="0.5">ab</tspan></text>
     </g>
     <g
        id="node_group_ae">
@@ -198,14 +198,14 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.03076923076923077"
-         y="0.6000000000000001"
+         x="0.17948717948717946"
+         y="-0.5"
          id="label1_ae"><tspan
            sodipodi:role="line"
            id="label2_ae"
            style="stroke-width:0.264583;stroke:none"
-           x="-0.03076923076923077"
-           y="0.6000000000000001">ae</tspan></text>
+           x="0.17948717948717946"
+           y="-0.5">ae</tspan></text>
     </g>
     <g
        id="node_group_bc">
@@ -218,14 +218,14 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.03076923076923077"
-         y="0.0"
+         x="0.17948717948717946"
+         y="0.16666666666666666"
          id="label1_bc"><tspan
            sodipodi:role="line"
            id="label2_bc"
            style="stroke-width:0.264583;stroke:none"
-           x="-0.03076923076923077"
-           y="0.0">bc</tspan></text>
+           x="0.17948717948717946"
+           y="0.16666666666666666">bc</tspan></text>
     </g>
     <g
        id="node_group_bd">
@@ -238,14 +238,14 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.03076923076923077"
-         y="0.2"
+         x="0.17948717948717946"
+         y="0.8333333333333333"
          id="label1_bd"><tspan
            sodipodi:role="line"
            id="label2_bd"
            style="stroke-width:0.264583;stroke:none"
-           x="-0.03076923076923077"
-           y="0.2">bd</tspan></text>
+           x="0.17948717948717946"
+           y="0.8333333333333333">bd</tspan></text>
     </g>
     <g
        id="node_group_ef">
@@ -258,14 +258,14 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.03076923076923077"
-         y="1.0"
+         x="0.17948717948717946"
+         y="-0.8333333333333333"
          id="label1_ef"><tspan
            sodipodi:role="line"
            id="label2_ef"
            style="stroke-width:0.264583;stroke:none"
-           x="-0.03076923076923077"
-           y="1.0">ef</tspan></text>
+           x="0.17948717948717946"
+           y="-0.8333333333333333">ef</tspan></text>
     </g>
     <g
        id="node_group_eg">
@@ -278,14 +278,14 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.03076923076923077"
-         y="0.4"
+         x="0.17948717948717946"
+         y="-0.16666666666666666"
          id="label1_eg"><tspan
            sodipodi:role="line"
            id="label2_eg"
            style="stroke-width:0.264583;stroke:none"
-           x="-0.03076923076923077"
-           y="0.4">eg</tspan></text>
+           x="0.17948717948717946"
+           y="-0.16666666666666666">eg</tspan></text>
     </g>
   </g>
   <g

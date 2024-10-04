@@ -12,9 +12,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <defs
-     id="defs82" />
+     id="defs86" />
   <sodipodi:namedview
-     id="namedview80"
+     id="namedview84"
      pagecolor="#505050"
      bordercolor="#eeeeee"
      borderopacity="1"
@@ -38,13 +38,13 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.11538461538461539"
+         x="-0.20512820512820512"
          y="-1.0"
          id="label1_a"><tspan
            sodipodi:role="line"
            id="label2_a"
            style="stroke-width:0.264583;stroke:none"
-           x="-0.11538461538461539"
+           x="-0.20512820512820512"
            y="-1.0">a</tspan></text>
     </g>
     <g
@@ -58,14 +58,14 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.11538461538461539"
-         y="-0.5"
+         x="-0.20512820512820512"
+         y="-0.6666666666666666"
          id="label1_c"><tspan
            sodipodi:role="line"
            id="label2_c"
            style="stroke-width:0.264583;stroke:none"
-           x="-0.11538461538461539"
-           y="-0.5">c</tspan></text>
+           x="-0.20512820512820512"
+           y="-0.6666666666666666">c</tspan></text>
     </g>
     <g
        id="node_group_d">
@@ -78,14 +78,14 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.11538461538461539"
-         y="0.0"
+         x="-0.20512820512820512"
+         y="0.6666666666666666"
          id="label1_d"><tspan
            sodipodi:role="line"
            id="label2_d"
            style="stroke-width:0.264583;stroke:none"
-           x="-0.11538461538461539"
-           y="0.0">d</tspan></text>
+           x="-0.20512820512820512"
+           y="0.6666666666666666">d</tspan></text>
     </g>
     <g
        id="node_group_f">
@@ -98,14 +98,14 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.11538461538461539"
-         y="-0.75"
+         x="-0.20512820512820512"
+         y="-0.3333333333333333"
          id="label1_f"><tspan
            sodipodi:role="line"
            id="label2_f"
            style="stroke-width:0.264583;stroke:none"
-           x="-0.11538461538461539"
-           y="-0.75">f</tspan></text>
+           x="-0.20512820512820512"
+           y="-0.3333333333333333">f</tspan></text>
     </g>
     <g
        id="node_group_g">
@@ -118,14 +118,14 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.11538461538461539"
-         y="-0.25"
+         x="-0.20512820512820512"
+         y="1.0"
          id="label1_g"><tspan
            sodipodi:role="line"
            id="label2_g"
            style="stroke-width:0.264583;stroke:none"
-           x="-0.11538461538461539"
-           y="-0.25">g</tspan></text>
+           x="-0.20512820512820512"
+           y="1.0">g</tspan></text>
     </g>
     <g
        id="node_group_ab">
@@ -138,14 +138,14 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="0.3846153846153846"
-         y="0.125"
+         x="0.4615384615384615"
+         y="0.16666666666666666"
          id="label1_ab"><tspan
            sodipodi:role="line"
            id="label2_ab"
            style="stroke-width:0.264583;stroke:none"
-           x="0.3846153846153846"
-           y="0.125">ab</tspan></text>
+           x="0.4615384615384615"
+           y="0.16666666666666666">ab</tspan></text>
     </g>
     <g
        id="node_group_ae">
@@ -158,114 +158,14 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="0.3846153846153846"
-         y="-0.125"
+         x="0.4615384615384615"
+         y="-0.16666666666666666"
          id="label1_ae"><tspan
            sodipodi:role="line"
            id="label2_ae"
            style="stroke-width:0.264583;stroke:none"
-           x="0.3846153846153846"
-           y="-0.125">ae</tspan></text>
-    </g>
-    <g
-       id="node_group_e">
-      <circle
-         style="fill:#000000;stroke-width:0.264583"
-         id="shape_e"
-         cx="pos[0]"
-         cy="pos[1]"
-         r="10" />
-      <text
-         xml:space="preserve"
-         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="0.1346153846153846"
-         y="-0.125"
-         id="label1_e"><tspan
-           sodipodi:role="line"
-           id="label2_e"
-           style="stroke-width:0.264583;stroke:none"
-           x="0.1346153846153846"
-           y="-0.125">e</tspan></text>
-    </g>
-    <g
-       id="node_group_bc">
-      <circle
-         style="fill:#000000;stroke-width:0.264583"
-         id="shape_bc"
-         cx="pos[0]"
-         cy="pos[1]"
-         r="10" />
-      <text
-         xml:space="preserve"
-         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.11538461538461539"
-         y="0.25"
-         id="label1_bc"><tspan
-           sodipodi:role="line"
-           id="label2_bc"
-           style="stroke-width:0.264583;stroke:none"
-           x="-0.11538461538461539"
-           y="0.25">bc</tspan></text>
-    </g>
-    <g
-       id="node_group_bd">
-      <circle
-         style="fill:#000000;stroke-width:0.264583"
-         id="shape_bd"
-         cx="pos[0]"
-         cy="pos[1]"
-         r="10" />
-      <text
-         xml:space="preserve"
-         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.11538461538461539"
-         y="0.5"
-         id="label1_bd"><tspan
-           sodipodi:role="line"
-           id="label2_bd"
-           style="stroke-width:0.264583;stroke:none"
-           x="-0.11538461538461539"
-           y="0.5">bd</tspan></text>
-    </g>
-    <g
-       id="node_group_b">
-      <circle
-         style="fill:#000000;stroke-width:0.264583"
-         id="shape_b"
-         cx="pos[0]"
-         cy="pos[1]"
-         r="10" />
-      <text
-         xml:space="preserve"
-         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="0.1346153846153846"
-         y="0.125"
-         id="label1_b"><tspan
-           sodipodi:role="line"
-           id="label2_b"
-           style="stroke-width:0.264583;stroke:none"
-           x="0.1346153846153846"
-           y="0.125">b</tspan></text>
-    </g>
-    <g
-       id="node_group_eg">
-      <circle
-         style="fill:#000000;stroke-width:0.264583"
-         id="shape_eg"
-         cx="pos[0]"
-         cy="pos[1]"
-         r="10" />
-      <text
-         xml:space="preserve"
-         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.11538461538461539"
-         y="0.75"
-         id="label1_eg"><tspan
-           sodipodi:role="line"
-           id="label2_eg"
-           style="stroke-width:0.264583;stroke:none"
-           x="-0.11538461538461539"
-           y="0.75">eg</tspan></text>
+           x="0.4615384615384615"
+           y="-0.16666666666666666">ae</tspan></text>
     </g>
     <g
        id="node_group_ef">
@@ -278,14 +178,114 @@
       <text
          xml:space="preserve"
          style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
-         x="-0.11538461538461539"
-         y="1.0"
+         x="0.1282051282051282"
+         y="-0.16666666666666666"
          id="label1_ef"><tspan
            sodipodi:role="line"
            id="label2_ef"
            style="stroke-width:0.264583;stroke:none"
-           x="-0.11538461538461539"
-           y="1.0">ef</tspan></text>
+           x="0.1282051282051282"
+           y="-0.16666666666666666">ef</tspan></text>
+    </g>
+    <g
+       id="node_group_e">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_e"
+         cx="pos[0]"
+         cy="pos[1]"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="-0.20512820512820512"
+         y="0.3333333333333333"
+         id="label1_e"><tspan
+           sodipodi:role="line"
+           id="label2_e"
+           style="stroke-width:0.264583;stroke:none"
+           x="-0.20512820512820512"
+           y="0.3333333333333333">e</tspan></text>
+    </g>
+    <g
+       id="node_group_eg">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_eg"
+         cx="pos[0]"
+         cy="pos[1]"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="0.1282051282051282"
+         y="0.5"
+         id="label1_eg"><tspan
+           sodipodi:role="line"
+           id="label2_eg"
+           style="stroke-width:0.264583;stroke:none"
+           x="0.1282051282051282"
+           y="0.5">eg</tspan></text>
+    </g>
+    <g
+       id="node_group_b">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_b"
+         cx="pos[0]"
+         cy="pos[1]"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="-0.20512820512820512"
+         y="0.0"
+         id="label1_b"><tspan
+           sodipodi:role="line"
+           id="label2_b"
+           style="stroke-width:0.264583;stroke:none"
+           x="-0.20512820512820512"
+           y="0.0">b</tspan></text>
+    </g>
+    <g
+       id="node_group_bd">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_bd"
+         cx="pos[0]"
+         cy="pos[1]"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="0.1282051282051282"
+         y="-0.5"
+         id="label1_bd"><tspan
+           sodipodi:role="line"
+           id="label2_bd"
+           style="stroke-width:0.264583;stroke:none"
+           x="0.1282051282051282"
+           y="-0.5">bd</tspan></text>
+    </g>
+    <g
+       id="node_group_bc">
+      <circle
+         style="fill:#000000;stroke-width:0.264583"
+         id="shape_bc"
+         cx="pos[0]"
+         cy="pos[1]"
+         r="10" />
+      <text
+         xml:space="preserve"
+         style="font-size:4.0px;text-align:center;text-anchor:middle;fill:#eeffff;stroke:none"
+         x="0.1282051282051282"
+         y="0.16666666666666666"
+         id="label1_bc"><tspan
+           sodipodi:role="line"
+           id="label2_bc"
+           style="stroke-width:0.264583;stroke:none"
+           x="0.1282051282051282"
+           y="0.16666666666666666">bc</tspan></text>
     </g>
   </g>
   <g
@@ -315,7 +315,7 @@
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
        inkscape:connection-start="#shape_c"
-       inkscape:connection-end="#shape_ae" />
+       inkscape:connection-end="#shape_ab" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 0,0 V 0"
@@ -323,7 +323,7 @@
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
        inkscape:connection-start="#shape_d"
-       inkscape:connection-end="#shape_ae" />
+       inkscape:connection-end="#shape_ab" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 0,0 V 0"
@@ -331,7 +331,7 @@
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
        inkscape:connection-start="#shape_f"
-       inkscape:connection-end="#shape_ab" />
+       inkscape:connection-end="#shape_ae" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 0,0 V 0"
@@ -339,14 +339,14 @@
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
        inkscape:connection-start="#shape_g"
-       inkscape:connection-end="#shape_ab" />
+       inkscape:connection-end="#shape_ae" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 0,0 V 0"
        id="path66"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_e"
+       inkscape:connection-start="#shape_ef"
        inkscape:connection-end="#shape_ae" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -354,39 +354,55 @@
        id="path68"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_bc"
-       inkscape:connection-end="#shape_e" />
+       inkscape:connection-start="#shape_e"
+       inkscape:connection-end="#shape_ef" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 0,0 V 0"
        id="path70"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_bd"
-       inkscape:connection-end="#shape_e" />
+       inkscape:connection-start="#shape_e"
+       inkscape:connection-end="#shape_eg" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 0,0 V 0"
        id="path72"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_b"
-       inkscape:connection-end="#shape_ab" />
+       inkscape:connection-start="#shape_eg"
+       inkscape:connection-end="#shape_ae" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 0,0 V 0"
        id="path74"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_eg"
-       inkscape:connection-end="#shape_b" />
+       inkscape:connection-start="#shape_b"
+       inkscape:connection-end="#shape_bc" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 0,0 V 0"
        id="path76"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#shape_ef"
-       inkscape:connection-end="#shape_b" />
+       inkscape:connection-start="#shape_b"
+       inkscape:connection-end="#shape_bd" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 0,0 V 0"
+       id="path78"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_bd"
+       inkscape:connection-end="#shape_ab" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 0,0 V 0"
+       id="path80"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#shape_bc"
+       inkscape:connection-end="#shape_ab" />
   </g>
 </svg>

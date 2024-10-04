@@ -104,11 +104,6 @@ def direct_cluster_sccs(new_ass: nx.DiGraph, cluster_num=0):
             trm_ass_dep,
             filter_edge=lambda e1, e2: trm_ass_dep[e1][e2]["EDGE_TYPE"] != "COLL",
         )
-        # trm_ass_con = nx.subgraph_view(
-        #     new_ass,
-        #     filter_edge=lambda e1, e2: new_ass[e1][e2]["EDGE_TYPE"] != "COLL",
-        #     filter_node=lambda n: n in cluster_nodes,
-        # ).copy()
         clusters = list(nx.weakly_connected_components(trm_ass_con))
         print(f"Segmenting SCC to {len(clusters)} Clusters: {clusters}")
         seg_ass_dep = nx.union_all([new_ass_dep.subgraph(cluster) for cluster in clusters])
