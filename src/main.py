@@ -1,3 +1,5 @@
+import networkx as nx
+
 from recongraph.io_utils import file_writer, graph_generator
 from recongraph.processors import graph_parser, graph_solver
 from recongraph.visualizer import graph_visualizer
@@ -11,15 +13,15 @@ if __name__ == "__main__":
 
     def viz_and_save(graph, path: Path):
         file_writer.pygraphviz_export(graph, path.with_suffix(".pdf"))
-        # pos = graph_visualizer.multipartite_layout_by_connections(graph)
-        pos, bbox = graph_visualizer.pygraphviz_layout(graph)
-        file_writer.inkscape_export(graph, path.with_suffix(".svg"), pos, bbox)
+        pos, bbox = graph_visualizer.multipartite_layout_by_connections(graph)
+        # pos, bbox = graph_visualizer.pygraphviz_layout(graph)
+        # file_writer.inkscape_export(graph, path.with_suffix(".svg"), pos, bbox)
         # graph_visualizer.viz_dag(graph, pos)
 
-    assembly = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
+    # assembly = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
     # from assemblies.example_graph import con as assembly
     # assembly = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
-
+    assembly = nx.read_gml("../assemblies/extended.gml")
     viz_and_save(assembly, export_path / "01-dep.pdf")
 
     res_dep = graph_solver.direct_cluster_sccs(assembly.copy())
