@@ -10,6 +10,7 @@ import warnings
 logger = logging.getLogger(__name__)
 VIZ_DEP_INSTALLED = (importlib.util.find_spec('pygraphviz')) is not None
 
+
 def pygraphviz_export(g, name):
     if not VIZ_DEP_INSTALLED:
         warnings.warn("Package pygraphviz is not installed. Skipping visualization.")
@@ -23,6 +24,8 @@ def pygraphviz_export(g, name):
 def export_stages(stages_dict, name):
     logger.debug(stages_dict)
     with open(name, 'w') as file:
+        file.write(
+            f"Stage,component,connections,parts,newly_added,group\n")
         for stg in stages_dict.keys():
             for cmp in stages_dict[stg]:
                 comp = stages_dict[stg][cmp]
@@ -32,6 +35,8 @@ def export_stages(stages_dict, name):
 
 def export_gantt(gantt_dict, name):
     with open(name, 'w') as file:
+        file.write(
+            f"item,start,end,latest,deps,children\n")
         for el in gantt_dict.items():
             file.write(
                 f"{el[0]},{el[1]['start']},{el[1]['end']},{el[1]['latest']},{';'.join(el[1]['deps'])},{';'.join(el[1]['children'])}\n")
@@ -39,6 +44,7 @@ def export_gantt(gantt_dict, name):
 
 def export_clusters(clusters_dict, name):
     with open(name, 'w') as file:
+        file.write(f"Level,Name,Parts,Connections,SubClusters\n")
         for lay in clusters_dict.items():
             for clst in lay[1]:
                 file.write(f"{lay[0]},{clst[0]},{';'.join(clst[1])},{';'.join(clst[2])},{';'.join(clst[3])}\n")
