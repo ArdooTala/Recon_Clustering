@@ -12,12 +12,12 @@ def _get_dep_graph_from_connections(graph, nodes):
     return graph.subgraph(list(elems) + list(nodes)).copy()
 
 
-def generate_stages(ass, g):
-    graph = g.copy()
+def generate_stages(assembly, con_dep):
+    graph = con_dep.copy()
     con = nx.subgraph_view(
-        ass,
-        filter_edge=lambda e1, e2: ass[e1][e2]["EDGE_TYPE"] != "COLL",
-    )
+        assembly,
+        filter_edge=lambda e1, e2: assembly[e1][e2]["EDGE_TYPE"] != "COLL",
+    ).copy()
     stages_dict = {}
     all_parts = []
 
@@ -42,20 +42,31 @@ def generate_stages(ass, g):
             comp_added = [p for p in comp_parts if p not in all_parts]
             all_parts += comp_added
 
-            comp_group = set(comp_parts)
+            for node in comp_conns + comp_parts:
+                con.nodes[node]['stage'] = stage
+                con.nodes[node]['stage_component'] = component_count
 
-            if stage > 0:
-                ext_clstrs = []
-                for cmp_name in stages_dict[stage - 1].keys():
-                    if any([prt in stages_dict[stage - 1][cmp_name]["group"] for prt in comp_parts]):
-                        comp_group.update(stages_dict[stage - 1][cmp_name]["group"])
-                        ext_clstrs.append(f"{stage}-{cmp_name}")
-                logger.debug(f"\t\tComponent Extends Clusters > {ext_clstrs}")
+            status_graph = nx.subgraph_view(
+                con,
+                filter_node=lambda n: (con.nodes(data='stage', default=stage)[n] < stage) or (n in component)
+            )
+            comp_group = next(wcc for wcc in nx.weakly_connected_components(status_graph) if any([n in wcc for n in comp_parts]))
+
+            # comp_group = set(comp_parts)
+
+            # if stage > 0:
+            #     ext_clstrs = []
+            #     for cmp_name in stages_dict[stage - 1].keys():
+            #         if any([prt in stages_dict[stage - 1][cmp_name]["group"] for prt in comp_parts]):
+            #             comp_group.update(stages_dict[stage - 1][cmp_name]["group"])
+            #             ext_clstrs.append(f"{stage-1}-{cmp_name}")
+            #     logger.debug(f"\t\t\tComponent Extends Clusters > {ext_clstrs}")
 
             stages_dict[stage][component_count]["conns"] = comp_conns
             stages_dict[stage][component_count]["parts"] = comp_parts
             stages_dict[stage][component_count]["added"] = comp_added
-            stages_dict[stage][component_count]["group"] = comp_group
+            # stages_dict[stage][component_count]["group"] = comp_group
+            stages_dict[stage][component_count]["group"] = [c for c in comp_group if status_graph.nodes(data="TYPE")[c] == "PART"]
 
             component_count += 1
         # stages_dict[stage] = sources
