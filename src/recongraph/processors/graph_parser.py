@@ -66,7 +66,7 @@ def generate_stages(assembly, con_dep):
             stages_dict[stage][component_count]["parts"] = comp_parts
             stages_dict[stage][component_count]["added"] = comp_added
             # stages_dict[stage][component_count]["group"] = comp_group
-            stages_dict[stage][component_count]["group"] = [c for c in comp_group if status_graph.nodes(data="TYPE")[c] == "PART"]
+            stages_dict[stage][component_count]["group"] = [c for c in comp_group if con.nodes(data="TYPE")[c] == "PART"]
 
             component_count += 1
         # stages_dict[stage] = sources
