@@ -4,6 +4,7 @@ import networkx as nx
 
 logger = logging.getLogger(__name__)
 
+
 def _get_dep_graph_from_connections(graph, nodes):
     elems = set()
     for no in nodes:
@@ -11,8 +12,12 @@ def _get_dep_graph_from_connections(graph, nodes):
     return graph.subgraph(list(elems) + list(nodes)).copy()
 
 
-def generate_stages(con, g):
+def generate_stages(ass, g):
     graph = g.copy()
+    con = nx.subgraph_view(
+        ass,
+        filter_edge=lambda e1, e2: ass[e1][e2]["EDGE_TYPE"] != "COLL",
+    )
     stages_dict = {}
     all_parts = []
 
