@@ -42,7 +42,7 @@ def generate_stages(assembly, con_dep):
             comp_added = [p for p in comp_parts if p not in all_parts]
             all_parts += comp_added
 
-            for node in comp_added:
+            for node in comp_added + comp_conns:
                 con.nodes[node]['stage'] = stage
                 con.nodes[node]['stage_component'] = component_count
 
