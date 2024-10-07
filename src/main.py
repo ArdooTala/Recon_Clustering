@@ -1,5 +1,4 @@
 import networkx as nx
-
 from recongraph.io_utils import file_writer, graph_generator
 from recongraph.processors import graph_parser, graph_solver
 from recongraph.visualizer import graph_visualizer
