@@ -1,5 +1,7 @@
 import logging
+from pprint import pprint
 import networkx as nx
+from recongraph.processors import graph_solver
 
 
 logger = logging.getLogger(__name__)
@@ -10,6 +12,54 @@ def _get_dep_graph_from_connections(graph, nodes):
     for no in nodes:
         elems.update(list(graph.predecessors(no)))
     return graph.subgraph(list(elems) + list(nodes)).copy()
+
+
+def generate_stages_v2(res_xpn):
+    res_con = graph_solver.convert_ass_dep_to_con_dep(res_xpn)
+    stages = list(nx.topological_generations(res_con))
+    logger.info(f"Generated {len(stages)} stages > # of connections in each stage: {list(map(len, stages))}")
+
+    return stages
+
+
+def extract_stages(assembly, stages):
+    con = nx.subgraph_view(
+        assembly,
+        filter_edge=lambda e1, e2: assembly[e1][e2]["EDGE_TYPE"] != "COLL",
+    ).copy()
+
+    stages_dict = {}
+    for stage, stage_conn_nodes in enumerate(stages):
+        logger.info(f"\t Stage {stage} > {stage_conn_nodes}")
+
+        assembly_sub_graph = _get_dep_graph_from_connections(con, stage_conn_nodes)
+        for node in assembly_sub_graph.nodes:
+            con.nodes[node]['stage'] = min(con.nodes.data('stage', default=stage)[node], stage)
+
+        components_graph = nx.subgraph_view(
+            con,
+            filter_node=lambda n: (con.nodes.data('stage', default=stage)[n] < stage) or (n in assembly_sub_graph)
+        )
+
+        stages_dict[stage] = {}
+
+        connected_components = nx.weakly_connected_components(components_graph)
+        for component, connected_component in enumerate(connected_components):
+            component_graph = assembly_sub_graph.subgraph(connected_component)
+            if not component_graph:
+                continue
+            logger.debug(f"\t\tComponent: {component_graph} > {component_graph.nodes}")
+            stages_dict[stage][component] = {}
+            comp_conns = [n for n in component_graph if assembly_sub_graph.nodes[n]["TYPE"] == "CONN"]
+            comp_parts = [n for n in component_graph if assembly_sub_graph.nodes[n]["TYPE"] == "PART"]
+            comp_added = [p for p in comp_parts if con.nodes.data("stage")[p] == stage]
+
+            stages_dict[stage][component]["conns"] = comp_conns
+            stages_dict[stage][component]["parts"] = comp_parts
+            stages_dict[stage][component]["added"] = comp_added
+            stages_dict[stage][component]["group"] = [c for c in connected_component if
+                                                            con.nodes.data("TYPE")[c] == "PART"]
+    return stages_dict
 
 
 def generate_stages(assembly, con_dep):
@@ -25,20 +75,29 @@ def generate_stages(assembly, con_dep):
     stage = 0
     while graph.order() > 0:
         logger.debug(f"Stage: {stage}")
-        sources = [x for x, ind in graph.in_degree if ind == 0]
-        logger.debug(f"\tSource Nodes: {sources}")
-        if not sources:
+        source_conn_nodes = [x for x, ind in graph.in_degree if ind == 0]
+        logger.debug(f"\t{len(source_conn_nodes)} Source Connection Nodes: {source_conn_nodes}")
+        if not source_conn_nodes:
             raise Exception("FUCK!...No Sources in Graph")
-        con_graph = _get_dep_graph_from_connections(con, sources)
+        assembly_sub_graph = _get_dep_graph_from_connections(con, source_conn_nodes)
 
         # Export
         stages_dict[stage] = {}
         component_count = 0
-        for component in nx.weakly_connected_components(con_graph):
-            logger.debug(f"\t\tComponent: {component}")
+
+        components_graph = nx.subgraph_view(
+            con,
+            filter_node=lambda n: (con.nodes.data('stage', default=stage)[n] < stage) or (n in assembly_sub_graph)
+        )
+        connected_components = nx.weakly_connected_components(components_graph)
+        for connected_component in connected_components :
+            component = assembly_sub_graph.subgraph(connected_component)
+            if not component:
+                continue
+            logger.debug(f"\t\tComponent: {component} > {component.nodes}")
             stages_dict[stage][component_count] = {}
-            comp_conns = [n for n in component if con_graph.nodes[n]["TYPE"] == "CONN"]
-            comp_parts = [n for n in component if con_graph.nodes[n]["TYPE"] == "PART"]
+            comp_conns = [n for n in component if assembly_sub_graph.nodes[n]["TYPE"] == "CONN"]
+            comp_parts = [n for n in component if assembly_sub_graph.nodes[n]["TYPE"] == "PART"]
             comp_added = [p for p in comp_parts if p not in all_parts]
             all_parts += comp_added
 
@@ -46,32 +105,15 @@ def generate_stages(assembly, con_dep):
                 con.nodes[node]['stage'] = stage
                 con.nodes[node]['stage_component'] = component_count
 
-            status_graph = nx.subgraph_view(
-                con,
-                filter_node=lambda n: (con.nodes(data='stage', default=stage)[n] < stage) or (n in component)
-            )
-            comp_group = next(wcc for wcc in nx.weakly_connected_components(status_graph) if any([n in wcc for n in comp_parts]))
-
-            # comp_group = set(comp_parts)
-
-            # if stage > 0:
-            #     ext_clstrs = []
-            #     for cmp_name in stages_dict[stage - 1].keys():
-            #         if any([prt in stages_dict[stage - 1][cmp_name]["group"] for prt in comp_parts]):
-            #             comp_group.update(stages_dict[stage - 1][cmp_name]["group"])
-            #             ext_clstrs.append(f"{stage-1}-{cmp_name}")
-            #     logger.debug(f"\t\t\tComponent Extends Clusters > {ext_clstrs}")
-
             stages_dict[stage][component_count]["conns"] = comp_conns
             stages_dict[stage][component_count]["parts"] = comp_parts
             stages_dict[stage][component_count]["added"] = comp_added
             # stages_dict[stage][component_count]["group"] = comp_group
-            stages_dict[stage][component_count]["group"] = [c for c in comp_group if
+            stages_dict[stage][component_count]["group"] = [c for c in  connected_component if
                                                             con.nodes(data="TYPE")[c] == "PART"]
 
             component_count += 1
-        # stages_dict[stage] = sources
-        graph.remove_nodes_from(sources)
+        graph.remove_nodes_from(source_conn_nodes)
         stage += 1
 
     return stages_dict
