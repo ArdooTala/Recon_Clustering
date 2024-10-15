@@ -70,7 +70,6 @@ def direct_cluster_sccs(new_ass: nx.DiGraph, cluster_num=0):
         raise Exception("Graph is one SCC")
 
     if nx.is_directed_acyclic_graph(new_ass_dep):
-        print("Graph is DAG...")
         logger.info("Graph is DAG. Exiting Solution.")
         return new_ass_dep
 
@@ -108,12 +107,12 @@ def direct_cluster_sccs(new_ass: nx.DiGraph, cluster_num=0):
             filter_edge=lambda e1, e2: trm_ass_dep[e1][e2]["EDGE_TYPE"] != "COLL",
         )
         clusters = list(nx.weakly_connected_components(trm_ass_con))
-        logger.info(f"Splitting the SCC to {len(clusters)} Clusters: {clusters}")
+        logger.debug(f"Splitting the SCC to {len(clusters)} Clusters: {clusters}")
         seg_ass_dep = nx.union_all([new_ass_dep.subgraph(cluster) for cluster in clusters])
 
         # Remove edges from ConnectionsDependencyGraph
         edges_to_remove = [edge for edge in trm_ass_dep.edges if not seg_ass_dep.has_edge(*edge)]
-        logger.info(f"\tRemoving {len(edges_to_remove)} Edges from the graph: {edges_to_remove}")
+        logger.debug(f"\tRemoving {len(edges_to_remove)} Edges from the graph: {edges_to_remove}")
         assert all([new_ass_dep.edges[e]['EDGE_TYPE'] == 'COLL' for e in edges_to_remove])
         new_ass_dep.remove_edges_from(edges_to_remove)
 
@@ -126,7 +125,7 @@ def direct_cluster_sccs(new_ass: nx.DiGraph, cluster_num=0):
 
             cluster_num += 1
 
-        logger.info(f"Is DAG yet: {nx.is_directed_acyclic_graph(new_ass_dep)}")
+        logger.debug(f"Is DAG yet: {nx.is_directed_acyclic_graph(new_ass_dep)}")
         return direct_cluster_sccs(new_ass_dep, cluster_num)
 
 

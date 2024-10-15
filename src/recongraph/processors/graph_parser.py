@@ -30,7 +30,7 @@ def extract_stages(assembly, stages):
 
     stages_dict = {}
     for stage, stage_conn_nodes in enumerate(stages):
-        logger.info(f"\t Stage {stage} > {stage_conn_nodes}")
+        logger.debug(f"\t Stage {stage} > {stage_conn_nodes}")
 
         assembly_sub_graph = _get_dep_graph_from_connections(con, stage_conn_nodes)
         for node in assembly_sub_graph.nodes:
