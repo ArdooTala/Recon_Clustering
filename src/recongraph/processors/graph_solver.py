@@ -191,27 +191,6 @@ def resolve_dependencies(graph: nx.DiGraph):
 
     for rdg in reciprocal_dependencies_groups:
         ass_dep = _resolve_reciprocal_dependency_group(ass_dep, rdg)
-        # logger.debug(f"Solving RECIPROCAL DEPENDENCY GROUP of {len(rdg)} nodes")
-        #
-        # # Remove COLL edges
-        # trm_ass_dep = ass_dep.subgraph(rdg)
-        # trm_ass_con = nx.subgraph_view(
-        #     trm_ass_dep,
-        #     filter_edge=lambda e1, e2: trm_ass_dep[e1][e2]["EDGE_TYPE"] != "COLL",
-        # )
-        # clusters = list(nx.weakly_connected_components(trm_ass_con))
-        # logger.debug(f"\tSplitting the RECIPROCAL DEPENDENCY GROUP to {len(clusters)} Clusters: {clusters}")
-        # seg_ass_dep = nx.union_all([graph.subgraph(cluster) for cluster in clusters])
-        #
-        # # Remove edges from ConnectionsDependencyGraph
-        # edges_to_remove = [edge for edge in trm_ass_dep.edges if not seg_ass_dep.has_edge(*edge)]
-        # assert all([graph.edges[e]['EDGE_TYPE'] == 'COLL' for e in edges_to_remove])
-        # logger.debug(f"\tRemoving {len(edges_to_remove)} Collision Edges between clusters: {edges_to_remove}")
-        # ass_dep.remove_edges_from(edges_to_remove)
-        #
-        # for cluster in clusters:
-        #     ass_dep = _resolve_cluster(ass_dep, cluster)
-
         logger.debug(f"Is DAG: {nx.is_directed_acyclic_graph(ass_dep)}")
 
     return ass_dep
