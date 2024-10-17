@@ -15,7 +15,7 @@ def _get_dep_graph_from_connections(graph, nodes):
 
 
 def generate_stages_v2(res_xpn):
-    res_con = graph_solver.convert_ass_dep_to_con_dep(res_xpn)
+    res_con = graph_solver._convert_ass_dep_to_con_dep(res_xpn)
     stages = list(nx.topological_generations(res_con))
     logger.info(f"Generated {len(stages)} stages > # of connections in each stage: {list(map(len, stages))}")
 
@@ -30,7 +30,7 @@ def extract_stages(assembly, stages):
 
     stages_dict = {}
     for stage, stage_conn_nodes in enumerate(stages):
-        logger.info(f"\t Stage {stage} > {stage_conn_nodes}")
+        logger.debug(f"\t Stage {stage} > {stage_conn_nodes}")
 
         assembly_sub_graph = _get_dep_graph_from_connections(con, stage_conn_nodes)
         for node in assembly_sub_graph.nodes:
