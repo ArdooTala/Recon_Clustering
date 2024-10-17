@@ -38,7 +38,7 @@ def _collapse_nodes(graph, nodes, cluster_node, save_dict=None) -> nx.DiGraph:
     subg = graph.subgraph(nodes).copy()
     cluster_level_data = subg.nodes.data('level', default=-1)
     cluster_level = max([lvl for _, lvl in cluster_level_data]) + 1
-    logger.info(f"\t>> FORMING CLUSTER: {cluster_node} > CLUSTER LEVEL: {cluster_level} > NODES: {nodes}")
+    logger.info(f"\tCollapsing Nodes into Cluster {cluster_node} with Cluster Level: {cluster_level} > NODES: {nodes}")
 
     graph.add_node(cluster_node, TYPE="CLUS", level=cluster_level, sub_graph=subg)
     for node in nodes:
@@ -121,11 +121,6 @@ def _find_reciprocal_dependency_groups(graph):
 def resolve_dependencies(graph: nx.DiGraph, cluster_num=0, cluster_level=0):
     ass_dep = graph.copy()
 
-    # Get/Add clusters_dict as a graph attribute
-    if 'clusters_dict' not in ass_dep.graph:
-        ass_dep.graph['clusters_dict'] = {}
-    clusters_dict = ass_dep.graph['clusters_dict']
-
     if nx.is_directed_acyclic_graph(ass_dep):
         logger.info("Graph is DAG. Exiting Solution.")
         return ass_dep
@@ -166,22 +161,20 @@ def resolve_dependencies(graph: nx.DiGraph, cluster_num=0, cluster_level=0):
 
             # Update Graphs
             internal_graph = ass_dep.subgraph(cluster)
-            logger.debug(f"SOLVING CLUSTER INTERNAL {internal_graph}")
+            logger.debug(f">> SOLVING CLUSTER'S INTERNAL GRAPH {internal_graph}")
 
             resolved_internal_graph = resolve_dependencies(internal_graph, cluster_level=cluster_level+1)
             assert nx.is_directed_acyclic_graph(resolved_internal_graph)
 
-            # resolved_cluster_sources = [x for x, ind in resolved_internal_graph.in_degree if ind == 0]
-            # assert all([graph.nodes[cls_src]["TYPE"] == "PART" for cls_src in resolved_cluster_sources])
             resolved_cluster_sinks = [x for x, ind in resolved_internal_graph.out_degree if ind == 0]
             assert all([graph.nodes[cls_snk]["TYPE"] == "CONN" for cls_snk in resolved_cluster_sinks])
 
             # Debug
-            cluster_sinks = [x for x, ind in internal_graph.out_degree if ind == 0]
-            assert all([graph.nodes[cls_snk]["TYPE"] == "CONN" for cls_snk in resolved_cluster_sinks])
-            logger.debug(f"Cluster {cluster_name} sinks          : {cluster_sinks}")
-            logger.debug(f"Resolved Cluster {cluster_name} sinks : {resolved_cluster_sinks}")
-            logger.debug(f"SAME SINKS: {cluster_sinks == resolved_cluster_sinks}")
+            # cluster_sinks = [x for x, ind in internal_graph.out_degree if ind == 0]
+            # assert all([graph.nodes[cls_snk]["TYPE"] == "CONN" for cls_snk in resolved_cluster_sinks])
+            # logger.debug(f"Cluster {cluster_name} sinks          : {cluster_sinks}")
+            # logger.debug(f"Resolved Cluster {cluster_name} sinks : {resolved_cluster_sinks}")
+            # logger.debug(f"SAME SINKS: {cluster_sinks == resolved_cluster_sinks}")
             # end Debug
 
             tmp_graph = _collapse_nodes(ass_dep, cluster, 'cls')
@@ -189,8 +182,7 @@ def resolve_dependencies(graph: nx.DiGraph, cluster_num=0, cluster_level=0):
             logger.debug(f"Cluster {cluster_name} Successors: {cluster_successors}")
             assert all([ass_dep.nodes[succ]['TYPE'] == 'CONN' for succ in cluster_successors])
 
-
-            logger.debug(f"DONE SOLVING CLUSTER {cluster_name}\n")
+            logger.debug(f"<< DONE SOLVING CLUSTER {cluster_name}\n")
 
             # Replace Cluster
             ass_dep.remove_nodes_from(cluster)
@@ -204,7 +196,6 @@ def resolve_dependencies(graph: nx.DiGraph, cluster_num=0, cluster_level=0):
 
     return ass_dep
 
-        # For each Cluster: Find Connections
 
 def direct_cluster_sccs(new_ass: nx.DiGraph, cluster_num=0):
     new_ass_dep = new_ass.copy()
