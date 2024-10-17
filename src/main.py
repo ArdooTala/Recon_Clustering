@@ -20,8 +20,13 @@ if __name__ == "__main__":
 
     # assembly = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
     # from assemblies.example_graph import con as assembly
-    # assembly = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
-    assembly = nx.read_gml("../assemblies/extended.gml")
+    assembly = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
+    # assembly = nx.read_gml("../assemblies/extended.gml")
+
+    from recongraph.processors import disassembly
+    disassembly.find_connection_nodes_to_remove(assembly, 'b')
+    exit()
+
     viz_and_save(assembly, export_path / "01-dep.pdf")
 
     res_dep = graph_solver.direct_cluster_sccs(assembly.copy())
