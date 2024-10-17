@@ -16,11 +16,10 @@ if __name__ == "__main__":
         file_writer.pygraphviz_export(graph, path.with_suffix(".pdf"))
 
         if not pos or not bbox:
-            pos, bbox = graph_visualizer.multipartite_layout_by_connections(graph)
-            # pos, bbox = graph_visualizer.pygraphviz_layout(graph)
-
-        # file_writer.inkscape_export(graph, path.with_suffix(".svg"), pos, bbox)
-        graph_visualizer.viz_dag(graph, pos)
+            # pos, bbox = graph_visualizer.multipartite_layout_by_connections(graph)
+            pos, bbox = graph_visualizer.pygraphviz_layout(graph)
+        file_writer.inkscape_export(graph, path.with_suffix(".svg"), pos, bbox)
+        # graph_visualizer.viz_dag(graph, pos)
 
     # assembly = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
     # from assemblies.example_graph import con as assembly
@@ -29,6 +28,14 @@ if __name__ == "__main__":
     # assembly = nx.read_gml("../assemblies/extended.gml")
     viz_and_save(assembly, export_path / "01-dep.pdf")
 
+    resolved = graph_solver.resolve_dependencies(assembly)
+    viz_and_save(resolved, export_path / "RESOLVED.pdf")
+    stages = graph_parser.generate_stages_v2(resolved)
+    stages_dict = graph_parser.extract_stages(assembly, stages)
+    file_writer.export_stages(stages_dict, export_path / "export-components.csv" )
+    print(assembly)
+    print(resolved)
+    exit()
     res_dep = graph_solver.direct_cluster_sccs(assembly.copy())
     viz_and_save(res_dep, export_path / "02-res_dep.pdf")
 

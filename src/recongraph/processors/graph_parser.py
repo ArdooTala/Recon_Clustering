@@ -15,7 +15,7 @@ def _get_dep_graph_from_connections(graph, nodes):
 
 
 def generate_stages_v2(res_xpn):
-    res_con = graph_solver.convert_ass_dep_to_con_dep(res_xpn)
+    res_con = graph_solver._convert_ass_dep_to_con_dep(res_xpn)
     stages = list(nx.topological_generations(res_con))
     logger.info(f"Generated {len(stages)} stages > # of connections in each stage: {list(map(len, stages))}")
 
