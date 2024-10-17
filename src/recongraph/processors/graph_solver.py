@@ -80,25 +80,27 @@ def direct_cluster_sccs(new_ass: nx.DiGraph, cluster_num=0):
         cluster_nodes = condensed.nodes[scc_node]['members']
         if len(cluster_nodes) < 2:
             continue
-        logger.debug(f"Found a SCC: {cluster_nodes}")
+        logger.debug(f"Found a SCC of {len(cluster_nodes)} Nodes > {cluster_nodes}")
         for i in range(10):
             extended_ass_dep = extend_sub_graph_with_parts(new_ass_dep, cluster_nodes)
 
+            extra_nodes = [n for n in extended_ass_dep.nodes if n not in cluster_nodes]
+            logger.debug(f"\tExtending subgraph with {len(extra_nodes)} nodes > {extra_nodes}")
             cluster_nodes = list(extended_ass_dep.nodes)
-            logger.debug(f"EXTENDED SUBGRAPH: {cluster_nodes}")
+            logger.debug(f"EXTENDED SUBGRAPH of {len(cluster_nodes)} Nodes > {cluster_nodes}")
 
             temp_ass_dep = collapse_nodes(new_ass_dep, cluster_nodes, -1)
             all_sccs = nx.strongly_connected_components(temp_ass_dep)
             extended_nodes = [list(g) for g in all_sccs if -1 in g][0]
             if len(extended_nodes) > 1:
                 extended_nodes.remove(-1)
-                logger.debug(f"Found extended nodes: {extended_nodes}")
+                logger.debug(f"\tFound new SCC including the extended nodes: {extended_nodes}")
                 cluster_nodes = set(cluster_nodes)
                 cluster_nodes.update(extended_nodes)
                 cluster_nodes = list(cluster_nodes)
                 logger.debug(f"\tExtending > [{i}]: Latest EXTENDED Nodes: {cluster_nodes}")
             else:
-                logger.debug(f"Extended {i} times. Final EXTENDED Nodes: {cluster_nodes}")
+                logger.debug(f"Extended {i+1} times to {len(cluster_nodes)} nodes. Final EXTENDED Nodes: {cluster_nodes}")
                 break
 
         trm_ass_dep = new_ass.subgraph(cluster_nodes)

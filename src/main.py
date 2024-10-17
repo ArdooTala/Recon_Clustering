@@ -7,7 +7,7 @@ from pathlib import Path
 import logging
 
 if __name__ == "__main__":
-    logging.getLogger().setLevel(logging.INFO)
+    logging.getLogger().setLevel(logging.DEBUG)
     export_path = Path("../exports/")
     if not export_path.exists():
         export_path.mkdir()
@@ -24,7 +24,8 @@ if __name__ == "__main__":
 
     # assembly = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
     # from assemblies.example_graph import con as assembly
-    assembly = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
+    # assembly = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
+    assembly = nx.read_gml("../assemblies/exception.gml")
     # assembly = nx.read_gml("../assemblies/extended.gml")
     viz_and_save(assembly, export_path / "01-dep.pdf")
 
