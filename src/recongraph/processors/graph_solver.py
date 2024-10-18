@@ -130,8 +130,10 @@ def _resolve_cluster(graph, cluster):
     resolved_cluster_sinks = [x for x, ind in resolved_internal_graph.out_degree if ind == 0]
     assert all([graph.nodes[cls_snk]["TYPE"] == "CONN" for cls_snk in resolved_cluster_sinks])
 
-    tmp_graph = _collapse_nodes(ass_dep, cluster, 'cls')
-    cluster_successors = list(tmp_graph.successors('cls'))
+    cluster_successors = set(
+        [succ for node in internal_graph for succ in ass_dep.successors(node) if succ not in internal_graph]
+    )
+
     logger.debug(f"Cluster Successors: {cluster_successors}")
     assert all([ass_dep.nodes[succ]['TYPE'] == 'CONN' for succ in cluster_successors])
 
