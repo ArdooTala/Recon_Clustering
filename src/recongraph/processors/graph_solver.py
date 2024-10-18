@@ -62,31 +62,11 @@ def _collapse_nodes(graph, nodes, cluster_node, save_dict=None) -> nx.DiGraph:
 def _form_reciprocal_dependency_group(graph: nx.DiGraph, subgraph):
     scc_nodes = subgraph.copy()
 
-    for i in range(10):
-        extended_ass_dep = _extract_subgraph_as_cluster(graph, scc_nodes)
-
-        extra_nodes = [n for n in extended_ass_dep.nodes if n not in scc_nodes]
-        logger.debug(f"\tIncluding {len(extra_nodes)} connected parts > {extra_nodes}")
-        scc_nodes = list(extended_ass_dep.nodes)
-        # logger.debug(f"\t\tEXTENDED SUBGRAPH of {len(scc_nodes)} Nodes > {scc_nodes}")
-
-        # Check if extending forms another scc
-        temp_ass_dep = _collapse_nodes(graph, scc_nodes, -1)
-        extended_nodes = [list(g) for g in nx.strongly_connected_components(temp_ass_dep) if -1 in g][0]
-
-        if len(extended_nodes) > 1:
-            logger.debug(f"\tFound new SCC including the extended nodes: {extended_nodes}")
-            extended_nodes.remove(-1)
-            scc_nodes = set(scc_nodes)
-            scc_nodes.update(extended_nodes)
-            scc_nodes = list(scc_nodes)
-            logger.debug(f"\tExtending subgraph to new SCC with {len(extended_nodes)} nodes > {extended_nodes}")
-        else:
-            logger.debug(f"\tExtended SCC {i} times to {len(scc_nodes)} nodes.")
-            logger.debug(f"\tFinal EXTENDED Nodes: {scc_nodes}")
-            break
-    else:
-        raise Exception("Extended the SCC 10 times already. Is there a loop?")
+    extended_ass_dep = _extract_subgraph_as_cluster(graph, scc_nodes)
+    extra_nodes = [n for n in extended_ass_dep.nodes if n not in scc_nodes]
+    logger.debug(f"\tIncluding {len(extra_nodes)} connected parts > {extra_nodes}")
+    scc_nodes = list(extended_ass_dep.nodes)
+    # logger.debug(f"\t\tEXTENDED SUBGRAPH of {len(scc_nodes)} Nodes > {scc_nodes}")
 
     return scc_nodes
 
@@ -101,13 +81,11 @@ def _find_reciprocal_dependency_groups(graph):
         if len(scc_nodes) < 2:
             continue
         logger.debug(f"Found a SCC of {len(scc_nodes)} Nodes > {scc_nodes}")
-
         reciprocal_dependencies_groups.append(
             _form_reciprocal_dependency_group(graph, scc_nodes)
         )
-
     rdgs_nodes = [n for rdg in reciprocal_dependencies_groups for n in rdg]
-    logger.debug(f"FOUND {len(reciprocal_dependencies_groups)} RECIPROCAL DEPENDENCY GROUPS > # of Nodes/Unique Nodes: {len(rdgs_nodes)}/{len(set(rdgs_nodes))}")
+    logger.debug(f"FOUND {len(reciprocal_dependencies_groups)} RECIPROCAL DEPENDENCIES > # of Nodes/Unique Nodes: {len(rdgs_nodes)}/{len(set(rdgs_nodes))}")
 
     reciprocal_dependencies_subgraph = graph.subgraph(
         set(rdgs_nodes)
