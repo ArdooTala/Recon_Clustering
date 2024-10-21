@@ -22,6 +22,7 @@ def add_stages(res_xpn, earliest=True):
         stages = list(nx.topological_generations(res_con.reverse()))
         stages.reverse()
     logger.info(f"Generated {len(stages)} stages > # of connections in each stage: {list(map(len, stages))}")
+    logger.debug(f"Longest Path Length: {nx.dag_longest_path_length(res_con)}")
 
     return stages
 
