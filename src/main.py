@@ -14,16 +14,16 @@ if __name__ == "__main__":
     def viz_and_save(graph, path: Path, pos=None, bbox=None):
         file_writer.pygraphviz_export(graph, path.with_suffix(".pdf"))
 
-        # if not pos or not bbox:
+        if not pos or not bbox:
             # pos, bbox = graph_visualizer.multipartite_layout_by_connections(graph)
-            # pos, bbox = graph_visualizer.pygraphviz_layout(graph)
-        # file_writer.inkscape_export(graph, path.with_suffix(".svg"), pos, bbox)
+            pos, bbox = graph_visualizer.pygraphviz_layout(graph)
+        file_writer.inkscape_export(graph, path.with_suffix(".svg"), pos, bbox)
         # graph_visualizer.viz_dag(graph, pos)
 
     # Load Assembly
     # assembly = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
-    # assembly = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
-    assembly = nx.read_gml("../assemblies/exception2.gml")
+    assembly = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
+    # assembly = nx.read_gml("../assemblies/exception2.gml")
     # assembly = nx.read_gml("../assemblies/extended.gml")
 
     viz_and_save(assembly, export_path / "01-dep.pdf")

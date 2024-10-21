@@ -27,7 +27,7 @@ def pygraphviz_layout(g):
     gg = nx.nx_agraph.to_agraph(g)
     gg.layout(
         prog="dot",
-        args="-Grankdir='TB' -Granksep=0.5 -Gsplines='false' -Gnodesep=0.02 -Goutputorder='edgesfirst'"
+        args="-Grankdir='BT' -Granksep=0.5 -Gsplines='false' -Gnodesep=0.02 -Goutputorder='edgesfirst'"
     )
     bbox = tuple(map(float, gg.graph_attr['bb'].split(',')))
     # bbox = gg.graph_attr['bb'].split(',')
