@@ -31,6 +31,11 @@ if __name__ == "__main__":
     resolved = graph_solver.resolve_dependencies(assembly)
     viz_and_save(resolved, export_path / "RESOLVED.pdf")
 
+    pos, bbox = graph_visualizer.pygraphviz_layout(resolved)
+
+    file_writer.inkscape_export(assembly, (export_path / "E1").with_suffix(".svg"), pos, bbox)
+    file_writer.inkscape_export(resolved, (export_path / "E2").with_suffix(".svg"), pos, bbox)
+
     # EARLY STAGES
     stages = graph_parser.add_stages(resolved)
     stages_dict = graph_parser.extract_stages(assembly, stages)
