@@ -14,9 +14,13 @@ def _get_dep_graph_from_connections(graph, nodes):
     return graph.subgraph(list(elems) + list(nodes)).copy()
 
 
-def generate_stages_v2(res_xpn):
+def add_stages(res_xpn, earliest=True):
     res_con = graph_solver._convert_ass_dep_to_con_dep(res_xpn)
-    stages = list(nx.topological_generations(res_con))
+    if earliest:
+        stages = list(nx.topological_generations(res_con))
+    else:
+        stages = list(nx.topological_generations(res_con.reverse()))
+        stages.reverse()
     logger.info(f"Generated {len(stages)} stages > # of connections in each stage: {list(map(len, stages))}")
 
     return stages
