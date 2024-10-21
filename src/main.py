@@ -20,18 +20,25 @@ if __name__ == "__main__":
         # file_writer.inkscape_export(graph, path.with_suffix(".svg"), pos, bbox)
         # graph_visualizer.viz_dag(graph, pos)
 
+    # Load Assembly
     # assembly = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
-    # from assemblies.example_graph import con as assembly
     # assembly = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
     assembly = nx.read_gml("../assemblies/exception2.gml")
     # assembly = nx.read_gml("../assemblies/extended.gml")
+
     viz_and_save(assembly, export_path / "01-dep.pdf")
 
     resolved = graph_solver.resolve_dependencies(assembly)
     viz_and_save(resolved, export_path / "RESOLVED.pdf")
-    stages = graph_parser.generate_stages_v2(resolved)
+
+    # EARLY STAGES
+    stages = graph_parser.add_stages(resolved)
     stages_dict = graph_parser.extract_stages(assembly, stages)
-    file_writer.export_stages(stages_dict, export_path / "export-components.csv" )
-    print(assembly)
-    print(resolved)
+    file_writer.export_stages(stages_dict, export_path / "export-early_components.csv")
+
+    # LATE STAGES
+    stages = graph_parser.add_stages(resolved, earliest=False)
+    stages_dict = graph_parser.extract_stages(assembly, stages)
+    file_writer.export_stages(stages_dict, export_path / "export-late_components.csv")
+
     print("FIN")
