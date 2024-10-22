@@ -14,23 +14,76 @@ def _get_dep_graph_from_connections(graph, nodes):
     return graph.subgraph(list(elems) + list(nodes)).copy()
 
 
-def add_stages(res_xpn, earliest=True):
-    res_con = graph_solver._convert_ass_dep_to_con_dep(res_xpn)
-    if earliest:
-        stages = list(nx.topological_generations(res_con))
-    else:
-        stages = list(nx.topological_generations(res_con.reverse()))
-        stages.reverse()
-    logger.info(f"Generated {len(stages)} stages > # of connections in each stage: {list(map(len, stages))}")
+def add_stages(graph: nx.DiGraph):
+    assert nx.is_directed_acyclic_graph(graph)
+
+    res_con = graph_solver._convert_ass_dep_to_con_dep(graph)
     logger.debug(f"Longest Path Length: {nx.dag_longest_path_length(res_con)}")
 
-    return stages
+    # Earliest
+    stages = list(nx.topological_generations(res_con))
+    for stage, nodes in enumerate(stages):
+        for node in nodes:
+            graph.nodes[node]["earliest_stage"] = stage
+    logger.info(f"Generated {len(stages)} earliest stages > # of connections in each stage: {list(map(len, stages))}")
+
+    # Latest
+    stages = list(nx.topological_generations(res_con.reverse()))
+    stages.reverse()
+    for stage, nodes in enumerate(stages):
+        for node in nodes:
+            graph.nodes[node]["latest_stage"] = stage
+    logger.info(f"Generated {len(stages)} latest stages   > # of connections in each stage: {list(map(len, stages))}")
+
+    for node in graph.nodes:
+        if graph.nodes[node]["TYPE"] == "CONN":
+            continue
+
+        conns = graph.subgraph([n for n in graph.neighbors(node) if graph.nodes[n]["TYPE"] == "CONN"])
+        if not conns:
+            raise Exception("PART has no CONN successors!")
+
+        graph.nodes[node]["earliest_stage"] = min([s[1] for s in list(conns.nodes.data("earliest_stage"))])
+        graph.nodes[node]["latest_stage"] = min([s[1] for s in list(conns.nodes.data("latest_stage"))])
+        logger.debug(f"Node: {node} > Stage: {graph.nodes[node]["earliest_stage"]} => {graph.nodes[node]["latest_stage"]}")
+
+    return range(len(stages))
+
+
+def add_components(graph, stage_attr="latest_stage"):
+    assert nx.is_directed_acyclic_graph(graph)
+
+    longest_path = graph.subgraph(nx.dag_longest_path(graph))
+    stages = sorted(set([s[1] for s in longest_path.nodes.data(stage_attr)]))
+    components_dict = {s: [] for s in stages}
+    logger.debug(f"Found {len(stages)} stages > {stages}")
+    for stage in stages:
+        stage_graph = nx.subgraph_view(
+            graph,
+            filter_node=lambda n: (graph.nodes.data(stage_attr)[n] <= stage)
+        )
+        logger.debug(f"Stage {stage}: Progress is a {stage_graph}")
+        components = nx.weakly_connected_components(stage_graph)
+        for component, component_nodes in enumerate(components):
+            logger.debug(f"\tStage {stage} - Component {component} > {component_nodes}")
+            components_dict[stage].append(component)
+            for component_node in component_nodes:
+                comp_dict = graph.nodes[component_node].get('component', {})
+                comp_dict[stage] = component
+                graph.nodes[component_node]['component'] = comp_dict
+
+    return components_dict
+
+
+def get_component(graph, stage, component):
+    node_filter = lambda node: graph.nodes[node]['component'].get(stage, None) == component
+    return nx.subgraph_view(graph, filter_node=node_filter)
 
 
 def extract_stages(assembly, stages):
     con = nx.subgraph_view(
         assembly,
-        filter_edge=lambda e1, e2: assembly[e1][e2]["EDGE_TYPE"] != "COLL",
+        filter_edge=lambda e1, e2: assembly[e1][e2]["EDGE_TYPE"] == "CONN",
     ).copy()
 
     stages_dict = {}

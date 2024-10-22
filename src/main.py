@@ -38,11 +38,19 @@ if __name__ == "__main__":
 
     # EARLY STAGES
     stages = graph_parser.add_stages(resolved)
+    components = graph_parser.add_components(resolved)
+
+    print(components)
+
+    graph_visualizer.viz_g(graph_parser.get_component(resolved, 0, 0))
+    graph_visualizer.viz_g(graph_parser.get_component(resolved, 0, 1))
+    graph_visualizer.viz_g(graph_parser.get_component(resolved, 1, 0))
+    exit()
     stages_dict = graph_parser.extract_stages(assembly, stages)
     file_writer.export_stages(stages_dict, export_path / "export-early_components.csv")
 
     # LATE STAGES
-    stages = graph_parser.add_stages(resolved, earliest=False)
+    stages = graph_parser.add_stages(resolved)
     stages_dict = graph_parser.extract_stages(assembly, stages)
     file_writer.export_stages(stages_dict, export_path / "export-late_components.csv")
 
