@@ -47,7 +47,7 @@ def add_stages(graph: nx.DiGraph):
         graph.nodes[node]["latest_stage"] = min([s[1] for s in list(conns.nodes.data("latest_stage"))])
         logger.debug(f"Node: {node} > Stage: {graph.nodes[node]["earliest_stage"]} => {graph.nodes[node]["latest_stage"]}")
 
-    return stages
+    return range(len(stages))
 
 
 def add_components(graph, stage_attr="latest_stage"):
@@ -55,6 +55,7 @@ def add_components(graph, stage_attr="latest_stage"):
 
     longest_path = graph.subgraph(nx.dag_longest_path(graph))
     stages = sorted(set([s[1] for s in longest_path.nodes.data(stage_attr)]))
+    components_dict = {s: [] for s in stages}
     logger.debug(f"Found {len(stages)} stages > {stages}")
     for stage in stages:
         stage_graph = nx.subgraph_view(
@@ -65,10 +66,13 @@ def add_components(graph, stage_attr="latest_stage"):
         components = nx.weakly_connected_components(stage_graph)
         for component, component_nodes in enumerate(components):
             logger.debug(f"\tStage {stage} - Component {component} > {component_nodes}")
+            components_dict[stage].append(component)
             for component_node in component_nodes:
                 comp_dict = graph.nodes[component_node].get('component', {})
                 comp_dict[stage] = component
                 graph.nodes[component_node]['component'] = comp_dict
+
+    return components_dict
 
 
 def get_component(graph, stage, component):
