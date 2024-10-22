@@ -21,8 +21,8 @@ if __name__ == "__main__":
         # graph_visualizer.viz_dag(graph, pos)
 
     # Load Assembly
-    assembly = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
-    # assembly = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
+    # assembly = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
+    assembly = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
     # assembly = nx.read_gml("../assemblies/exception2.gml")
     # assembly = nx.read_gml("../assemblies/extended.gml")
 
@@ -33,6 +33,10 @@ if __name__ == "__main__":
 
     # EARLY STAGES
     stages = graph_parser.add_stages(resolved)
+    components = graph_parser.add_components(resolved)
+
+    graph_visualizer.viz_g(graph_parser.get_component(resolved, 0, 0))
+    exit()
     stages_dict = graph_parser.extract_stages(assembly, stages)
     file_writer.export_stages(stages_dict, export_path / "export-early_components.csv")
 

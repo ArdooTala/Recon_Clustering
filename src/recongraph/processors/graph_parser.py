@@ -50,6 +50,32 @@ def add_stages(graph: nx.DiGraph):
     return stages
 
 
+def add_components(graph, stage_attr="latest_stage"):
+    assert nx.is_directed_acyclic_graph(graph)
+
+    longest_path = graph.subgraph(nx.dag_longest_path(graph))
+    stages = sorted(set([s[1] for s in longest_path.nodes.data(stage_attr)]))
+    logger.debug(f"Found {len(stages)} stages > {stages}")
+    for stage in stages:
+        stage_graph = nx.subgraph_view(
+            graph,
+            filter_node=lambda n: (graph.nodes.data(stage_attr)[n] <= stage)
+        )
+        logger.debug(f"Stage {stage}: Progress is a {stage_graph}")
+        components = nx.weakly_connected_components(stage_graph)
+        for component, component_nodes in enumerate(components):
+            logger.debug(f"\tStage {stage} - Component {component} > {component_nodes}")
+            for component_node in component_nodes:
+                comp_dict = graph.nodes[component_node].get('component', {})
+                comp_dict[stage] = component
+                graph.nodes[component_node]['component'] = comp_dict
+
+
+def get_component(graph, stage, component):
+    node_filter = lambda node: graph.nodes[node]['component'].get(stage, None) == component
+    return nx.subgraph_view(graph, filter_node=node_filter)
+
+
 def extract_stages(assembly, stages):
     con = nx.subgraph_view(
         assembly,
