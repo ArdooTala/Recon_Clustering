@@ -1,7 +1,7 @@
 import networkx as nx
 from recongraph.io_utils import file_writer, graph_generator
 from recongraph.processors import graph_parser, graph_solver
-from recongraph.visualizer import graph_visualizer
+from recongraph.visualizer import graph_visualizer, graphviz_utils
 from pathlib import Path
 import logging
 
@@ -40,12 +40,17 @@ if __name__ == "__main__":
     stages = graph_parser.add_stages(resolved)
     components = graph_parser.add_components(resolved)
 
-    print(components)
+    clustered = graph_parser.cluster_components(resolved)
+    dot = graphviz_utils.to_dot(resolved, clustered)
+    print(dot)
+    with open("KIR.dot", 'w') as f:
+        f.write(dot)
 
-    graph_visualizer.viz_g(graph_parser.get_component(resolved, 0, 0))
-    graph_visualizer.viz_g(graph_parser.get_component(resolved, 0, 1))
-    graph_visualizer.viz_g(graph_parser.get_component(resolved, 1, 0))
     exit()
+    graph_visualizer.viz_g(graph_parser.get_component_parts(resolved, 0, 0))
+    graph_visualizer.viz_g(graph_parser.get_component_parts(resolved, 0, 1))
+    graph_visualizer.viz_g(graph_parser.get_component_parts(resolved, 1, 0))
+
     stages_dict = graph_parser.extract_stages(assembly, stages)
     file_writer.export_stages(stages_dict, export_path / "export-early_components.csv")
 

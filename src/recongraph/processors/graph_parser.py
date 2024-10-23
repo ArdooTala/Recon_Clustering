@@ -75,9 +75,54 @@ def add_components(graph, stage_attr="latest_stage"):
     return components_dict
 
 
-def get_component(graph, stage, component):
-    node_filter = lambda node: graph.nodes[node]['component'].get(stage, None) == component
-    return nx.subgraph_view(graph, filter_node=node_filter)
+def get_component_parts(graph, stage, component):
+    def comp_filter(node):
+        return all([
+            graph.nodes[node]['component'].get(stage, None) == component,
+            graph.nodes.data("TYPE")[node] == "PART",
+        ])
+    return nx.subgraph_view(graph, filter_node=comp_filter)
+
+
+def cluster_components(graph, stage_attr="latest_stage"):
+    assert nx.is_directed_acyclic_graph(graph)
+    graph = graph.copy()
+
+    longest_path = graph.subgraph(nx.dag_longest_path(graph))
+    stages = sorted(set([s[1] for s in longest_path.nodes.data(stage_attr)]))
+
+    for stage in stages:
+        print(stage)
+        cluster_graph(
+            graph,
+            key=lambda x: x[1].get('component', {}).get(stage, None)
+        )
+
+    print(graph)
+    return graph
+
+
+def cluster_graph(graph, key=None):
+    if not key:
+        key = lambda x: x
+    clusters = set(
+        map(key, graph.nodes.data())
+    )
+    print(f">>> {clusters}")
+    for cluster in clusters:
+        if cluster is None:
+            continue
+
+        cluster_subgraph = graph.subgraph(
+            [node[0] for node in graph.nodes.data() if key(node) == cluster]
+        ).copy()
+        cluster_subgraph.name = f"{cluster}"
+
+        print(f"{cluster} > {cluster_subgraph}")
+        graph.remove_nodes_from(cluster_subgraph.nodes)
+        data = list(cluster_subgraph.nodes.data())[0][1]
+        print(data)
+        graph.add_node(cluster_subgraph, **data)
 
 
 def extract_stages(assembly, stages):

@@ -3,8 +3,6 @@ import textwrap as tw
 import pygraphviz as pgv
 import matplotlib.pyplot as plt
 
-from recongraph.io_utils import graph_generator
-
 
 def to_dot(graph, clustered_graph):
     return f"digraph {graph.name} {{\n"\
@@ -36,6 +34,8 @@ def _write_node(node, color='black', shape='circle'):
 
 
 if __name__ == "__main__":
+    from recongraph.io_utils import graph_generator
+
     assembly = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
     clusters = {
         'cls_1': [
