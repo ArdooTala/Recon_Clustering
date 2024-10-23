@@ -172,322 +172,322 @@ graph [
   ]
   node [
     id 34
-    label "P0-P9"
+    label "P0_P9"
     TYPE "CONN"
   ]
   node [
     id 35
-    label "P0-P8"
+    label "P0_P8"
     TYPE "CONN"
   ]
   node [
     id 36
-    label "P1-P0"
+    label "P1_P0"
     TYPE "CONN"
   ]
   node [
     id 37
-    label "P1-P33"
+    label "P1_P33"
     TYPE "CONN"
   ]
   node [
     id 38
-    label "P2-P0"
+    label "P2_P0"
     TYPE "CONN"
   ]
   node [
     id 39
-    label "P2-P33"
+    label "P2_P33"
     TYPE "CONN"
   ]
   node [
     id 40
-    label "P3-P1"
+    label "P3_P1"
     TYPE "CONN"
   ]
   node [
     id 41
-    label "P3-P8"
+    label "P3_P8"
     TYPE "CONN"
   ]
   node [
     id 42
-    label "P4-P1"
+    label "P4_P1"
     TYPE "CONN"
   ]
   node [
     id 43
-    label "P4-P8"
+    label "P4_P8"
     TYPE "CONN"
   ]
   node [
     id 44
-    label "P5-P2"
+    label "P5_P2"
     TYPE "CONN"
   ]
   node [
     id 45
-    label "P5-P9"
+    label "P5_P9"
     TYPE "CONN"
   ]
   node [
     id 46
-    label "P6-P2"
+    label "P6_P2"
     TYPE "CONN"
   ]
   node [
     id 47
-    label "P6-P9"
+    label "P6_P9"
     TYPE "CONN"
   ]
   node [
     id 48
-    label "P7-P9"
+    label "P7_P9"
     TYPE "CONN"
   ]
   node [
     id 49
-    label "P7-P8"
+    label "P7_P8"
     TYPE "CONN"
   ]
   node [
     id 50
-    label "P8-P16"
+    label "P8_P16"
     TYPE "CONN"
   ]
   node [
     id 51
-    label "P8-P33"
+    label "P8_P33"
     TYPE "CONN"
   ]
   node [
     id 52
-    label "P9-P16"
+    label "P9_P16"
     TYPE "CONN"
   ]
   node [
     id 53
-    label "P9-P33"
+    label "P9_P33"
     TYPE "CONN"
   ]
   node [
     id 54
-    label "P10-P12"
+    label "P10_P12"
     TYPE "CONN"
   ]
   node [
     id 55
-    label "P10-P9"
+    label "P10_P9"
     TYPE "CONN"
   ]
   node [
     id 56
-    label "P11-P12"
+    label "P11_P12"
     TYPE "CONN"
   ]
   node [
     id 57
-    label "P11-P9"
+    label "P11_P9"
     TYPE "CONN"
   ]
   node [
     id 58
-    label "P12-P7"
+    label "P12_P7"
     TYPE "CONN"
   ]
   node [
     id 59
-    label "P12-P16"
+    label "P12_P16"
     TYPE "CONN"
   ]
   node [
     id 60
-    label "P13-P15"
+    label "P13_P15"
     TYPE "CONN"
   ]
   node [
     id 61
-    label "P13-P8"
+    label "P13_P8"
     TYPE "CONN"
   ]
   node [
     id 62
-    label "P14-P15"
+    label "P14_P15"
     TYPE "CONN"
   ]
   node [
     id 63
-    label "P14-P8"
+    label "P14_P8"
     TYPE "CONN"
   ]
   node [
     id 64
-    label "P15-P7"
+    label "P15_P7"
     TYPE "CONN"
   ]
   node [
     id 65
-    label "P15-P16"
+    label "P15_P16"
     TYPE "CONN"
   ]
   node [
     id 66
-    label "P17-P16"
+    label "P17_P16"
     TYPE "CONN"
   ]
   node [
     id 67
-    label "P17-P33"
+    label "P17_P33"
     TYPE "CONN"
   ]
   node [
     id 68
-    label "P18-P16"
+    label "P18_P16"
     TYPE "CONN"
   ]
   node [
     id 69
-    label "P18-P33"
+    label "P18_P33"
     TYPE "CONN"
   ]
   node [
     id 70
-    label "P19-P23"
+    label "P19_P23"
     TYPE "CONN"
   ]
   node [
     id 71
-    label "P19-P17"
+    label "P19_P17"
     TYPE "CONN"
   ]
   node [
     id 72
-    label "P20-P23"
+    label "P20_P23"
     TYPE "CONN"
   ]
   node [
     id 73
-    label "P20-P17"
+    label "P20_P17"
     TYPE "CONN"
   ]
   node [
     id 74
-    label "P21-P24"
+    label "P21_P24"
     TYPE "CONN"
   ]
   node [
     id 75
-    label "P21-P18"
+    label "P21_P18"
     TYPE "CONN"
   ]
   node [
     id 76
-    label "P22-P24"
+    label "P22_P24"
     TYPE "CONN"
   ]
   node [
     id 77
-    label "P22-P18"
+    label "P22_P18"
     TYPE "CONN"
   ]
   node [
     id 78
-    label "P23-P25"
+    label "P23_P25"
     TYPE "CONN"
   ]
   node [
     id 79
-    label "P23-P16"
+    label "P23_P16"
     TYPE "CONN"
   ]
   node [
     id 80
-    label "P24-P25"
+    label "P24_P25"
     TYPE "CONN"
   ]
   node [
     id 81
-    label "P24-P16"
+    label "P24_P16"
     TYPE "CONN"
   ]
   node [
     id 82
-    label "P25-P17"
+    label "P25_P17"
     TYPE "CONN"
   ]
   node [
     id 83
-    label "P25-P18"
+    label "P25_P18"
     TYPE "CONN"
   ]
   node [
     id 84
-    label "P26-P30"
+    label "P26_P30"
     TYPE "CONN"
   ]
   node [
     id 85
-    label "P26-P17"
+    label "P26_P17"
     TYPE "CONN"
   ]
   node [
     id 86
-    label "P27-P30"
+    label "P27_P30"
     TYPE "CONN"
   ]
   node [
     id 87
-    label "P27-P17"
+    label "P27_P17"
     TYPE "CONN"
   ]
   node [
     id 88
-    label "P28-P31"
+    label "P28_P31"
     TYPE "CONN"
   ]
   node [
     id 89
-    label "P28-P18"
+    label "P28_P18"
     TYPE "CONN"
   ]
   node [
     id 90
-    label "P29-P31"
+    label "P29_P31"
     TYPE "CONN"
   ]
   node [
     id 91
-    label "P29-P18"
+    label "P29_P18"
     TYPE "CONN"
   ]
   node [
     id 92
-    label "P30-P32"
+    label "P30_P32"
     TYPE "CONN"
   ]
   node [
     id 93
-    label "P30-P33"
+    label "P30_P33"
     TYPE "CONN"
   ]
   node [
     id 94
-    label "P31-P32"
+    label "P31_P32"
     TYPE "CONN"
   ]
   node [
     id 95
-    label "P31-P33"
+    label "P31_P33"
     TYPE "CONN"
   ]
   node [
     id 96
-    label "P32-P17"
+    label "P32_P17"
     TYPE "CONN"
   ]
   node [
     id 97
-    label "P32-P18"
+    label "P32_P18"
     TYPE "CONN"
   ]
   edge [
