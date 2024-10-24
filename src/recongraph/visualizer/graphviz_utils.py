@@ -13,7 +13,7 @@ def to_dot(graph, clustered_graph):
 
 
 def _write_edges(graph):
-    edges = map(_write_edge, graph.edges)
+    edges = map(_write_edge, graph.edges.data())
     return f"{f'\n'.join(edges)}"
 
 
@@ -23,7 +23,7 @@ def _write_nodes(nodes):
 
 
 def _write_edge(edge, color='black'):
-    return f"{edge[0]} -> {edge[1]} [color={color}]"
+    return f"{edge[0]} -> {edge[1]} [color={edge[2].get('color', color)}]"
 
 
 def _write_node(node, color='black', shape='circle'):

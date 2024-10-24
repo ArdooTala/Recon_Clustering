@@ -12,6 +12,12 @@ import warnings
 logger = logging.getLogger(__name__)
 VIZ_DEP_INSTALLED = (importlib.util.find_spec('pygraphviz')) is not None
 
+EDGE_COLORS = {
+    "CONN": '#000000',
+    "COLL": '#FF0000',
+    "EXTR": '#00FF00',
+}
+
 
 def pygraphviz_export(g, name):
     if not VIZ_DEP_INSTALLED:
@@ -106,8 +112,10 @@ def inkscape_export(g, name, node_pos, bbox):
         node_text.text = node
 
     edges_layer = root.findall(".//*[@id='edges_1']")[0]
+
     for edge in g.edges():
-        stroke_color = '#000000' if  g.edges[*edge].get("EDGE_TYPE", None) == 'CONN' else '#FF0000'
+        stroke_color = EDGE_COLORS.get(g.edges[*edge].get("EDGE_TYPE", None), '#88FF88')
+        # stroke_color = '#000000' if  g.edges[*edge].get("EDGE_TYPE", None) == 'CONN' else '#FF0000'
         edge_path = ET.SubElement(edges_layer, 'path', {
             "style": f"fill:none;fill-rule:evenodd;stroke:{stroke_color};stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#RoundedArrow)",
             "d": "m 71.642728,91.17392 25.709589,9.63346",

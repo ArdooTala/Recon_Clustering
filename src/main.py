@@ -22,9 +22,9 @@ if __name__ == "__main__":
 
     # Load Assembly
     # assembly = graph_generator.graph_from_gh_csv("../assemblies/ReconSlab_Top-Connectivity.csv")
-    # assembly = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
+    assembly = graph_generator.graph_from_dot_file("../assemblies/simple.dot")
     # assembly = nx.read_gml("../assemblies/exception2.gml")
-    assembly = nx.read_gml("../assemblies/extended.gml")
+    # assembly = nx.read_gml("../assemblies/extended.gml")
 
     viz_and_save(assembly, export_path / "01-dep.pdf")
 
@@ -46,6 +46,8 @@ if __name__ == "__main__":
     with open("KIR.dot", 'w') as f:
         f.write(dot)
 
+    ass = nx.nx_agraph.read_dot("KIR_Layout.dot")
+    print(ass.nodes.data())
     exit()
     graph_visualizer.viz_g(graph_parser.get_component_parts(resolved, 0, 0))
     graph_visualizer.viz_g(graph_parser.get_component_parts(resolved, 0, 1))
