@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 
 <svg
+        xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+        xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+        xmlns:svg="http://www.w3.org/2000/svg"
         width="210mm"
         height="297mm"
         viewBox="0 0 210 297"
@@ -8,11 +11,29 @@
         id="svg5"
         inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
         sodipodi:docname="TestInkscapeNetwork.svg"
-        xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-        xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:svg="http://www.w3.org/2000/svg">
-
+        xmlns="http://www.w3.org/2000/svg">
+    <defs
+            id="defs86">
+        <marker
+                style="overflow:visible"
+                id="RoundedArrow"
+                refX="5"
+                refY="0"
+                orient="auto-start-reverse"
+                inkscape:stockid="RoundedArrow"
+                markerWidth="9.99994899"
+                markerHeight="9.667"
+                viewBox="0 0 6.1347524 5.9304951"
+                inkscape:isstock="true"
+                inkscape:collect="always"
+                preserveAspectRatio="xMidYMid">
+            <path
+                    transform="scale(0.7)"
+                    d="m -0.21114562,-4.1055728 6.42229122,3.21114561 a 1,1 90 0 1 0,1.78885438 L -0.21114562,4.1055728 A 1.236068,1.236068 31.717474 0 1 -2,3 v -6 a 1.236068,1.236068 148.28253 0 1 1.78885438,-1.1055728 z"
+                    style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+                    id="path1367"/>
+        </marker>
+    </defs>
     <g
             inkscape:label="nodes_1"
             inkscape:groupmode="layer"

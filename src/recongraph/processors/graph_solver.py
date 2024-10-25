@@ -121,7 +121,7 @@ def _find_reciprocal_dependency_groups(graph):
 def _resolve_cluster(graph, cluster):
     ass_dep = graph.copy()
 
-    internal_graph = ass_dep.subgraph(cluster)
+    internal_graph = ass_dep.subgraph(cluster).copy()
     logger.debug(f">> SOLVING CLUSTER'S INTERNAL GRAPH {internal_graph}")
 
     resolved_internal_graph = resolve_dependencies(internal_graph)
@@ -134,18 +134,28 @@ def _resolve_cluster(graph, cluster):
         [succ for node in internal_graph for succ in ass_dep.successors(node) if succ not in internal_graph]
     )
 
+    # Assert the cluster is a source
+    cluster_predecessors = set(
+        [pred for node in internal_graph for pred in ass_dep.predecessors(node) if pred not in internal_graph]
+    )
+    # print(cluster_predecessors)
+    # print(ass_dep.edges.data(nbunch=['76',]))
+    # assert len(cluster_predecessors) == 0
+
     logger.debug(f"Cluster Successors: {cluster_successors}")
     assert all([ass_dep.nodes[succ]['TYPE'] == 'CONN' for succ in cluster_successors])
 
     logger.debug(f"<< DONE SOLVING CLUSTER")
 
     # Replace Cluster
-    ass_dep.remove_nodes_from(cluster)
-    ass_dep = nx.union(ass_dep, resolved_internal_graph)
+    ass_dep.remove_edges_from(internal_graph.edges)
+    ass_dep.add_edges_from(resolved_internal_graph.edges.data())
 
     for sink in resolved_cluster_sinks:
         for succ in cluster_successors:
-            ass_dep.add_edge(sink, succ)
+            ass_dep.add_edge(sink, succ, EDGE_TYPE='EXTR', color='blue')
+            assert ass_dep.nodes[sink]["TYPE"] == "CONN"
+            assert ass_dep.nodes[succ]["TYPE"] == "CONN"
 
     return ass_dep
 

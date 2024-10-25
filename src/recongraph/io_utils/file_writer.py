@@ -1,5 +1,7 @@
 import importlib.util
 import logging
+from email.policy import default
+
 import networkx as nx
 import xml.etree.ElementTree as ET
 import pathlib
@@ -105,8 +107,9 @@ def inkscape_export(g, name, node_pos, bbox):
 
     edges_layer = root.findall(".//*[@id='edges_1']")[0]
     for edge in g.edges():
+        stroke_color = '#000000' if  g.edges[*edge].get("EDGE_TYPE", None) == 'CONN' else '#FF0000'
         edge_path = ET.SubElement(edges_layer, 'path', {
-            "style": "fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1",
+            "style": f"fill:none;fill-rule:evenodd;stroke:{stroke_color};stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#RoundedArrow)",
             "d": "m 71.642728,91.17392 25.709589,9.63346",
             "id": "{edge[0] + '__' + edge[1]}",
             "inkscape:connector-type": "polyline",
