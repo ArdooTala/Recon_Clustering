@@ -7,6 +7,25 @@ from recongraph.processors import graph_solver
 logger = logging.getLogger(__name__)
 
 
+def _convert_ass_dep_to_con_dep(dep_graph):
+    drop_types = ["PART"]
+
+    con_dep = dep_graph.copy()
+    for n, t in dep_graph.nodes.data("TYPE"):
+        if t not in drop_types:
+            continue
+
+        for s in con_dep.successors(n):
+            for p in list(con_dep.predecessors(n)):
+                if s == p:
+                    continue
+                con_dep.add_edge(p, s)
+
+        con_dep.remove_node(n)
+
+    return con_dep
+
+
 def _get_dep_graph_from_connections(graph, nodes):
     elems = set()
     for no in nodes:
@@ -17,7 +36,7 @@ def _get_dep_graph_from_connections(graph, nodes):
 def add_stages(graph: nx.DiGraph):
     assert nx.is_directed_acyclic_graph(graph)
 
-    res_con = graph_solver._convert_ass_dep_to_con_dep(graph)
+    res_con = _convert_ass_dep_to_con_dep(graph)
     logger.debug(f"Longest Path Length: {nx.dag_longest_path_length(res_con)}")
 
     # Earliest
