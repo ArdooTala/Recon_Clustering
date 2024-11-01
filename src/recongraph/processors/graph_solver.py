@@ -119,6 +119,7 @@ def _find_reciprocal_dependency_groups(graph):
 
 
 def _resolve_cluster(graph, cluster):
+    # TODO: Break inward dependency to assemble cluster earlier...Shall we?
     ass_dep = graph.copy()
 
     internal_graph = ass_dep.subgraph(cluster).copy()

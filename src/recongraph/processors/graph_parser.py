@@ -45,7 +45,7 @@ def add_stages(graph: nx.DiGraph):
 
         graph.nodes[node]["earliest_stage"] = min([s[1] for s in list(conns.nodes.data("earliest_stage"))])
         graph.nodes[node]["latest_stage"] = min([s[1] for s in list(conns.nodes.data("latest_stage"))])
-        logger.debug(f"Node: {node} > Stage: {graph.nodes[node]["earliest_stage"]} => {graph.nodes[node]["latest_stage"]}")
+        logger.debug(f"Node: {node} > Stage: {graph.nodes[node]['earliest_stage']} => {graph.nodes[node]['latest_stage']}")
 
     return range(len(stages))
 
