@@ -4,25 +4,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def _convert_ass_dep_to_con_dep(dep_graph, drop_types=None):
-    if not drop_types:
-        drop_types = ["PART"]
-
-    con_dep = dep_graph.copy()
-    for n, t in dep_graph.nodes.data("TYPE"):
-        if t not in drop_types:
-            continue
-
-        for s in con_dep.successors(n):
-            for p in list(con_dep.predecessors(n)):
-                if s == p:
-                    continue
-                con_dep.add_edge(p, s)
-
-        con_dep.remove_node(n)
-
-    return con_dep
-
 
 def _extract_subgraph_as_cluster(graph, nodes):
     nodes_set = set(nodes)
