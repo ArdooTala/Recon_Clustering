@@ -1,0 +1,27 @@
+digraph SIMPLE {
+    subgraph {
+        node[shape=box]
+        a
+        b
+        c
+        d
+        e
+        f
+        g
+    }
+
+    a -> {ab ae}
+    b -> {bc bd ab}
+    c -> bc
+    d -> {bd dg}
+    e -> {ef ae}
+    f -> ef
+    g -> dg
+
+    subgraph {
+        edge[color=red]
+        {bc bd} -> e
+        {ef} -> b
+        {dg} -> c
+    }
+}
